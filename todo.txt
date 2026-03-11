@@ -1,0 +1,14 @@
+Required to get it together:
+* Update presentation to make the right includes
+* Setup small VM / mini kubernetes with fluxcd
+    * Host TTY on domain, protect by ingress
+    * reversegitops.dev/vote (you can enter stuff, as long as something is 'open').
+        * powered by configbutler.ai?
+    * reversegitops.dev/talks/gitops-paradox -> shows presentation    /tty (websocket,requires auth!)
+        * Behind dex / gh auth
+        * Do I dare to take the risk that I don't have reliable internet?
+        * Let's do a simple k3s cluster and hook it up to cloudflare throuh the internal tunnel mechanism. Would that work with webhooks reliable?
+
+Later:
+* https://github.com/xtermjs/xterm.js/tree/master/addons/addon-clipboard
+* Either create PR/fork adjusted plugins
