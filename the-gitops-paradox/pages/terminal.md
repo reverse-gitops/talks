@@ -1,0 +1,42 @@
+---
+layout: default
+---
+
+<div style="position: absolute; inset: 6px; display: flex; flex-direction: column;">
+  <WebTerminal
+    backendUrl="http://127.0.0.1:10001"
+    sessionId="reverse-gitops-demo-terminal"
+    :fontSize="13"
+    releaseKey="F2"
+    activationKey="t"
+  />
+  <div class="clickable-code" style="position: absolute; bottom: 12px; right: 20px; z-index: 10; background: rgba(0,0,0,0.6); padding: 2px 8px; border-radius: 4px; color: #0f0; font-family: monospace;">echo hello</div>
+</div>
+
+---
+layout: two-cols
+layoutClass: gap-6
+class: h-full flex flex-col min-h-0
+---
+
+# Left
+
+- Press `r` to focus the terminal
+- Press `F2` to release keyboard control back to Slidev
+- This slide keeps the same PTY session as the full-screen slide
+
+<div class="clickable-code" style="display: inline-block; margin-top: 1rem; padding: 0.25rem 0.5rem; border-radius: 4px; background: rgba(0,0,0,0.65); color: #0f0; font-family: monospace;">
+  kubectl get pods -A
+</div>
+
+::right::
+
+<div style="flex: 1; min-height: 0; display: flex; flex-direction: column;">
+    <WebTerminal
+      backendUrl="http://127.0.0.1:10001"
+      sessionId="reverse-gitops-demo-terminal"
+      :fontSize="12"
+      releaseKey="F2"
+      activationKey="r"
+    />
+</div>

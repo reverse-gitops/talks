@@ -1,0 +1,651 @@
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { useSlideContext } from '@slidev/client'
+import { Terminal } from '@xterm/xterm'
+import { FitAddon } from '@xterm/addon-fit'
+import { WebLinksAddon } from '@xterm/addon-web-links'
+import { AttachAddon } from '@xterm/addon-attach'
+import '@xterm/xterm/css/xterm.css'
+import {
+  createTerminalSessionController,
+  type TerminalSessionController,
+  type TerminalSessionSource,
+} from '../utils/terminalSessionController'
+import { createCursorWarmupRunner } from '../utils/cursorWarmup'
+
+const props = defineProps<{
+  wsUrl?: string
+  backendUrl?: string
+  fontSize?: number
+  releaseKey?: string
+  /** Enable verbose console logging for terminal/bridge lifecycle diagnostics.
+   *  You can also enable this with `?webTerminalDebug=1` or localStorage `webTerminalDebug=1`. */
+  debug?: boolean
+  /** Stable identifier shared between the presentation and presenter windows.
+   *  Both windows must use the same value to share a PTY session.
+   *  Defaults to the backendUrl or wsUrl when not set. */
+  sessionId?: string
+  /** When set, pressing this key (while not typing in an editable element) will focus the terminal.
+   *  E.g. activationKey="t". If not set, the terminal will not auto-focus on mount. */
+  activationKey?: string
+}>()
+
+const terminalContainer = ref<HTMLElement | null>(null)
+const isFocused = ref(false)
+const isControlledElsewhere = ref(false)
+
+// Skip the real terminal in Slidev thumbnail/overview contexts to avoid interfering
+// with the shared PTY (e.g. sending a tiny resize that scrambles the shell output).
+// Falls back to false (full render) when running outside Slidev.
+const THUMBNAIL_CONTEXTS = new Set(['previewNext', 'overview'])
+const { $renderContext: renderContext } = useSlideContext()
+const isPlaceholder = THUMBNAIL_CONTEXTS.has(renderContext.value)
+
+let terminal: Terminal | null = null
+let socket: WebSocket | null = null
+let fitAddon: FitAddon | null = null
+let attachAddon: AttachAddon | null = null
+let resizeObserver: ResizeObserver | null = null
+let sessionController: TerminalSessionController | null = null
+let terminalDataSubscription: { dispose: () => void } | null = null
+let activationKeyHandler: ((e: KeyboardEvent) => void) | null = null
+let controlOwnerCleanup: (() => void) | null = null
+let suppressFocusSideEffects = false
+let initRunId = 0
+
+const isTypingInEditable = (el: Element | null): boolean => {
+    if (!el) return false
+    if (el instanceof HTMLTextAreaElement || el instanceof HTMLInputElement) return true
+    return !!(el as HTMLElement).closest?.('[contenteditable="true"]')
+}
+const instanceId = Math.random().toString(36).slice(2, 8)
+
+const isDebugEnabled = () => {
+    if (props.debug) return true
+    if (typeof window === 'undefined') return false
+    const queryEnabled = new URLSearchParams(window.location.search).get('webTerminalDebug') === '1'
+    let storageEnabled = false
+    try {
+        storageEnabled = window.localStorage.getItem('webTerminalDebug') === '1'
+    } catch {
+        // ignore storage access errors
+    }
+    return queryEnabled || storageEnabled
+}
+
+const debugLog = (message: string, details?: unknown) => {
+    if (!isDebugEnabled()) return
+    const prefix = `[WebTerminal:${instanceId}] ${message}`
+    if (details === undefined) {
+        console.info(prefix)
+    } else {
+        console.info(prefix, details)
+    }
+}
+
+const logEvent = (event: string, details: Record<string, unknown> = {}) => {
+    debugLog(event, {
+        instanceId,
+        renderContext: renderContext.value,
+        ...details,
+    })
+}
+
+const summarizeSocketPayload = (payload: unknown) => {
+    if (typeof payload === 'string') {
+        const normalized = payload.replace(/\r/g, '\\r').replace(/\n/g, '\\n')
+        return {
+            kind: 'string',
+            length: payload.length,
+            preview: normalized.slice(0, 120),
+        }
+    }
+    if (payload instanceof ArrayBuffer) {
+        return { kind: 'arraybuffer', byteLength: payload.byteLength }
+    }
+    if (typeof Blob !== 'undefined' && payload instanceof Blob) {
+        return { kind: 'blob', size: payload.size, type: payload.type }
+    }
+    return { kind: typeof payload }
+}
+
+// Minimum pixel dimensions for a meaningful terminal fit.
+// Containers smaller than this (e.g. Slidev presenter thumbnails) are skipped
+// to prevent tiny col/row values from corrupting the shared PTY size.
+const MIN_FIT_WIDTH_PX = 200
+const MIN_FIT_HEIGHT_PX = 100
+
+const safeFit = (reason: string) => {
+    if (!fitAddon || !terminalContainer.value) return
+    const rect = terminalContainer.value.getBoundingClientRect()
+    if (rect.width < MIN_FIT_WIDTH_PX || rect.height < MIN_FIT_HEIGHT_PX) {
+        debugLog('Skipping fit: container too small', { width: rect.width, height: rect.height })
+        return
+    }
+    fitAddon.fit()
+    if (terminal && !THUMBNAIL_CONTEXTS.has(renderContext.value)) {
+        sessionController?.requestResize(terminal.cols, terminal.rows, reason)
+    }
+}
+
+// xterm.js 6.0 bug: when the terminal is inside a CSS-scaled ancestor (e.g. Slidev's
+// slide scaling), xterm measures character sizes in layout pixels (offsetHeight) but
+// mouse events arrive in visual viewport pixels (getBoundingClientRect). We intercept
+// all mouse events and divide the offset by the CSS scale factor before xterm sees them.
+const _correctedEvents = new WeakSet<MouseEvent>()
+const fixMouseCoords = (e: MouseEvent) => {
+    if (_correctedEvents.has(e) || !terminalContainer.value) return
+    const rect = terminalContainer.value.getBoundingClientRect()
+    // CSS scale applied by ancestors (e.g. Slidev): BCR is visual, offsetHeight is layout
+    const scale = rect.height / terminalContainer.value.offsetHeight
+    if (Math.abs(scale - 1) < 0.01) return
+    e.stopImmediatePropagation()
+    const corrected = new MouseEvent(e.type, {
+        bubbles: e.bubbles, cancelable: e.cancelable, composed: e.composed,
+        view: e.view, detail: e.detail,
+        screenX: e.screenX, screenY: e.screenY,
+        clientX: rect.left + (e.clientX - rect.left) / scale,
+        clientY: rect.top + (e.clientY - rect.top) / scale,
+        ctrlKey: e.ctrlKey, altKey: e.altKey, shiftKey: e.shiftKey, metaKey: e.metaKey,
+        button: e.button, buttons: e.buttons, relatedTarget: e.relatedTarget,
+    })
+    _correctedEvents.add(corrected)
+    e.target!.dispatchEvent(corrected)
+}
+const MOUSE_EVENT_TYPES = ['mousedown', 'mouseup', 'mousemove', 'click', 'contextmenu']
+const handleCapturedMouseEvent = (event: Event) => {
+    if (event instanceof MouseEvent) fixMouseCoords(event)
+}
+
+const hasNativeCursorNode = () => !!terminalContainer.value?.querySelector('.xterm-cursor')
+
+const restoreElementFocus = (element: Element | null) => {
+    if (!(element instanceof HTMLElement)) return
+    if (element === terminal?.textarea) return
+    try {
+        element.focus({ preventScroll: true })
+    } catch {
+        element.focus()
+    }
+}
+
+const cursorWarmup = createCursorWarmupRunner({
+    minWidthPx: MIN_FIT_WIDTH_PX,
+    minHeightPx: MIN_FIT_HEIGHT_PX,
+    environment: {
+        hasCursorNode: () => hasNativeCursorNode(),
+        isFocused: () => isFocused.value,
+        getContainerSize: () => terminalContainer.value?.getBoundingClientRect() ?? { width: 0, height: 0 },
+        focusTerminal: () => terminal?.focus(),
+        blurTerminal: () => terminal?.blur(),
+        onRender: callback => terminal?.onRender(callback) ?? { dispose() {} },
+        captureFocusRestore: () => {
+            const previousActiveElement = document.activeElement
+            return () => restoreElementFocus(previousActiveElement)
+        },
+        setSuppressFocusSideEffects: value => {
+            suppressFocusSideEffects = value
+        },
+        requestAnimationFrame: callback => window.requestAnimationFrame(callback),
+        setTimeout: (callback, delayMs) => window.setTimeout(callback, delayMs),
+        clearTimeout: handle => window.clearTimeout(handle),
+        debugLog: (message, details) => debugLog(message, details),
+    },
+})
+
+const ensureInactiveCursorNode = (reason: string) => {
+    if (!terminal || typeof window === 'undefined') return
+    cursorWarmup.ensureCursorNode(reason)
+}
+
+const syncCursorVisualState = () => {
+    if (!terminal || typeof window === 'undefined') return
+    window.requestAnimationFrame(() => {
+        if (!terminal) return
+        if (isControlledElsewhere.value && !isFocused.value) {
+            terminal.blur()
+        }
+        terminal.refresh(0, Math.max(terminal.rows - 1, 0))
+        ensureInactiveCursorNode('syncCursorVisualState')
+    })
+}
+
+const handleCodeClick = (e: MouseEvent) => {
+  const target = e.target as HTMLElement
+  // Only trigger if nested inside or is an element with class 'clickable-code'
+  const clickableElement = target.closest('.clickable-code') as HTMLElement | null
+  
+  if (clickableElement) {
+    // Don't execute if it's inside the terminal itself
+    if (terminalContainer.value?.contains(clickableElement)) return
+
+    const code = clickableElement.innerText.trim()
+    if (code && terminal) {
+      // Use terminal.input() so bracketed paste mode and other xterm input handling is respected
+      terminal.input(code + '\n')
+      terminal.focus()
+    }
+  }
+}
+
+const initTerminal = async () => {
+    if (!terminalContainer.value) return
+    const runId = ++initRunId
+    logEvent('component.init.start', {
+        renderContext: renderContext.value,
+        wsUrl: props.wsUrl,
+        backendUrl: props.backendUrl,
+        sessionId: props.sessionId,
+        releaseKey: props.releaseKey,
+    })
+
+    // Initialize Terminal
+    terminal = new Terminal({
+        cursorBlink: true,
+        cursorStyle: 'block',
+        cursorInactiveStyle: 'outline', // hollow block when not focused
+        macOptionIsMeta: true,
+        scrollback: 10000,
+        tabStopWidth: 10,
+        allowProposedApi: true,
+        fontSize: props.fontSize ?? 15,
+    })
+
+    // Initialize Addons
+    fitAddon = new FitAddon()
+    const webLinksAddon = new WebLinksAddon()
+
+    terminal.loadAddon(fitAddon)
+    terminal.loadAddon(webLinksAddon)
+
+    terminal.open(terminalContainer.value)
+    safeFit('initial')
+    syncCursorVisualState()
+
+    // Track focus state for our border/hint overlay via the underlying textarea DOM element
+    // (xterm handles the cursor appearance natively via cursorInactiveStyle)
+    const ta = terminal.textarea
+    if (ta) {
+        ta.addEventListener('focus', () => {
+            if (suppressFocusSideEffects) return
+            isFocused.value = true
+            isControlledElsewhere.value = false
+            sessionController?.setFocused(true)
+            sessionController?.setControlOwner(instanceId)
+            debugLog('Terminal textarea focus')
+            if (terminal && !THUMBNAIL_CONTEXTS.has(renderContext.value)) {
+                sessionController?.requestResize(terminal.cols, terminal.rows, 'terminal-focus', true)
+            }
+            syncCursorVisualState()
+        })
+        ta.addEventListener('blur', () => {
+            if (suppressFocusSideEffects) return
+            isFocused.value = false
+            sessionController?.setFocused(false)
+            sessionController?.setControlOwner(null)
+            debugLog('Terminal textarea blur')
+            syncCursorVisualState()
+        })
+    }
+
+    // Set up global key handler: activation key focuses the terminal, and
+    // release key can reclaim focus when another tab currently owns the session.
+    if (props.activationKey || props.releaseKey) {
+        const key = props.activationKey?.toLowerCase()
+        const releaseKey = (props.releaseKey ?? 'F2').toLowerCase()
+        activationKeyHandler = (e: KeyboardEvent) => {
+            if (e.repeat) return
+            if (isTypingInEditable(document.activeElement)) return
+            const pressedKey = e.key.toLowerCase()
+            if (key && pressedKey === key) {
+                e.preventDefault()
+                terminal?.focus()
+                return
+            }
+            if (!isFocused.value && isControlledElsewhere.value && pressedKey === releaseKey) {
+                e.preventDefault()
+                terminal?.focus()
+            }
+        }
+        document.addEventListener('keydown', activationKeyHandler)
+    }
+
+    terminalDataSubscription?.dispose()
+    terminalDataSubscription = terminal.onData((data) => {
+        const normalized = data.replace(/\r/g, '\\r').replace(/\n/g, '\\n')
+        debugLog('Terminal input event', { length: data.length, preview: normalized.slice(0, 120) })
+    })
+
+    // Intercept the release key so the presenter can return keyboard control to Slidev
+    terminal.attachCustomKeyEventHandler((e: KeyboardEvent) => {
+        if (e.type === 'keydown' && e.key === (props.releaseKey ?? 'F2')) {
+            terminal?.blur()
+            return false
+        }
+        return true
+    })
+
+    // Fix xterm.js 6.0 HiDPI mouse coordinate bug
+    MOUSE_EVENT_TYPES.forEach(t => terminalContainer.value!.addEventListener(t, handleCapturedMouseEvent, { capture: true }))
+
+    // Handle resizing — both window resize and container resize (e.g. slide layout changes)
+    window.addEventListener('resize', handleResize)
+    resizeObserver = new ResizeObserver(() => { safeFit('resize-observer') })
+    resizeObserver.observe(terminalContainer.value)
+
+    // Add global click listener for 'click to execute' feature
+    document.addEventListener('click', handleCodeClick)
+
+    let connectionUrl: string | null = props.wsUrl ?? null
+    let connectionSource: TerminalSessionSource | 'direct' = props.wsUrl ? 'direct' : 'created'
+
+    if (props.wsUrl && props.backendUrl) {
+        console.warn('WebTerminal received both wsUrl and backendUrl; wsUrl takes precedence and managed session sharing is disabled.')
+        logEvent('session.mode.warning', {
+            wsUrl: props.wsUrl,
+            backendUrl: props.backendUrl,
+        })
+    }
+
+    if (!connectionUrl && props.backendUrl) {
+        sessionController = createTerminalSessionController({
+            backendUrl: props.backendUrl,
+            sessionId: props.sessionId ?? props.backendUrl,
+            debug: isDebugEnabled(),
+            logger: (event, details) => logEvent(event, details),
+        })
+        controlOwnerCleanup?.()
+        controlOwnerCleanup = sessionController.onControlOwnerChange((ownerId) => {
+            isControlledElsewhere.value = !!ownerId && ownerId !== instanceId
+            syncCursorVisualState()
+        })
+        isControlledElsewhere.value = (() => {
+            const ownerId = sessionController?.getControlOwner()
+            return !!ownerId && ownerId !== instanceId
+        })()
+        syncCursorVisualState()
+
+        const resolved = await sessionController.resolveConnection()
+        if (runId !== initRunId) return
+        if (resolved) {
+            connectionUrl = resolved.url
+            connectionSource = resolved.source
+        } else {
+            terminal.write('\r\nFailed to create terminal session.\r\n')
+        }
+    }
+
+    // Connect to WebSocket
+    if (connectionUrl) {
+       connectWebSocket(connectionUrl, connectionSource)
+    } else {
+       terminal.write('\r\nNo WebSocket URL or Backend URL provided.\r\n')
+    }
+}
+
+const connectWebSocket = (url: string, source: TerminalSessionSource | 'direct') => {
+    attachAddon?.dispose()
+    attachAddon = null
+
+    const webSocket = new WebSocket(url)
+    socket = webSocket
+    logEvent('socket.connecting', { url, source })
+    webSocket.addEventListener('message', (event) => {
+        debugLog('WebSocket message event', summarizeSocketPayload(event.data))
+    })
+
+    webSocket.onopen = () => {
+        if (socket !== webSocket) return
+        logEvent('socket.open', { url, source })
+        if (terminal) {
+            attachAddon = new AttachAddon(webSocket)
+            terminal.loadAddon(attachAddon)
+            safeFit('socket-open')
+            syncCursorVisualState()
+        }
+    }
+
+    webSocket.onclose = async (event) => {
+        const isActiveSocket = socket === webSocket
+        if (isActiveSocket) socket = null
+        logEvent('socket.close', {
+            url,
+            source,
+            code: event.code,
+            reason: event.reason,
+            wasClean: event.wasClean,
+        })
+
+        if (sessionController && isActiveSocket) {
+            const recovery = await sessionController.handleSocketClose(event, url)
+            if (recovery) {
+                connectWebSocket(recovery.retryUrl, 'recovered')
+                return
+            }
+        }
+
+        if (terminal && isActiveSocket) {
+            terminal.write('\r\nConnection closed.\r\n')
+        }
+    }
+    
+    webSocket.onerror = (err) => {
+        if (socket !== webSocket) return
+        console.error("WebSocket error:", err)
+        logEvent('socket.error', { url, source })
+        if (terminal) {
+            terminal.write('\r\nWebSocket error.\r\n')
+        }
+    }
+}
+
+const focusTerminal = () => terminal?.focus()
+
+
+const handleResize = () => {
+    safeFit('window-resize')
+}
+
+const dispose = () => {
+    initRunId++
+    logEvent('component.dispose.start')
+    isFocused.value = false
+    isControlledElsewhere.value = false
+    sessionController?.setFocused(false)
+    if (sessionController?.getControlOwner() === instanceId) {
+        sessionController.setControlOwner(null)
+    }
+    MOUSE_EVENT_TYPES.forEach(t => terminalContainer.value?.removeEventListener(t, handleCapturedMouseEvent, { capture: true }))
+    window.removeEventListener('resize', handleResize)
+    resizeObserver?.disconnect()
+    resizeObserver = null
+    document.removeEventListener('click', handleCodeClick)
+    if (activationKeyHandler) {
+        document.removeEventListener('keydown', activationKeyHandler)
+        activationKeyHandler = null
+        debugLog('Activation key handler removed')
+    }
+    controlOwnerCleanup?.()
+    controlOwnerCleanup = null
+    if (socket) {
+        debugLog('Closing WebSocket', { readyState: socket.readyState })
+        socket.close()
+        socket = null
+    }
+    attachAddon?.dispose()
+    attachAddon = null
+    if (sessionController) {
+        sessionController.dispose()
+        sessionController = null
+    }
+    if (terminal) {
+        debugLog('Disposing xterm instance')
+        terminalDataSubscription?.dispose()
+        terminalDataSubscription = null
+        terminal.dispose()
+        terminal = null
+    }
+    logEvent('component.dispose.complete')
+}
+
+defineExpose({ focus: focusTerminal, blur: () => terminal?.blur() })
+
+onMounted(() => {
+    debugLog('Component mounted', { renderContext: renderContext.value })
+    if (isPlaceholder) {
+        debugLog('Thumbnail/overview context; skipping terminal init', { renderContext: renderContext.value })
+        return
+    }
+    initTerminal()
+})
+
+onUnmounted(() => {
+    debugLog('Component unmounted', { renderContext: renderContext.value })
+    dispose()
+})
+
+watch(() => [props.wsUrl, props.backendUrl, props.sessionId], () => {
+    logEvent('component.props.changed', { wsUrl: props.wsUrl, backendUrl: props.backendUrl, sessionId: props.sessionId })
+    dispose()
+    initTerminal()
+})
+
+</script>
+
+<template>
+  <div
+    v-if="isPlaceholder"
+    class="web-terminal-placeholder"
+  >
+    terminal
+  </div>
+  <div
+    v-else
+    class="web-terminal-wrapper"
+    :class="{ 'is-focused': isFocused, 'is-controlled-elsewhere': isControlledElsewhere && !isFocused }"
+    @click="focusTerminal"
+  >
+    <div
+      ref="terminalContainer"
+      class="web-terminal-container"
+    />
+    <div
+      v-if="!isFocused && !isControlledElsewhere"
+      class="focus-hint"
+    >
+      Click to interact
+    </div>
+    <div
+      v-else-if="!isFocused && isControlledElsewhere"
+      class="focus-hint takeover"
+    >
+      Press {{ releaseKey ?? 'F2' }} to take over
+    </div>
+    <div
+      v-else
+      class="focus-hint release"
+    >
+      {{ releaseKey ?? 'F2' }} to release
+    </div>
+  </div>
+</template>
+
+<style>
+/* Global styles for clickable code blocks */
+.clickable-code, .clickable-code * {
+  cursor: pointer;
+}
+.clickable-code {
+  transition: opacity 0.2s;
+}
+.clickable-code:hover {
+  opacity: 0.8;
+}
+.clickable-code:hover code {
+  outline: 1px dashed #555;
+  outline-offset: 2px;
+}
+</style>
+
+<style scoped>
+.web-terminal-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  padding: 1rem;
+  background-color: #000;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15);
+  transition: box-shadow 0.2s;
+}
+
+.web-terminal-wrapper.is-focused {
+  box-shadow: 0 0 0 2px #4ade80;
+}
+
+.web-terminal-wrapper.is-controlled-elsewhere {
+  box-shadow: 0 0 0 2px #60a5fa;
+}
+
+@keyframes remote-cursor-blink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+
+.web-terminal-wrapper.is-controlled-elsewhere :deep(.xterm-rows .xterm-cursor.xterm-cursor-outline) {
+  animation: remote-cursor-blink 1s step-end infinite;
+  outline-color: #60a5fa !important;
+}
+
+.web-terminal-container {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}
+
+.focus-hint {
+  position: absolute;
+  bottom: 6px;
+  right: 10px;
+  font-size: 0.65rem;
+  font-family: monospace;
+  color: rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+  user-select: none;
+  transition: color 0.2s;
+}
+
+.focus-hint.release {
+  color: #4ade80aa;
+}
+
+.focus-hint.takeover {
+  color: #60a5faaa;
+}
+
+.web-terminal-placeholder {
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  border-radius: 4px;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.3);
+  user-select: none;
+}
+</style>

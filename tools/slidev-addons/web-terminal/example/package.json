@@ -1,0 +1,18 @@
+{
+    "name": "web-terminal-playground",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "dev": "slidev example.md",
+        "build": "slidev build example.md",
+        "export": "slidev export example.md",
+        "lint": "eslint ."
+    },
+    "dependencies": {
+        "@slidev/cli": "^52.11.3",
+        "@slidev/theme-default": "latest",
+        "http-proxy": "^1.18.1",
+        "slidev-addon-web-terminal": "file:..",
+        "vue": "^3.4.0"
+    }
+}

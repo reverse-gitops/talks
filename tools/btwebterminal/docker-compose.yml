@@ -1,0 +1,20 @@
+version: "3.5"
+
+services:
+
+  bill.webterminal:
+    image: berttejeda/bill-webterminal
+    build:
+      context: .
+      dockerfile: Dockerfile    
+    restart: always
+    container_name: bill-webterminal
+    hostname: bill.webterminal
+    network_mode: host
+    tty: true 
+    environment:
+      - TZ="US/Eastern"
+    volumes:
+      - $HOME/.aws:/home/svcdevops/.aws
+      - $HOME/.kube:/home/svcdevops/.kube
+      - /var/run/docker.sock:/var/run/docker.sock
