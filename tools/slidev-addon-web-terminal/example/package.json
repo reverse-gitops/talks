@@ -12,7 +12,7 @@
         "@slidev/cli": "^52.11.3",
         "@slidev/theme-default": "latest",
         "http-proxy": "^1.18.1",
-        "slidev-addon-web-terminal": "file:..",
+        "slidev-addon-web-terminal": "file:../addons/web-terminal",
         "vue": "^3.4.0"
     }
 }

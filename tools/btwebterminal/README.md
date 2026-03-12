@@ -1,4 +1,4 @@
-pipx install --force --editable /home/simon/git/big-demo/bert.webterminal
+pipx install --force --editable /home/simon/git/big-demo/talks/tools/btwebterminal
 In a new terminal: bt-webterminal
 
 Shall I be running that on my windows pc?

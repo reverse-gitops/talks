@@ -21,9 +21,9 @@ comark: true
 # duration of the presentation (5 minutes for questions)
 duration: 20m
 addons:
-  - slidev-addon-web-terminal
-  - slidev-addon-qrcode
-  - slidev-addon-excalidraw
+  - web-terminal
+  - qrcode
+  - excalidraw-renderer
 ---
 # Welcome to Slidev
 

@@ -1,19 +1,30 @@
-Updates:
+Updates
 
-* libs are retreived through package.json
-* fonts are downloaded local (online fallback kept in place)
-* renderings are cached
-* Frame can be chosen, and renderings of equal elements are the same. We do this by keeping the seed the same (to prevent ugly 'small' changes for elements that stay at their place).
-* Added some unit tests to validate behaviour
+Added support for rendering a single frame only.
 
-TODO:
+Ensured seeded random effects use a stable seed for identical objects. This is especially helpful for slide sequences that gradually build up an image across slides.
 
-* I made a start with MAGIC-MOVE.md but that's good enough for me now, but technically there is still interesting stuff to discover
-* Update README, create PR or fork?
+Libraries are now retrieved through package.json.
+
+Fonts are downloaded locally, while keeping the online fallback in place.
+
+Added caching for renderings.
+
+A specific frame can now be selected, and identical elements render consistently across frames. This is done by keeping the seed stable, which avoids small visual shifts in elements that remain in the same position.
+
+Added unit tests to validate this behavior.
+
+TODO
+
+Made a start on MAGIC-MOVE.md. It is good enough for now, but there are still some technically interesting things left to explore.
+
+Update the README.
+
+Decide whether to open a PR or maintain this as a fork.
 
 ---
 
-# slidev-addon-excalidraw
+# Based upon slidev-addon-excalidraw
 
 show excalidraw in [slidev](https://sli.dev/)
 
@@ -57,7 +68,7 @@ addons:
 ```json
  "slidev": {
     "addons": [
-      "slidev-addon-excalidraw"
+      "slidev-addon-excalidraw-renderer"
     ]
   },
 ```

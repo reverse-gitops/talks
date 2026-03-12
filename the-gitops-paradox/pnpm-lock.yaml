@@ -21,14 +21,14 @@ importers:
         specifier: ^1.18.1
         version: 1.18.1
       slidev-addon-excalidraw:
-        specifier: file:../slidev-addon-excalidraw
-        version: file:../slidev-addon-excalidraw
+        specifier: file:../tools/slidev-addon-excalidraw-renderer
+        version: file:../tools/slidev-addon-excalidraw-renderer
       slidev-addon-qrcode:
         specifier: ^1.0.2
         version: 1.0.2
       slidev-addon-web-terminal:
-        specifier: file:../bert.slidev/addons/slidev-addon-web-terminal
-        version: file:../bert.slidev/addons/slidev-addon-web-terminal(@slidev/cli@52.14.1(@nuxt/kit@3.21.1)(@types/markdown-it@14.1.2)(@types/node@22.19.15)(@vue/compiler-sfc@3.5.29)(markdown-it@14.1.1)(postcss@8.5.8)(react@19.2.4))(vue@3.5.29(typescript@5.9.3))
+        specifier: file:../tools/slidev-addons-web-terminal
+        version: file:../tools/slidev-addons-web-terminal(@slidev/cli@52.14.1(@nuxt/kit@3.21.1)(@types/markdown-it@14.1.2)(@types/node@22.19.15)(@vue/compiler-sfc@3.5.29)(markdown-it@14.1.1)(postcss@8.5.8)(react@19.2.4))(vue@3.5.29(typescript@5.9.3))
       vue:
         specifier: ^3.5.29
         version: 3.5.29(typescript@5.9.3)
@@ -3089,15 +3089,15 @@ packages:
   sliced@1.0.1:
     resolution: {integrity: sha512-VZBmZP8WU3sMOZm1bdgTadsQbcscK0UM8oKxKVBs4XAhUo2Xxzm/OFMGBkPusxw9xL3Uy8LrzEqGqJhclsr0yA==}
 
-  slidev-addon-excalidraw@file:../slidev-addon-excalidraw:
-    resolution: {directory: ../../slidev-addon-excalidraw, type: directory}
+  slidev-addon-excalidraw@file:../tools/slidev-addon-excalidraw-renderer:
+    resolution: {directory: ../../tools/slidev-addon-excalidraw-renderer, type: directory}
 
   slidev-addon-qrcode@1.0.2:
     resolution: {integrity: sha512-vYjfu8KHnOaiijWaQFc5LaaglDIISGZ5Bx4m0RbmDlPiIZDseEoJX6O3Lxh4LaaCdo5JpMK/3o6CcNZtcTqpLg==}
     engines: {slidev: '>=0.32.1'}
 
-  slidev-addon-web-terminal@file:../bert.slidev/addons/slidev-addon-web-terminal:
-    resolution: {directory: ../../bert.slidev/addons/slidev-addon-web-terminal, type: directory}
+  slidev-addon-web-terminal@file:../tools/slidev-addons-web-terminal:
+    resolution: {directory: ../../tools/slidev-addons-web-terminal, type: directory}
     peerDependencies:
       '@slidev/cli': '>=0.40.0'
       vue: ^3.0.0
@@ -7145,7 +7145,7 @@ snapshots:
 
   sliced@1.0.1: {}
 
-  slidev-addon-excalidraw@file:../slidev-addon-excalidraw:
+  slidev-addon-excalidraw@file:../tools/slidev-addon-excalidraw-renderer:
     dependencies:
       '@excalidraw/excalidraw': 0.18.0(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react: 19.2.4
@@ -7160,7 +7160,7 @@ snapshots:
     dependencies:
       qr-code-styling: 1.9.2
 
-  slidev-addon-web-terminal@file:../bert.slidev/addons/slidev-addon-web-terminal(@slidev/cli@52.14.1(@nuxt/kit@3.21.1)(@types/markdown-it@14.1.2)(@types/node@22.19.15)(@vue/compiler-sfc@3.5.29)(markdown-it@14.1.1)(postcss@8.5.8)(react@19.2.4))(vue@3.5.29(typescript@5.9.3)):
+  slidev-addon-web-terminal@file:../tools/slidev-addons-web-terminal(@slidev/cli@52.14.1(@nuxt/kit@3.21.1)(@types/markdown-it@14.1.2)(@types/node@22.19.15)(@vue/compiler-sfc@3.5.29)(markdown-it@14.1.1)(postcss@8.5.8)(react@19.2.4))(vue@3.5.29(typescript@5.9.3)):
     dependencies:
       '@slidev/cli': 52.14.1(@nuxt/kit@3.21.1)(@types/markdown-it@14.1.2)(@types/node@22.19.15)(@vue/compiler-sfc@3.5.29)(markdown-it@14.1.1)(postcss@8.5.8)(react@19.2.4)
       '@xterm/addon-attach': 0.12.0

@@ -1045,11 +1045,11 @@
       "locked": false,
       "fontSize": 28,
       "fontFamily": 1,
-      "text": "slidev-addon-excalidraw",
+      "text": "slidev-addon-excalidraw-renderer",
       "textAlign": "center",
       "verticalAlign": "middle",
       "containerId": "8UG26eM_i3gLMBD4eePZg",
-      "originalText": "slidev-addon-excalidraw",
+      "originalText": "slidev-addon-excalidraw-renderer",
       "lineHeight": 1.25,
       "baseline": 27
     }
