@@ -1,13 +1,21 @@
 <template>
-  <p v-if="loading">Loading Excalidraw...</p>
-  <div :class="$attrs.class" v-if="svg" v-html="svg"></div>
+  <div v-bind="rootAttrs" :class="[attrs.class, 'excalidraw-renderer']">
+    <div v-if="svg" class="excalidraw-renderer__svg" v-html="svg"></div>
+    <div v-else-if="loading" class="excalidraw-renderer__loading">Loading Excalidraw...</div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref, useAttrs } from 'vue'
 import { buildMatchMap } from './matchFrames'
 
 defineOptions({ inheritAttrs: false })
+
+const attrs = useAttrs()
+const rootAttrs = computed(() => {
+  const { class: _class, ...rest } = attrs
+  return rest
+})
 
 // Shared JSON cache — fetched once, shared across all component instances
 const jsonCache = new Map<string, Promise<any>>()
@@ -24,7 +32,7 @@ function getCachedJson(url: string): Promise<any> {
   return jsonCache.get(url)!
 }
 
-const loading = ref(false)
+const loading = ref(true)
 const svg = ref<string | null>(null)
 
 const props = withDefaults(defineProps<{
@@ -131,9 +139,31 @@ const loadJsonAndExport = async (
       ...json,
       elements: filteredElements,
       appState: { ...(json.appState as any), exportWithDarkMode: darkMode, exportBackground: background },
+      // In presentations the SVG is embedded into the page immediately, so
+      // self-contained font inlining is wasted work and slows slide rendering.
+      skipInliningFonts: true,
     }).then((el: any) => el.outerHTML))
   }
 
   svg.value = await svgExportCache.get(exportKey)!
 }
 </script>
+
+<style scoped>
+.excalidraw-renderer__svg,
+.excalidraw-renderer__loading {
+  width: 100%;
+  height: 100%;
+}
+
+.excalidraw-renderer__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+}
+
+.excalidraw-renderer__svg :deep(svg) {
+  display: block;
+}
+</style>
