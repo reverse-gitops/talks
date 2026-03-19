@@ -12,6 +12,7 @@
     "@slidev/theme-default": "latest",
     "@slidev/theme-seriph": "latest",
     "http-proxy": "^1.18.1",
+    "prompts": "^2.4.2",
     "slidev-addon-excalidraw-renderer": "file:../tools/slidev-addon-excalidraw-renderer",
     "slidev-addon-qrcode": "^1.0.2",
     "slidev-addon-web-terminal": "file:../tools/slidev-addon-web-terminal",

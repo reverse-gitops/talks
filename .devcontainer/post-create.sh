@@ -79,4 +79,18 @@ touch /home/node/persisted-home/.claude.json
 rm -f /home/node/.claude.json
 ln -s /home/node/persisted-home/.claude.json /home/node/.claude.json
 
+log "Installing npm dependencies"
+
+# Install tools first — the presentations depend on them via file: references.
+npm install --prefix "${workspace_dir}/tools/slidev-addon-excalidraw-renderer"
+npm install --prefix "${workspace_dir}/tools/slidev-addon-web-terminal"
+
+# Install each presentation.
+for pkg_dir in "${workspace_dir}"/*/; do
+  if [ -f "${pkg_dir}package.json" ]; then
+    log "Installing dependencies in ${pkg_dir}"
+    npm install --prefix "${pkg_dir}"
+  fi
+done
+
 log "post-create completed"
