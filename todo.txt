@@ -12,3 +12,5 @@ Required to get it together:
 Later:
 * https://github.com/xtermjs/xterm.js/tree/master/addons/addon-clipboard
 * Either create PR/fork adjusted plugins
+
+Hoi piepeloi
