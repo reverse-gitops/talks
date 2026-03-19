@@ -1,17 +1,9 @@
 {
   "name": "Talks DevContainer",
-  "build": {
-    "dockerfile": "Dockerfile",
-    "context": ".."
-  },
+  "image": "node:22-bookworm",
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
   "features": {
-    "ghcr.io/devcontainers/features/common-utils:2": {
-      "userUid": "automatic",
-      "userGid": "automatic",
-      "username": "vscode"
-    },
     "ghcr.io/devcontainers/features/git:1": {}
   },
   "forwardPorts": [
@@ -40,10 +32,10 @@
     }
   },
   "postCreateCommand": "bash .devcontainer/post-create.sh '${containerWorkspaceFolder}'",
-  "remoteUser": "vscode",
+  "remoteUser": "node",
   "mounts": [
-    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig,target=/home/vscode/.gitconfig-host,type=bind,readonly,consistency=cached",
-    "source=talks-npm-cache,target=/home/vscode/.npm,type=volume"
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig,target=/home/node/.gitconfig-host,type=bind,readonly,consistency=cached",
+    "source=talks-npm-cache,target=/home/node/.npm,type=volume"
   ],
   "containerEnv": {
     "HOST_PROJECT_PATH": "${localWorkspaceFolder}",

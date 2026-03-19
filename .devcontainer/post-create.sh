@@ -17,13 +17,13 @@ workspace_dir="${1:-${containerWorkspaceFolder:-${WORKSPACE_FOLDER:-$(pwd)}}}"
 log "Using workspace directory: ${workspace_dir}"
 
 # Keep ~/.gitconfig writable inside the container while still importing host settings.
-if [ -f /home/vscode/.gitconfig-host ]; then
-  log "Configuring git to include /home/vscode/.gitconfig-host"
-  touch /home/vscode/.gitconfig
-  if git config --global --get-all include.path | grep -Fxq "/home/vscode/.gitconfig-host"; then
+if [ -f /home/node/.gitconfig-host ]; then
+  log "Configuring git to include /home/node/.gitconfig-host"
+  touch /home/node/.gitconfig
+  if git config --global --get-all include.path | grep -Fxq "/home/node/.gitconfig-host"; then
     log "Host gitconfig include already present"
   else
-    git config --global --add include.path /home/vscode/.gitconfig-host
+    git config --global --add include.path /home/node/.gitconfig-host
     log "Added host gitconfig include"
   fi
 fi
