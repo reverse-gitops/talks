@@ -9,6 +9,7 @@ layout: default
     :fontSize="13"
     releaseKey="F2"
     activationKey="t"
+    :dprMultiplier="3"
   />
   <div class="clickable-code" style="position: absolute; bottom: 12px; right: 20px; z-index: 10; background: rgba(0,0,0,0.6); padding: 2px 8px; border-radius: 4px; color: #0f0; font-family: monospace;">echo hello</div>
 </div>
@@ -37,7 +38,8 @@ class: h-full flex flex-col min-h-0
       sessionId="reverse-gitops-demo-terminal"
       :fontSize="12"
       releaseKey="F2"
-      activationKey="r"
+      activationKey="t"
+      :dprMultiplier="3"
     />
 </div>
 
@@ -59,7 +61,8 @@ layout: default
       sessionId="reverse-gitops-demo-terminal-lower-half"
       :fontSize="12"
       releaseKey="F2"
-      activationKey="y"
+      activationKey="F2"
+      :dprMultiplier="3"
     />
   </div>
 </div>

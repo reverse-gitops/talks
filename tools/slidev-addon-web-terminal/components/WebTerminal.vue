@@ -30,6 +30,11 @@ const props = defineProps<{
   /** When set, pressing this key (while not typing in an editable element) will focus the terminal.
    *  E.g. activationKey="t". If not set, the terminal will not auto-focus on mount. */
   activationKey?: string
+  /** Multiplier applied on top of the Slidev-scale-compensated DPR when sharpening the WebGL
+   *  backing store. 1.0 (default) matches physical pixels exactly. Values above 1 supersample
+   *  — the browser downsamples the oversized canvas, producing slightly crisper text at the cost
+   *  of higher GPU memory and rasterisation time. 1.5–2.0 is a practical range. */
+  dprMultiplier?: number
 }>()
 
 const terminalContainer = ref<HTMLElement | null>(null)
@@ -49,6 +54,8 @@ let fitAddon: FitAddon | null = null
 let attachAddon: AttachAddon | null = null
 let rendererAddon: WebglAddon | null = null
 let resizeObserver: ResizeObserver | null = null
+let sharpnessObserver: ResizeObserver | null = null
+let lastKnownEffectiveDPR: number | null = null
 let sessionController: TerminalSessionController | null = null
 let activationKeyHandler: ((e: KeyboardEvent) => void) | null = null
 let controlOwnerCleanup: (() => void) | null = null
@@ -133,6 +140,74 @@ const safeFit = (reason: string) => {
     }
 }
 
+
+// Uses the ResizeObserver devicePixelContentBoxSize API to detect the true physical
+// pixel size of the terminal container, including Slidev's CSS transform scale.
+// When the effective DPR (physicalWidth / layoutWidth) differs meaningfully from
+// window.devicePixelRatio, we update devicePixelRatio and refit so xterm's WebGL
+// backing store is sized for the post-scale visual resolution rather than the layout size.
+// This fixes the "soft text on large screens" problem described in RENDERING.md.
+// We set devicePixelRatio permanently (not restored after fit) because xterm's WebGL
+// renderer reads it during rendering, not just during resize.
+const setupSharpnessObserver = () => {
+    if (!terminalContainer.value) return
+    sharpnessObserver?.disconnect()
+    sharpnessObserver = null
+    lastKnownEffectiveDPR = null
+
+    const observer = new ResizeObserver(entries => {
+        for (const entry of entries) {
+            const dpSize = entry.devicePixelContentBoxSize?.[0]
+            if (!dpSize) continue
+            const physicalWidth = dpSize.inlineSize
+            const layoutWidth = (entry.target as HTMLElement).offsetWidth
+            if (layoutWidth <= 0) continue
+
+            const effectiveDPR = (physicalWidth / layoutWidth) * (props.dprMultiplier ?? 1)
+            const prev = lastKnownEffectiveDPR
+            lastKnownEffectiveDPR = effectiveDPR
+
+            // Skip if scale hasn't changed meaningfully from last observation
+            if (prev !== null && Math.abs(effectiveDPR - prev) < 0.05) continue
+
+            // Skip if there is no meaningful difference from the current DPR
+            // (no Slidev scaling, or already compensated)
+            if (Math.abs(effectiveDPR - window.devicePixelRatio) < 0.1) continue
+
+            // Only sharpen when the container is real-sized (not a thumbnail or pre-layout state)
+            const rect = (entry.target as HTMLElement).getBoundingClientRect()
+            if (rect.width < MIN_FIT_WIDTH_PX || rect.height < MIN_FIT_HEIGHT_PX) continue
+
+            // Only useful with the WebGL renderer — DOM renderer doesn't have a texture atlas
+            if (!rendererAddon) continue
+
+            debugLog('Scale-aware sharpening: updating DPR', {
+                effectiveDPR,
+                previousDPR: window.devicePixelRatio,
+                physicalWidth,
+                layoutWidth,
+            })
+
+            try {
+                Object.defineProperty(window, 'devicePixelRatio', { get: () => effectiveDPR, configurable: true })
+            } catch (e) {
+                debugLog('Could not override devicePixelRatio, scale-aware sharpening disabled', e)
+                continue
+            }
+
+            safeFit('sharpness-dpr')
+            terminal?.clearTextureAtlas?.()
+        }
+    })
+
+    try {
+        observer.observe(terminalContainer.value, { box: 'device-pixel-content-box' })
+        sharpnessObserver = observer
+        debugLog('Scale-aware sharpness observer active (devicePixelContentBoxSize)')
+    } catch {
+        debugLog('device-pixel-content-box not supported, scale-aware sharpening disabled')
+    }
+}
 
 // xterm.js 6.0 bug: when the terminal is inside a CSS-scaled ancestor (e.g. Slidev's
 // slide scaling), xterm measures character sizes in layout pixels (offsetHeight) but
@@ -297,6 +372,7 @@ const initTerminal = async () => {
         debugLog('Software WebGL detected, using DOM renderer')
     }
 
+    setupSharpnessObserver()
     safeFit('initial')
     syncCursorVisualState()
 
@@ -500,6 +576,9 @@ const dispose = () => {
     window.removeEventListener('resize', handleResize)
     resizeObserver?.disconnect()
     resizeObserver = null
+    sharpnessObserver?.disconnect()
+    sharpnessObserver = null
+    lastKnownEffectiveDPR = null
     document.removeEventListener('click', handleCodeClick)
     if (activationKeyHandler) {
         document.removeEventListener('keydown', activationKeyHandler)
