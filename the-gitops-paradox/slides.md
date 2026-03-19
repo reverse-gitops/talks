@@ -5,12 +5,10 @@ theme: default
 # like them? see https://unsplash.com/collections/94734566/slidev
 background: https://cover.sli.dev
 # some information about your slides (markdown enabled)
-title: Welcome to Slidev
+title: "Reverse GitOps: The API Comes First, Git Remembers"
 info: |
-  ## Slidev Starter Template
-  Presentation slides for developers.
-
-  Learn more at [Sli.dev](https://sli.dev)
+  ## Reverse GitOps
+  The API comes first. Git remembers.
 # https://sli.dev/features/drawing
 drawings:
   persist: false
@@ -26,9 +24,9 @@ addons:
   - excalidraw-renderer
 ---
 
-# The GitOps Paradox
+# Reverse GitOps
 
-Why Your Devs Need an API You Don't Want to Build
+The API Comes First, Git Remembers
 
 <div @click="$slidev.nav.next" class="mt-12 py-1" hover:bg="white op-10">
   Press Space for next page <carbon:arrow-right />
@@ -38,13 +36,25 @@ Why Your Devs Need an API You Don't Want to Build
   <button @click="$slidev.nav.openInEditor()" title="Open in Editor" class="slidev-icon-btn">
     <carbon:edit />
   </button>
-  <a href="https://github.com/slidevjs/slidev" target="_blank" class="slidev-icon-btn">
+  <a href="https://github.com/configbutler/gitops-reverser" target="_blank" class="slidev-icon-btn">
     <carbon:logo-github />
   </a>
 </div>
 
 <!--
-The last comment block of each slide will be treated as slide notes. It will be visible and editable in Presenter Mode along with the slide. [Read more in the docs](https://sli.dev/guide/syntax.html#notes)
+Hello everyone, I'm Simon Koudijs.
+
+This talk is about a very simple idea.
+
+GitOps gave us something genuinely valuable: reproducibility, auditability, promotion, rollback, and a shared declarative model for change.
+
+But I think one assumption inside GitOps is starting to crack a bit — not the assumption that declarative state is good, not that versioned history is good, not that reconciliation is good.
+
+The assumption that is starting to fail is this: that Git itself should be the primary front door for every change.
+
+I want to show you a different operating model. One where humans and AI agents make validated changes through a typed API, while Git still records the result cleanly in the background.
+
+That is what I call Reverse GitOps.
 -->
 
 ---

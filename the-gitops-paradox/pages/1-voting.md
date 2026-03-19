@@ -1,27 +1,92 @@
-# It's time
+---
+
+# GitOps got something very right
+
+Git is a fantastic memory
+
+<div class="grid grid-cols-2 gap-8 mt-8">
+<div>
+
+**What Git gives us:**
+
+- Audit trail
+- History & diffs
+- Promotion flows
+- Rollback & recovery
+- Distribution of desired state
+- Reproducibility
+
+</div>
+<div v-click>
+
+**And that is a huge achievement.**
+
+FluxCD and ArgoCD are beautiful tools.
+This talk is not here to change that.
+
+</div>
+</div>
+
+<!--
+Let me start by being very clear: this is not an anti-GitOps talk.
+
+In fact, I think GitOps got one of the most important things exactly right: Git is an incredibly good memory.
+
+It gives us history, diffs, promotion flows, rollback, disaster recovery, a mechanism to distribute desired state.
+
+That is a huge achievement.
+
+I am not here to argue that GitOps was wrong. I am here to argue that Git may be the wrong interface for more and more of the people and systems that need to make changes.
+
+Git is still extremely valuable. I just think it works better as the memory than as the front door.
+-->
 
 ---
 
-# Last week it was time to vote
+# But Git is a bad front door for many users
 
-(Take a picture on wednesday)
+<div class="grid grid-cols-2 gap-8 mt-8">
+<div>
 
----
+**The Git PR workflow:**
 
-# Today it's again time to vote
+1. Edit YAML in your editor
+2. Open a pull request
+3. Wait for CI
+4. Controller reconciles
+5. Something fails — far from where the change began
 
-* This talk is build arround a demo
-* Don't enter stuff you don't want to share, use a fake name, use a fake e-mail adres
-* It will end up in a public git repo, I will delete it afterwards
-* As always: don't put personal information on shabby websites
-* Well here is a shabby website: it's open source so you can trust it
-* Let's all add a little vote, how cool is that
+</div>
+<div v-click>
 
----
+**What users actually want:**
 
-# Show the QR Code
+1. Use a UI / CLI / IDE / agent
+2. Hit a typed API
+3. Get validation **immediately**
+4. Done
 
-vote.reversegitops.dev
+</div>
+</div>
 
-(change into )
+<div v-click class="mt-8 text-lg">
 
+Git was built for source code collaboration. Those virtues are **friction** for infrastructure operations.
+
+</div>
+
+<!--
+Git was built for source code collaboration. That gives it line-oriented editing, text diffs, review-driven workflows.
+
+Those are virtues for software development. But they are often friction for infrastructure operations.
+
+When Git is the front door, feedback is delayed. You push, you open a PR, CI runs, a controller reconciles, something fails later and farther away from the point where the change actually began.
+
+For platform engineers, that is survivable.
+
+But think about the broader audience now: developers using self-service platforms, operators making small changes, and increasingly AI agents trying to work through tools safely.
+
+Those users do not want to hand-author low-level YAML in Git for every action. They want a smaller, safer, typed interface.
+
+And the nice thing is: Kubernetes already knows how to do this.
+-->

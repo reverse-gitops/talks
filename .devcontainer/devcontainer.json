@@ -1,0 +1,52 @@
+{
+  "name": "Talks DevContainer",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "userUid": "automatic",
+      "userGid": "automatic",
+      "username": "vscode"
+    },
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+  "forwardPorts": [
+    3030,
+    3031
+  ],
+  "portsAttributes": {
+    "3030": {
+      "label": "Slidev",
+      "onAutoForward": "openBrowser"
+    },
+    "3031": {
+      "label": "Slidev Presenter",
+      "onAutoForward": "notify"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+      },
+      "extensions": [
+        "antfu.slidev",
+        "vue.volar"
+      ]
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/post-create.sh '${containerWorkspaceFolder}'",
+  "remoteUser": "vscode",
+  "mounts": [
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig,target=/home/vscode/.gitconfig-host,type=bind,readonly,consistency=cached",
+    "source=talks-npm-cache,target=/home/vscode/.npm,type=volume"
+  ],
+  "containerEnv": {
+    "HOST_PROJECT_PATH": "${localWorkspaceFolder}",
+    "PROJECT_PATH": "/workspaces/${localWorkspaceFolderBasename}"
+  }
+}

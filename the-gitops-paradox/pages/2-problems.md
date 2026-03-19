@@ -1,27 +1,50 @@
 ---
-
+layout: center
+class: text-center
 ---
 
-# A beatiful concept: you define intent (or spec) in files in a git repo. By doing so you have a perfect audit log (git blame). You can revert changes.
+# Let's let the audience make a change
 
-Let's celebrate GitOps: it's been years now and FluxCD and ArgoCD even have their own conference.
+<div class="flex items-center justify-center gap-12 mt-6">
+<div>
+  <QRCode value="https://vote.reversegitops.dev" :width="240" :height="240" />
+  <div class="mt-2 text-base text-gray-500">vote.reversegitops.dev</div>
+</div>
+<div class="text-left max-w-xs">
 
-But one things reamins a problem: it's not always easy for humans to grasp what is really going on. There is so many tools that can be applied. It's easier to make a mess than to stand ground and keep things simple. 
+**What should be the primary front door for day-to-day platform changes?**
 
-Sorry for beeing blunt: technology is not always solving problems.
+- 🔵 Git PR
+- 🟠 Typed API
 
----
+<div class="mt-4 text-sm text-gray-400">
 
-# Problems
+Use a fake name — your vote ends up in a public git repo.
 
-In my perception it's not always easy to get it right: writing YAML can be painfull. Getting the CRD right can be painfull. Tools are not always helping to much.
-* inside vscode there is no default schema support, only when you connect it your cluster. Do you always have access to a cluster?
-* Helm charts and Kustomize prevent repetition but they also layer complexity.
-* AI doesnt always use the latest versions, how could it know: there is so many old examples on the internet.
-* The process of git is nice: but lot's of people (at least outside of this conference) don't like/get git.
-* And this is all a great shame!
-* Because Kubernetes YAML is so nice, it's self-explaining and it lends itself to model things. Like platforms...
+</div>
+</div>
+</div>
 
-* Off course there is problems:
-    * What do you do with different environments? You just create multiple instances. And you script/template/explode whatever you need with other tech. Reverse-gitops doesnt need to solve everything.
+<!--
+[Pacing note: This starts the 10-minute core block — slides 4–8. Let the demo breathe. Don't rush.]
 
+So instead of just talking about that, let's try it.
+
+You can scan this QR code. On your phone, you'll get a tiny voting interface.
+
+Please actually do it.
+
+Because what I want to show is not just a cute demo. I want to show what it feels like when the front door is a user-friendly API-backed interface, while Git still remains in the loop.
+
+So go ahead and vote.
+
+And while you do that, notice what you are not doing.
+You are not cloning a repo.
+You are not editing YAML.
+You are not opening a PR.
+You are not waiting for CI to tell you whether your shape was wrong.
+
+You are just expressing intent.
+
+[Pause here. Give them time.]
+-->

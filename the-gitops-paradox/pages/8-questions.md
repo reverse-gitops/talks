@@ -1,36 +1,52 @@
-Q&A
+---
+layout: center
+class: text-center
+---
+
+# Q&A
+
+<!--
+Leave plenty of room for questions. Common ones to prepare for:
+-->
 
 ---
 
-Is git the source of truth?
+# Is Git the source of truth?
+
+Yes — in Reverse GitOps, Git is still the authoritative record.
+
+The controller writes intent objects into Git. That is your source of truth. The Kubernetes cluster is derived from it, same as standard GitOps.
 
 ---
 
-How do you do authentication?
+# How do you handle authentication?
 
----
+The Kubernetes API has native OIDC support. You can hook up your existing auth system and know exactly who submitted each intent object.
 
-Can you ...?
-
-I will certainly take it into consideration.
-
----
-
-# How do you know?
-
-Kubernetes API has native support OIDC, so you can hook up your auth system and know for sure who you are dealing with. If they have bad intent you can seek them out.
-
----
-
-# Does the RBAC system really apply?
-
-Creating new resources is a bit hard: you can only limit that in the scope of a namespace. But no-one is refraining you from hooking up known tools to check if something is allowed.
+RBAC applies at the API level — before anything reaches Git.
 
 ---
 
 # Is this a real audit log?
 
-* That depends on your git configuration: conceptually I don't see any problems with building support for signed commits. 
-* As long as your git provider is configured to not allow force pushes on main then there is no way to erase history.
+Yes, with the same caveats as any GitOps setup:
+
+- Conceptually, signed commits are fully supported
+- As long as your Git provider disallows force-pushes on main, history is tamper-evident
+- The author of each commit is the controller, acting on behalf of the authenticated user
 
 ---
+
+# What about high-frequency changes?
+
+Reverse GitOps is not designed for high-throughput event streaming.
+
+It works well for **intent-level changes**: app configuration, infrastructure declarations, platform requests. Things that are meaningful enough to record in Git.
+
+---
+
+# Does it work with ArgoCD / Flux?
+
+Yes. The controller writes clean YAML into Git. Any GitOps reconciler picks it up from there — it has no idea the change came from an API rather than a human editing a file.
+
+That is the point.

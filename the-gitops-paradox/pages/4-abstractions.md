@@ -1,13 +1,67 @@
-# GitOps is normally one-way
+---
 
-You can't reliable predict how the values.yaml where filled from only looking at the resulting resources
+# Principle 2: Capture Intent, Not Implementation
 
-# Reverse GitOps needs bi-directionality
+<div class="grid grid-cols-2 gap-8 mt-6">
+<div>
 
-* Simple YAML manifests (KRM)
+**What the user submits:**
+```yaml
+kind: Vote
+spec:
+  option: api-first
+```
 
-# And what about differences?
+<div class="mt-4 text-center text-2xl">↓</div>
 
-* Off course you will need variations accroos environments.
-* Let's take a look at your different options
-* Reverse GitOps is not describing how you do it: only how you should not do it.
+**What the platform renders:**
+```
+storage record
+git commit
+downstream state
+```
+
+</div>
+<div class="mt-4">
+
+<div class="border-l-4 border-yellow-400 pl-4 italic text-lg mb-6">
+"I want an app at this hostname."
+</div>
+
+<div v-click>
+
+Not:
+
+> "Please let me handcraft the Deployment, Service, Ingress, Certificate, ConfigMap, and NetworkPolicy."
+
+</div>
+
+<div v-click class="mt-4 font-bold">
+
+Users declare intent.
+The platform renders it.
+
+</div>
+
+</div>
+</div>
+
+<!--
+This is the second principle, and I think it is the most important one.
+
+Capture intent, not implementation.
+
+The user should submit the stable, user-facing abstraction. Not all the rendered machinery that exists downstream.
+
+In this voting demo, the interesting thing is not some internal storage format or generated output. The interesting thing is the vote as a clean, typed expression of intent.
+
+More generally, in platform engineering, the user should say something like "I want an app at this hostname." Not: "Please let me handcraft the Deployment, Service, Ingress, Certificate, ConfigMap, and NetworkPolicy."
+
+Users declare intent. The platform renders it.
+
+And behind that abstraction boundary, the platform team keeps freedom. You can use Helm, Kustomize, Crossplane, custom controllers. You can change those things later.
+
+The constraint is on the interface, not the implementation.
+
+Because if you get the interface right, you can evolve the machinery behind it without breaking the user's mental model.
+-->
