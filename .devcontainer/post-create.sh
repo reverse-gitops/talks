@@ -79,6 +79,9 @@ touch /home/node/persisted-home/.claude.json
 rm -f /home/node/.claude.json
 ln -s /home/node/persisted-home/.claude.json /home/node/.claude.json
 
+log "Fixing dotkube volume permissions"
+docker run --rm -v dotkube:/kube alpine sh -c "chmod -R a+r /kube && find /kube -type d -exec chmod a+x {} +"
+
 log "Installing npm dependencies"
 
 # Install tools first — the presentations depend on them via file: references.

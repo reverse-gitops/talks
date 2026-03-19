@@ -15,6 +15,7 @@ build:
 		-t $(IMAGE) .
 
 run-container: build
+	docker rm -f $(CONTAINER_NAME) 2>/dev/null || true
 	docker run --rm -it \
 		--name $(CONTAINER_NAME) \
 		--add-host host.docker.internal:host-gateway \

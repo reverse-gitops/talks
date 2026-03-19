@@ -5,6 +5,7 @@ import { Terminal } from '@xterm/xterm'
 import { FitAddon } from '@xterm/addon-fit'
 import { WebLinksAddon } from '@xterm/addon-web-links'
 import { AttachAddon } from '@xterm/addon-attach'
+import { WebglAddon } from '@xterm/addon-webgl'
 import '@xterm/xterm/css/xterm.css'
 import {
   createTerminalSessionController,
@@ -17,6 +18,7 @@ const props = defineProps<{
   wsUrl?: string
   backendUrl?: string
   fontSize?: number
+  fontFamily?: string
   releaseKey?: string
   /** Enable verbose console logging for terminal/bridge lifecycle diagnostics.
    *  You can also enable this with `?webTerminalDebug=1` or localStorage `webTerminalDebug=1`. */
@@ -45,13 +47,15 @@ let terminal: Terminal | null = null
 let socket: WebSocket | null = null
 let fitAddon: FitAddon | null = null
 let attachAddon: AttachAddon | null = null
+let rendererAddon: WebglAddon | null = null
 let resizeObserver: ResizeObserver | null = null
 let sessionController: TerminalSessionController | null = null
-let terminalDataSubscription: { dispose: () => void } | null = null
 let activationKeyHandler: ((e: KeyboardEvent) => void) | null = null
 let controlOwnerCleanup: (() => void) | null = null
 let suppressFocusSideEffects = false
 let initRunId = 0
+let textareaFocusHandler: (() => void) | null = null
+let textareaBlurHandler: (() => void) | null = null
 
 const isTypingInEditable = (el: Element | null): boolean => {
     if (!el) return false
@@ -114,6 +118,7 @@ const summarizeSocketPayload = (payload: unknown) => {
 // to prevent tiny col/row values from corrupting the shared PTY size.
 const MIN_FIT_WIDTH_PX = 200
 const MIN_FIT_HEIGHT_PX = 100
+const getResolvedFontFamily = () => props.fontFamily ?? "'JetBrainsMono Nerd Font Mono', 'Symbols Nerd Font Mono', monospace"
 
 const safeFit = (reason: string) => {
     if (!fitAddon || !terminalContainer.value) return
@@ -127,6 +132,7 @@ const safeFit = (reason: string) => {
         sessionController?.requestResize(terminal.cols, terminal.rows, reason)
     }
 }
+
 
 // xterm.js 6.0 bug: when the terminal is inside a CSS-scaled ancestor (e.g. Slidev's
 // slide scaling), xterm measures character sizes in layout pixels (offsetHeight) but
@@ -249,24 +255,64 @@ const initTerminal = async () => {
         tabStopWidth: 10,
         allowProposedApi: true,
         fontSize: props.fontSize ?? 15,
+        fontFamily: getResolvedFontFamily(),
     })
 
     // Initialize Addons
     fitAddon = new FitAddon()
-    const webLinksAddon = new WebLinksAddon()
-
     terminal.loadAddon(fitAddon)
-    terminal.loadAddon(webLinksAddon)
+    terminal.loadAddon(new WebLinksAddon())
 
     terminal.open(terminalContainer.value)
+
+    // Renderer cascade: WebGL → DOM (xterm v6 removed the canvas renderer).
+    // WebGL fixes Nerd Font glyph clipping (xterm.js issue #3807) and is fastest on real GPU.
+    // We detect software rendering (SwiftShader/Mesa) and skip it — software WebGL is slower
+    // than xterm's built-in DOM renderer.
+    const isSoftwareWebGL = (): boolean => {
+        try {
+            const probe = document.createElement('canvas')
+            const gl = probe.getContext('webgl2') ?? probe.getContext('webgl')
+            const ext = gl?.getExtension('WEBGL_debug_renderer_info')
+            const renderer = ext ? gl!.getParameter(ext.UNMASKED_RENDERER_WEBGL) as string : ''
+            return /swiftshader|software|llvmpipe|mesa offscreen/i.test(renderer)
+        } catch { return false }
+    }
+
+    if (!isSoftwareWebGL()) {
+        try {
+            const webgl = new WebglAddon()
+            webgl.onContextLoss(() => {
+                debugLog('WebGL context lost, falling back to DOM renderer')
+                webgl.dispose()
+                rendererAddon = null
+            })
+            terminal.loadAddon(webgl)
+            rendererAddon = webgl
+            debugLog('Using WebGL renderer')
+        } catch {
+            debugLog('WebGL unavailable, using DOM renderer')
+        }
+    } else {
+        debugLog('Software WebGL detected, using DOM renderer')
+    }
+
     safeFit('initial')
     syncCursorVisualState()
+
+    // Load Nerd Font then invalidate xterm's glyph atlas so the canvas/WebGL renderer
+    // redraws with the correct glyphs instead of the fallback font's cached bitmaps.
+    document.fonts.ready.then(() => {
+        if (runId !== initRunId || !terminal) return
+        terminal.clearTextureAtlas?.()
+        safeFit('fonts-ready')
+    })
 
     // Track focus state for our border/hint overlay via the underlying textarea DOM element
     // (xterm handles the cursor appearance natively via cursorInactiveStyle)
     const ta = terminal.textarea
     if (ta) {
-        ta.addEventListener('focus', () => {
+        textareaFocusHandler = () => {
             if (suppressFocusSideEffects) return
             isFocused.value = true
             isControlledElsewhere.value = false
@@ -277,15 +323,17 @@ const initTerminal = async () => {
                 sessionController?.requestResize(terminal.cols, terminal.rows, 'terminal-focus', true)
             }
             syncCursorVisualState()
-        })
-        ta.addEventListener('blur', () => {
+        }
+        textareaBlurHandler = () => {
             if (suppressFocusSideEffects) return
             isFocused.value = false
             sessionController?.setFocused(false)
             sessionController?.setControlOwner(null)
             debugLog('Terminal textarea blur')
             syncCursorVisualState()
-        })
+        }
+        ta.addEventListener('focus', textareaFocusHandler)
+        ta.addEventListener('blur', textareaBlurHandler)
     }
 
     // Set up global key handler: activation key focuses the terminal, and
@@ -309,12 +357,6 @@ const initTerminal = async () => {
         }
         document.addEventListener('keydown', activationKeyHandler)
     }
-
-    terminalDataSubscription?.dispose()
-    terminalDataSubscription = terminal.onData((data) => {
-        const normalized = data.replace(/\r/g, '\\r').replace(/\n/g, '\\n')
-        debugLog('Terminal input event', { length: data.length, preview: normalized.slice(0, 120) })
-    })
 
     // Intercept the release key so the presenter can return keyboard control to Slidev
     terminal.attachCustomKeyEventHandler((e: KeyboardEvent) => {
@@ -391,7 +433,6 @@ const connectWebSocket = (url: string, source: TerminalSessionSource | 'direct')
     socket = webSocket
     logEvent('socket.connecting', { url, source })
     webSocket.addEventListener('message', (event) => {
-        debugLog('WebSocket message event', summarizeSocketPayload(event.data))
     })
 
     webSocket.onopen = () => {
@@ -474,14 +515,19 @@ const dispose = () => {
     }
     attachAddon?.dispose()
     attachAddon = null
+    rendererAddon?.dispose()
+    rendererAddon = null
+    const ta = terminal?.textarea
+    if (ta && textareaFocusHandler) ta.removeEventListener('focus', textareaFocusHandler)
+    if (ta && textareaBlurHandler) ta.removeEventListener('blur', textareaBlurHandler)
+    textareaFocusHandler = null
+    textareaBlurHandler = null
     if (sessionController) {
         sessionController.dispose()
         sessionController = null
     }
     if (terminal) {
         debugLog('Disposing xterm instance')
-        terminalDataSubscription?.dispose()
-        terminalDataSubscription = null
         terminal.dispose()
         terminal = null
     }
@@ -551,6 +597,25 @@ watch(() => [props.wsUrl, props.backendUrl, props.sessionId], () => {
 </template>
 
 <style>
+/* Nerd Font — loaded here (non-scoped) because @font-face breaks inside <style scoped>.
+   JetBrainsMono NF covers powerline + devicons glyphs used by Starship and k9s.
+   font-display:block prevents the browser measuring character widths with a fallback font
+   before the real font arrives, which would corrupt xterm's col/row calculations. */
+@font-face {
+  font-family: 'JetBrainsMono Nerd Font Mono';
+  src: url('https://cdn.jsdelivr.net/gh/ryanoasis/nerd-fonts@v3.4.0/patched-fonts/JetBrainsMono/Ligatures/Regular/JetBrainsMonoNerdFontMono-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: 'JetBrainsMono Nerd Font Mono';
+  src: url('https://cdn.jsdelivr.net/gh/ryanoasis/nerd-fonts@v3.4.0/patched-fonts/JetBrainsMono/Ligatures/Bold/JetBrainsMonoNerdFontMono-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: block;
+}
+
 /* Global styles for clickable code blocks */
 .clickable-code, .clickable-code * {
   cursor: pointer;

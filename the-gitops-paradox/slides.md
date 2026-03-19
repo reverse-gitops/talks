@@ -6,6 +6,8 @@ theme: default
 background: https://cover.sli.dev
 # some information about your slides (markdown enabled)
 title: "Reverse GitOps: The API Comes First, Git Remembers"
+author: Simon Koudijs
+
 info: |
   ## Reverse GitOps
   The API comes first. Git remembers.

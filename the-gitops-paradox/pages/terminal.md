@@ -16,7 +16,7 @@ layout: default
 ---
 layout: two-cols
 layoutClass: gap-6
-class: h-full flex flex-col min-h-0
+class: h-full flex flex-col min-h-0  
 ---
 
 # Left
@@ -39,4 +39,27 @@ class: h-full flex flex-col min-h-0
       releaseKey="F2"
       activationKey="r"
     />
+</div>
+
+---
+layout: default
+---
+
+<div style="position: absolute; inset: 24px; display: flex; flex-direction: column; gap: 16px;">
+  <div style="flex: 0 0 calc(50% - 8px);">
+    <h1 style="margin: 0 0 0.5rem 0;">Fresh TTY</h1>
+    <p style="margin: 0; max-width: 40rem;">
+      This slide starts a separate terminal session while keeping room for a title and a few words above it.
+    </p>
+  </div>
+
+  <div style="flex: 1 1 calc(50% - 8px); min-height: 0;">
+    <WebTerminal
+      backendUrl="http://host.docker.internal:10001"
+      sessionId="reverse-gitops-demo-terminal-lower-half"
+      :fontSize="12"
+      releaseKey="F2"
+      activationKey="y"
+    />
+  </div>
 </div>

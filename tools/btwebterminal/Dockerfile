@@ -64,6 +64,9 @@ RUN curl -fsSLo /tmp/k9s.tar.gz "https://github.com/derailed/k9s/releases/downlo
     chmod +x /usr/local/bin/k9s && \
     rm /tmp/k9s.tar.gz
 
+# Install Starship prompt
+RUN curl -fsSL https://starship.rs/install.sh | sh -s -- --yes
+
 COPY openssl.cnf /etc/ssl/openssl.cnf
 COPY . "$APP_DIR"
 
@@ -75,9 +78,13 @@ RUN if compgen -G "extra_certs/*.crt" > /dev/null; then \
     fi && \
     pip install --no-cache-dir . && \
     install -m 0755 entrypoint.sh /usr/local/bin/entrypoint.sh && \
+    install -m 0755 scripts/clone-gitea-repo.sh /usr/local/bin/clone-gitea-repo.sh && \
     rm -f entrypoint.sh
 
 USER $USER
+
+RUN mkdir -p /home/$USER/.config && echo 'eval "$(starship init bash)"' >> /home/$USER/.bashrc
+COPY --chown=$USER:$USER starship.toml /home/$USER/.config/starship.toml
 
 WORKDIR $PROJECT_DIR
 
