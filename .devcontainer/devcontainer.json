@@ -8,15 +8,11 @@
   "features": {
     "ghcr.io/devcontainers/features/git:1": {}
   },
-  "forwardPorts": [3030, 3031],
+  "forwardPorts": [3030],
   "portsAttributes": {
     "3030": {
       "label": "Slidev",
       "onAutoForward": "openBrowser"
-    },
-    "3031": {
-      "label": "Slidev Presenter",
-      "onAutoForward": "notify"
     }
   },
   "customizations": {

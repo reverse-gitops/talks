@@ -55,8 +55,6 @@ The API comes first. Git remembers.
 
 Thank you.
 
----
-
 Speaking tip 1: do not read the script exactly as written. Use it as your base rhythm. Keep your own voice.
 
 Speaking tip 2: your most important job on stage is not speed — it is clarity. A talk like this wins when the audience can repeat one sentence afterward:
