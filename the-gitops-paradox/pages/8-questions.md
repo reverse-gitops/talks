@@ -25,6 +25,10 @@ The Kubernetes API has native OIDC support. You can hook up your existing auth s
 
 RBAC applies at the API level — before anything reaches Git.
 
+<!--
+Well OIDC is interesting to mention
+-->
+
 ---
 
 # Is this a real audit log?

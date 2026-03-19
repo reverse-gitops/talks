@@ -4,7 +4,7 @@ layout: default
 
 <div style="position: absolute; inset: 6px; display: flex; flex-direction: column;">
   <WebTerminal
-    backendUrl="http://127.0.0.1:10001"
+    backendUrl="http://host.docker.internal:10001"
     sessionId="reverse-gitops-demo-terminal"
     :fontSize="13"
     releaseKey="F2"
@@ -33,7 +33,7 @@ class: h-full flex flex-col min-h-0
 
 <div style="flex: 1; min-height: 0; display: flex; flex-direction: column;">
     <WebTerminal
-      backendUrl="http://127.0.0.1:10001"
+      backendUrl="http://host.docker.internal:10001"
       sessionId="reverse-gitops-demo-terminal"
       :fontSize="12"
       releaseKey="F2"

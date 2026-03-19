@@ -3,10 +3,7 @@ CONTAINER_NAME ?= bt-webterminal
 PLATFORM ?= linux/amd64
 HOST ?= 127.0.0.1
 PORT ?= 10001
-HOME_DIR ?= $(HOME)
-KUBE_DIR ?= $(HOME_DIR)/.kube
-DOCKER_SOCK ?= /var/run/docker.sock
-DOCKER_SOCK_GID ?= $(shell stat -c '%g' $(DOCKER_SOCK) 2>/dev/null || echo 0)
+KUBE_VOLUME ?= dotkube
 PYTHON ?= python3
 PIP ?= $(PYTHON) -m pip
 
@@ -20,15 +17,12 @@ build:
 run-container: build
 	docker run --rm -it \
 		--name $(CONTAINER_NAME) \
-		--network host \
 		--add-host host.docker.internal:host-gateway \
-		--group-add $(DOCKER_SOCK_GID) \
+		-p $(PORT):$(PORT) \
 		-e WEBTERMINAL_HOST=0.0.0.0 \
 		-e WEBTERMINAL_PORT=$(PORT) \
-		-e DOCKER_HOST=unix://$(DOCKER_SOCK) \
-		-e KUBECONFIG=/home/svcdevops/.kube/config \
-		-v $(DOCKER_SOCK):$(DOCKER_SOCK) \
-		-v $(KUBE_DIR):/home/svcdevops/.kube \
+		-e KUBECONFIG=/home/node/.kube/config \
+		-v $(KUBE_VOLUME):/home/node/.kube \
 		$(IMAGE)
 
 install-local:

@@ -5,7 +5,8 @@
 Different abstractions, similar lowered results
 
 <div class="mt-6">
-<ExcalidrawRenderer drawFilePath="/three-libs.excalidraw.json" />
+<!-- <ExcalidrawRenderer drawFilePath="/three-libs.excalidraw.json" /> -->
+<!-- TODO: fix component name — should be <Excalidraw> not <ExcalidrawRenderer> -->
 </div>
 
 <!--

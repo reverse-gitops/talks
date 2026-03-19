@@ -1,13 +1,32 @@
 import { defineConfig } from 'vite'
 import { createRequire } from 'module'
+import { exec } from 'child_process'
 
 const require = createRequire(import.meta.url)
+
+const VOTE_CODE_COMMAND = `kubectl get quizsession kubecon-2026 -n vote -o yaml | yq -r '.status.joinCode'`
 
 export default defineConfig({
     plugins: [
         {
             name: 'dynamic-terminal-proxy',
             configureServer(server) {
+                server.middlewares.use((req: any, res: any, next: any) => {
+                    if (req.url === '/api/vote-code' && req.method === 'GET') {
+                        exec(VOTE_CODE_COMMAND, (error, stdout) => {
+                            res.setHeader('Content-Type', 'application/json')
+                            if (error) {
+                                res.statusCode = 500
+                                res.end(JSON.stringify({ error: error.message }))
+                                return
+                            }
+                            res.end(JSON.stringify({ code: stdout.trim() }))
+                        })
+                        return
+                    }
+                    next()
+                })
+
                 const httpProxy = require('http-proxy')
                 const proxy = httpProxy.createProxyServer({
                     changeOrigin: true,

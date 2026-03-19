@@ -7,8 +7,7 @@ class: text-center
 
 <div class="flex items-center justify-center gap-12 mt-6">
 <div>
-  <QRCode value="https://vote.reversegitops.dev" :width="240" :height="240" />
-  <div class="mt-2 text-base text-gray-500">vote.reversegitops.dev</div>
+  <VoteQRCode />
 </div>
 <div class="text-left max-w-xs">
 

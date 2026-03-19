@@ -58,6 +58,10 @@ That is what I call Reverse GitOps.
 -->
 
 ---
+src: ./pages/terminal.md
+---
+
+---
 src: ./pages/0-intro.md
 ---
 
