@@ -73,3 +73,65 @@ Because if you get the interface right, you can evolve the machinery behind it w
 # 
 
 kubectl explain podinfoapp
+
+---
+
+# KRO
+
+Kubernetes native templating, works nice for this example. But can be anything you like.
+
+```yaml
+apiVersion: kro.run/v1alpha1
+kind: ResourceGraphDefinition
+metadata:
+  name: podinfo-app
+spec:
+  schema:
+    apiVersion: v1alpha1
+    kind: PodInfoApp
+    spec:
+      name: string | required=true
+      message: string | default="hello from kro"
+      color: string | default="#34577c"
+      replicas: integer | default=1 minimum=1 maximum=1 description="Number of replicas, keep at 1 during demo to avoid exhausting cluster resources"
+    status:
+      availableReplicas: ${deployment.status.availableReplicas}
+      ready: ${deployment.status.availableReplicas >= 1}
+  resources:
+    - id: deployment
+      readyWhen:
+        - "${deployment.status.availableReplicas >= 1}"
+      template: {}
+    - id: service
+    - id: ingressroute
+```
+
+---
+
+# Our example interface
+
+```bash
+$ kubectl explain podinfoapp.spec
+GROUP:      kro.run
+KIND:       PodInfoApp
+VERSION:    v1alpha1
+
+FIELD: spec <Object>
+
+
+DESCRIPTION:
+    <empty>
+FIELDS:
+  color <string>
+    <no description>
+
+  message       <string>
+    <no description>
+
+  name  <string> -required-
+    <no description>
+
+  replicas      <integer>
+    Number of replicas — keep at 1 during demo to avoid exhausting cluster
+    resources
+```
