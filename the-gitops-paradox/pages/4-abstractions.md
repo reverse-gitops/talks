@@ -65,3 +65,11 @@ The constraint is on the interface, not the implementation.
 
 Because if you get the interface right, you can evolve the machinery behind it without breaking the user's mental model.
 -->
+
+---
+
+---
+
+# 
+
+kubectl explain podinfoapp
