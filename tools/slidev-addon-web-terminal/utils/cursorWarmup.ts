@@ -21,6 +21,8 @@ export interface CursorWarmupRunnerOptions {
   minWidthPx: number
   minHeightPx: number
   timeoutMs?: number
+  /** Called once after each focus+blur warmup cycle completes (success or timeout). */
+  onComplete?: () => void
   environment: CursorWarmupEnvironment
 }
 
@@ -31,6 +33,7 @@ export function createCursorWarmupRunner(options: CursorWarmupRunnerOptions) {
     minWidthPx,
     minHeightPx,
     timeoutMs = DEFAULT_TIMEOUT_MS,
+    onComplete,
     environment,
   } = options
 
@@ -64,6 +67,7 @@ export function createCursorWarmupRunner(options: CursorWarmupRunnerOptions) {
         focusedRenderDisposable?.dispose()
         blurRenderDisposable?.dispose()
         restoreFocus()
+        onComplete?.()
       }
 
       focusedRenderDisposable = environment.onRender(() => {

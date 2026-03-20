@@ -80,7 +80,7 @@ rm -f /home/node/.claude.json
 ln -s /home/node/persisted-home/.claude.json /home/node/.claude.json
 
 log "Fixing dotkube volume permissions"
-docker run --rm -v dotkube:/kube alpine sh -c "chmod -R a+r /kube && find /kube -type d -exec chmod a+x {} +"
+chmod -R a+r /home/node/.kube && find /home/node/.kube -type d -exec chmod a+x {} +
 
 log "Installing npm dependencies"
 

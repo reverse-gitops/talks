@@ -22,11 +22,12 @@ ENV PROJECT_DIR=/home/$USER/workspace
 ENV CERT_DIR=/usr/local/share/ca-certificates
 ENV WEBTERMINAL_HOST=0.0.0.0
 ENV WEBTERMINAL_PORT=10001
+ENV EDITOR=nano
 
 SHELL ["/bin/bash", "-exo", "pipefail", "-c"]
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends bash ca-certificates curl git gnupg && \
+    apt-get install -y --no-install-recommends bash ca-certificates curl git gnupg nano ranger tree && \
     install -m 0755 -d /etc/apt/keyrings && \
     curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc && \
     chmod a+r /etc/apt/keyrings/docker.asc && \

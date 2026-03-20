@@ -14,7 +14,7 @@ import {
 } from '../utils/terminalSessionController'
 import { createCursorWarmupRunner } from '../utils/cursorWarmup'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   wsUrl?: string
   backendUrl?: string
   fontSize?: number
@@ -30,7 +30,10 @@ const props = defineProps<{
   /** When set, pressing this key (while not typing in an editable element) will focus the terminal.
    *  E.g. activationKey="t". If not set, the terminal will not auto-focus on mount. */
   activationKey?: string
-}>()
+}>(), {
+  releaseKey: 'F2',
+  activationKey: 't',
+})
 
 const terminalContainer = ref<HTMLElement | null>(null)
 const isFocused = ref(false)
@@ -53,6 +56,7 @@ let sessionController: TerminalSessionController | null = null
 let activationKeyHandler: ((e: KeyboardEvent) => void) | null = null
 let controlOwnerCleanup: (() => void) | null = null
 let suppressFocusSideEffects = false
+let cursorEnsured = false
 let initRunId = 0
 let textareaFocusHandler: (() => void) | null = null
 let textareaBlurHandler: (() => void) | null = null
@@ -178,8 +182,9 @@ const restoreElementFocus = (element: Element | null) => {
 const cursorWarmup = createCursorWarmupRunner({
     minWidthPx: MIN_FIT_WIDTH_PX,
     minHeightPx: MIN_FIT_HEIGHT_PX,
+    onComplete: () => { cursorEnsured = true },
     environment: {
-        hasCursorNode: () => hasNativeCursorNode(),
+        hasCursorNode: () => cursorEnsured || hasNativeCursorNode(),
         isFocused: () => isFocused.value,
         getContainerSize: () => terminalContainer.value?.getBoundingClientRect() ?? { width: 0, height: 0 },
         focusTerminal: () => terminal?.focus(),
@@ -340,7 +345,7 @@ const initTerminal = async () => {
     // release key can reclaim focus when another tab currently owns the session.
     if (props.activationKey || props.releaseKey) {
         const key = props.activationKey?.toLowerCase()
-        const releaseKey = (props.releaseKey ?? 'F2').toLowerCase()
+        const releaseKey = props.releaseKey.toLowerCase()
         activationKeyHandler = (e: KeyboardEvent) => {
             if (e.repeat) return
             if (isTypingInEditable(document.activeElement)) return
@@ -360,7 +365,7 @@ const initTerminal = async () => {
 
     // Intercept the release key so the presenter can return keyboard control to Slidev
     terminal.attachCustomKeyEventHandler((e: KeyboardEvent) => {
-        if (e.type === 'keydown' && e.key === (props.releaseKey ?? 'F2')) {
+        if (e.type === 'keydown' && e.key === props.releaseKey) {
             terminal?.blur()
             return false
         }
@@ -489,6 +494,7 @@ const handleResize = () => {
 
 const dispose = () => {
     initRunId++
+    cursorEnsured = false
     logEvent('component.dispose.start')
     isFocused.value = false
     isControlledElsewhere.value = false
@@ -585,13 +591,13 @@ watch(() => [props.wsUrl, props.backendUrl, props.sessionId], () => {
       v-else-if="!isFocused && isControlledElsewhere"
       class="focus-hint takeover"
     >
-      Press {{ releaseKey ?? 'F2' }} to take over
+      Press {{ releaseKey }} to take over
     </div>
     <div
       v-else
       class="focus-hint release"
     >
-      {{ releaseKey ?? 'F2' }} to release
+      {{ releaseKey }} to release
     </div>
   </div>
 </template>

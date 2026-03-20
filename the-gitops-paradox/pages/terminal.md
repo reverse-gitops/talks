@@ -6,9 +6,7 @@ layout: default
   <WebTerminal
     backendUrl="http://host.docker.internal:10001"
     sessionId="reverse-gitops-demo-terminal"
-    :fontSize="13"
-    releaseKey="F2"
-    activationKey="t"
+    :fontSize="12"
   />
   <div class="clickable-code" style="position: absolute; bottom: 12px; right: 20px; z-index: 10; background: rgba(0,0,0,0.6); padding: 2px 8px; border-radius: 4px; color: #0f0; font-family: monospace;">echo hello</div>
 </div>
@@ -21,7 +19,7 @@ class: h-full flex flex-col min-h-0
 
 # Left
 
-- Press `r` to focus the terminal
+- Press `t` to focus the terminal
 - Press `F2` to release keyboard control back to Slidev
 - This slide keeps the same PTY session as the full-screen slide
 
@@ -36,8 +34,6 @@ class: h-full flex flex-col min-h-0
       backendUrl="http://host.docker.internal:10001"
       sessionId="reverse-gitops-demo-terminal"
       :fontSize="12"
-      releaseKey="F2"
-      activationKey="r"
     />
 </div>
 
@@ -58,8 +54,6 @@ layout: default
       backendUrl="http://host.docker.internal:10001"
       sessionId="reverse-gitops-demo-terminal-lower-half"
       :fontSize="12"
-      releaseKey="F2"
-      activationKey="y"
     />
   </div>
 </div>
