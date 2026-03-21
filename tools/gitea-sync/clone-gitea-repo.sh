@@ -31,6 +31,16 @@ require_cmd() {
   }
 }
 
+ensure_safe_directory() {
+  local repo_dir="$1"
+
+  if git config --global --get-all safe.directory 2>/dev/null | grep -Fx -- "${repo_dir}" >/dev/null; then
+    return 0
+  fi
+
+  git config --global --add safe.directory "${repo_dir}"
+}
+
 for cmd in kubectl curl git base64 nohup awk grep; do
   require_cmd "${cmd}"
 done
@@ -48,7 +58,7 @@ GITEA_SERVICE="${GITEA_SERVICE:-gitea-http}"
 GITEA_LOCAL_PORT="${GITEA_LOCAL_PORT:-13000}"
 GITEA_ORG_NAME="${GITEA_ORG_NAME:-testorg}"
 GITEA_SECRET_PREFIX="${GITEA_SECRET_PREFIX:-git-creds-}"
-SECRET_NAMESPACE="${SECRET_NAMESPACE:-}"
+SECRET_NAMESPACE="${SECRET_NAMESPACE:-vote}"
 KUBECTL_CONTEXT="${KUBECTL_CONTEXT:-}"
 GIT_AUTHOR_NAME="${GIT_AUTHOR_NAME:-Gitea Repo User}"
 GIT_AUTHOR_EMAIL="${GIT_AUTHOR_EMAIL:-gitea-repo-user@example.local}"
@@ -234,15 +244,24 @@ clone_or_update_repo() {
   mkdir -p "$(dirname "${CHECKOUT_DIR}")"
 
   if [[ -d "${CHECKOUT_DIR}/.git" ]]; then
+    ensure_safe_directory "${CHECKOUT_DIR}"
     setup_repo_credentials "${credential_file}"
     git -C "${CHECKOUT_DIR}" fetch origin --prune >/dev/null
   else
     if [[ -e "${CHECKOUT_DIR}" ]]; then
-      echo "ERROR: checkout path exists but is not a git repository: ${CHECKOUT_DIR}" >&2
-      exit 1
+      if [[ ! -d "${CHECKOUT_DIR}" ]]; then
+        echo "ERROR: checkout path exists but is not a directory: ${CHECKOUT_DIR}" >&2
+        exit 1
+      fi
+
+      if [[ -n "$(find "${CHECKOUT_DIR}" -mindepth 1 -maxdepth 1 -print -quit 2>/dev/null)" ]]; then
+        echo "ERROR: checkout path exists but is not an empty directory or git repository: ${CHECKOUT_DIR}" >&2
+        exit 1
+      fi
     fi
 
     git clone "$(repo_url_with_auth)" "${CHECKOUT_DIR}" >/dev/null 2>&1
+    ensure_safe_directory "${CHECKOUT_DIR}"
     setup_repo_credentials "${credential_file}"
   fi
 

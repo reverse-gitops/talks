@@ -8,6 +8,7 @@ APP_USER="${USER:-node}"
 APP_HOME="${HOME:-/home/${APP_USER}}"
 KUBE_DIR="${APP_HOME}/.kube"
 SHARED_DIR="${APP_HOME}/shared"
+DEMO_REPO_DIR="${DEMO_REPO_DIR:-${APP_HOME}/demo}"
 
 sync_app_user_to_dir_owner() {
   local target_dir="$1"
@@ -70,7 +71,11 @@ if [[ -f .env ]];then
 fi
 
 if [[ "$(id -u)" -eq 0 ]]; then
-  sync_app_user_to_dir_owner "${SHARED_DIR}" || true
+  if [[ -d "${DEMO_REPO_DIR}" ]]; then
+    sync_app_user_to_dir_owner "${DEMO_REPO_DIR}" || true
+  else
+    sync_app_user_to_dir_owner "${SHARED_DIR}" || true
+  fi
 
   exec setpriv \
     --reuid "$(id -u "${APP_USER}")" \

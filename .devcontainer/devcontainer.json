@@ -33,6 +33,7 @@
     "--add-host=host.docker.internal:host-gateway"
   ],
   "postCreateCommand": "bash .devcontainer/post-create.sh '${containerWorkspaceFolder}'",
+  "postStartCommand": "bash .devcontainer/fix-mounted-permissions.sh '${containerWorkspaceFolder}'",
   "containerUser": "node",
   "remoteUser": "node",
   "updateRemoteUserUID": true,

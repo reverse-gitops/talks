@@ -74,6 +74,7 @@ git config --global gpg.ssh.allowedSignersFile /home/node/.config/git/allowed_si
 log "Git identity and SSH signing configured"
 
 shared_home_dir="/home/node/shared"
+fix_permissions_script="${workspace_dir}/.devcontainer/fix-mounted-permissions.sh"
 
 # Persist the ~/.claude.json file by making it a symlink (this trick can be used for other potenial config file in the home folder as well)
 if [ -L "${shared_home_dir}" ]; then
@@ -87,18 +88,15 @@ ln -s "${shared_home_dir}/.claude.json" /home/node/.claude.json
 log "Fixing dotkube volume permissions"
 chmod -R a+r /home/node/.kube && find /home/node/.kube -type d -exec chmod a+x {} +
 
-log "Installing npm dependencies"
+log "Fixing mounted repo volume permissions"
+if [ -r "${fix_permissions_script}" ]; then
+  # Run via bash so this still works when the bind-mounted workspace drops execute bits.
+  bash "${fix_permissions_script}" "${workspace_dir}"
+else
+  fail "Missing or unreadable permissions helper: ${fix_permissions_script}"
+fi
 
-# Install tools first — the presentations depend on them via file: references.
-npm install --prefix "${workspace_dir}/tools/slidev-addon-excalidraw-renderer"
-npm install --prefix "${workspace_dir}/tools/slidev-addon-web-terminal"
-
-# Install each presentation.
-for pkg_dir in "${workspace_dir}"/*/; do
-  if [ -f "${pkg_dir}package.json" ]; then
-    log "Installing dependencies in ${pkg_dir}"
-    npm install --prefix "${pkg_dir}"
-  fi
-done
+log "Installing npm dependencies via make"
+make -C "${workspace_dir}" install-node-deps
 
 log "post-create completed"

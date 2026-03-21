@@ -61,21 +61,33 @@ That is what I call Reverse GitOps.
 
 ---
 
-# Not live?
-
-<<< ../shared/demo/adam/rai/8f/examples.configbutler.ai/v1alpha1/quizsubmissions/vote/ccow-1.yaml yaml
+<<< @/snippets/test.yaml {height:100px}
 
 ---
 
-# Perhaps this then?
+```ts {monaco}
+console.log('HelloWorld')
+```
 
-# Not live?
+---
+layout: two-cols
+---
+# Let's do a cloud native
 
-<<< ~/shared/demo/adam/rai/8f/examples.configbutler.ai/v1alpha1/quizsubmissions/vote/ccow-1.yaml yaml
+::right::
 
---- #3
+<<< @/demo-repo/adam/rai/8f/examples.configbutler.ai/v1alpha1/quizsessions/vote/kubecon-2026.yaml yaml 
 
-# Is live
+
+---
+
+# This is what you will commit?
+
+<<< ./demo-repo/adam/rai/8f/examples.configbutler.ai/v1alpha1/quizsubmissions/vote/kubecon-2026-sample.yaml yaml
+
+---
+
+# Is that ok?
 
 <<< ./pages/test.yaml
 

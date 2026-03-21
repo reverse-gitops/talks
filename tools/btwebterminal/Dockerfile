@@ -81,6 +81,7 @@ RUN if compgen -G "extra_certs/*.crt" > /dev/null; then \
     pip install --no-cache-dir . && \
     install -m 0755 entrypoint.sh /usr/local/bin/entrypoint.sh && \
     install -m 0755 scripts/clone-gitea-repo.sh /usr/local/bin/clone-gitea-repo.sh && \
+    install -m 0755 scripts/pf-gitea.sh /usr/local/bin/pf-gitea.sh && \
     rm -f entrypoint.sh
 
 USER root
