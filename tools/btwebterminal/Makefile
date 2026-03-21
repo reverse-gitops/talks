@@ -4,6 +4,7 @@ PLATFORM ?= linux/amd64
 HOST ?= 127.0.0.1
 PORT ?= 10001
 KUBE_VOLUME ?= dotkube
+SHARED_HOME_VOLUME ?= talks-persisted-home
 PYTHON ?= python3
 PIP ?= $(PYTHON) -m pip
 
@@ -24,6 +25,7 @@ run: build
 		-e WEBTERMINAL_PORT=$(PORT) \
 		-e KUBECONFIG=/home/node/.kube/config \
 		-v $(KUBE_VOLUME):/home/node/.kube \
+		-v $(SHARED_HOME_VOLUME):/home/node/shared \
 		$(IMAGE)
 
 install-local:

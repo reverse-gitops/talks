@@ -73,11 +73,16 @@ git config --global gpg.ssh.allowedSignersFile /home/node/.config/git/allowed_si
 
 log "Git identity and SSH signing configured"
 
+shared_home_dir="/home/node/shared"
+
 # Persist the ~/.claude.json file by making it a symlink (this trick can be used for other potenial config file in the home folder as well)
-mkdir -p /home/node/persisted-home
-touch /home/node/persisted-home/.claude.json
+if [ -L "${shared_home_dir}" ]; then
+  rm -f "${shared_home_dir}"
+fi
+mkdir -p "${shared_home_dir}"
+touch "${shared_home_dir}/.claude.json"
 rm -f /home/node/.claude.json
-ln -s /home/node/persisted-home/.claude.json /home/node/.claude.json
+ln -s "${shared_home_dir}/.claude.json" /home/node/.claude.json
 
 log "Fixing dotkube volume permissions"
 chmod -R a+r /home/node/.kube && find /home/node/.kube -type d -exec chmod a+x {} +

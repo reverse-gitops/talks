@@ -17,6 +17,7 @@ ENV KUBECTL_VERSION=v1.35.0 \
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV USER=node
+ENV HOME=/home/$USER
 ENV APP_DIR=/home/$USER/app
 ENV PROJECT_DIR=/home/$USER/workspace
 ENV CERT_DIR=/usr/local/share/ca-certificates
@@ -27,7 +28,7 @@ ENV EDITOR=nano
 SHELL ["/bin/bash", "-exo", "pipefail", "-c"]
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends bash ca-certificates curl git gnupg nano ranger tree && \
+    apt-get install -y --no-install-recommends bash ca-certificates curl git gnupg nano procps ranger tree && \
     install -m 0755 -d /etc/apt/keyrings && \
     curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc && \
     chmod a+r /etc/apt/keyrings/docker.asc && \
@@ -82,7 +83,7 @@ RUN if compgen -G "extra_certs/*.crt" > /dev/null; then \
     install -m 0755 scripts/clone-gitea-repo.sh /usr/local/bin/clone-gitea-repo.sh && \
     rm -f entrypoint.sh
 
-USER $USER
+USER root
 
 RUN mkdir -p /home/$USER/.config && echo 'eval "$(starship init bash)"' >> /home/$USER/.bashrc
 COPY --chown=$USER:$USER starship.toml /home/$USER/.config/starship.toml

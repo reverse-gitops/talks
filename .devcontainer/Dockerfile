@@ -18,7 +18,7 @@ RUN mkdir -p \
     /home/node/.npm \
     /home/node/.codex \
     /home/node/.claude \
-    /home/node/persisted-home \
+    /home/node/shared \
     /home/node/.config/git \
     /home/node/.kube \
     /home/node/.ssh \

@@ -2,6 +2,13 @@
 layout: default
 ---
 
+```
+watch --color -n 2 '
+  git pull --ff-only --quiet 2>/dev/null
+  git log --oneline --graph --decorate --all --color=always | head -30
+'
+```
+
 <div style="position: absolute; inset: 6px; display: flex; flex-direction: column;">
   <WebTerminal
     backendUrl="http://host.docker.internal:10001"

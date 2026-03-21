@@ -29,7 +29,7 @@
       ]
     }
   },
-  "runArgs": [
+    "runArgs": [
     "--add-host=host.docker.internal:host-gateway"
   ],
   "postCreateCommand": "bash .devcontainer/post-create.sh '${containerWorkspaceFolder}'",
@@ -40,9 +40,9 @@
     "source=talks-npmcache,target=/home/node/.npm,type=volume",
     "source=talks-codexconfig,target=/home/node/.codex,type=volume",
     "source=talks-claudeconfig,target=/home/node/.claude,type=volume",
-    "source=talks-persisted-home,target=/home/node/persisted-home,type=volume",
     "source=dotkube,target=/home/node/.kube,type=volume",
-    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+    "source=talks-persisted-home,target=/home/node/shared,type=volume",
+    "source=talks-demo-repo,target=/workspaces/talks/the-gitops-paradox/demo-repo,type=volume"
   ],
   "containerEnv": {
     "HOST_PROJECT_PATH": "${localWorkspaceFolder}",

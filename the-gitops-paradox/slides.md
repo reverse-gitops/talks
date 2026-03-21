@@ -60,6 +60,26 @@ That is what I call Reverse GitOps.
 -->
 
 ---
+
+# Not live?
+
+<<< ../shared/demo/adam/rai/8f/examples.configbutler.ai/v1alpha1/quizsubmissions/vote/ccow-1.yaml yaml
+
+---
+
+# Perhaps this then?
+
+# Not live?
+
+<<< ~/shared/demo/adam/rai/8f/examples.configbutler.ai/v1alpha1/quizsubmissions/vote/ccow-1.yaml yaml
+
+--- #3
+
+# Is live
+
+<<< ./pages/test.yaml
+
+---
 src: ./pages/terminal.md
 ---
 

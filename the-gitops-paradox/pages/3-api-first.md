@@ -91,3 +91,12 @@ That is something Kubernetes has spent years getting good at.
 
 And it is a much better fit for both humans and agents than asking everyone to directly manipulate Git as the first step.
 -->
+
+
+---
+
+# Headerw
+
+<<< ./test.yaml yaml
+
+Why is that?
