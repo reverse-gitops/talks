@@ -13,7 +13,8 @@ ENV KUBECTL_VERSION=v1.35.0 \
     K3D_VERSION=v5.8.3 \
     FLUX_VERSION=2.8.0 \
     K9S_VERSION=v0.50.9 \
-    KUBECTL_NEAT_VERSION=v2.0.4
+    KUBECTL_NEAT_VERSION=v2.0.4 \
+    HTTPYAC_VERSION=6.16.7
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
@@ -29,7 +30,7 @@ ENV EDITOR=nano
 SHELL ["/bin/bash", "-exo", "pipefail", "-c"]
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends bash ca-certificates curl git gnupg nano procps ranger tree && \
+    apt-get install -y --no-install-recommends bash ca-certificates curl git gnupg httpie nano nodejs npm procps ranger tree && \
     install -m 0755 -d /etc/apt/keyrings && \
     curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc && \
     chmod a+r /etc/apt/keyrings/docker.asc && \
@@ -72,6 +73,9 @@ RUN curl -fsSLo /tmp/kubectl-neat.tar.gz "https://github.com/itaysk/kubectl-neat
     tar -xzf /tmp/kubectl-neat.tar.gz -C /usr/local/bin kubectl-neat && \
     chmod +x /usr/local/bin/kubectl-neat && \
     rm /tmp/kubectl-neat.tar.gz
+
+# Install httpyac
+RUN npm install -g "httpyac@${HTTPYAC_VERSION}"
 
 # Install Starship prompt
 RUN curl -fsSL https://starship.rs/install.sh | sh -s -- --yes

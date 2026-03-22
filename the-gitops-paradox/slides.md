@@ -57,7 +57,6 @@ div.grid.grid-cols-2.w-full.h-full.auto-rows-fr:has(> .two-third) {
 
 * Simon Koudijs
 * 39 years old
-* Father of two
 
 ## Experience
 
@@ -78,13 +77,6 @@ layout: fact
 
 ---
 # I <mdi-heart /> GitOps
-
----
-
-# What to expect
-
-* Kubernetes Resource Model (KRM)
-* 
 
 ---
 layout: full

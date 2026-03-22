@@ -1,12 +1,12 @@
-I'm Simon, have been an software engineer for years. Worked at companies big and small, and in the last 6 years I switched to DevOps and platform engineering in a smaller sized company: where we made the switch the Kubernetes. I don't work there anymore, since I learned that I was missing something. Something that I'm now trying to build. I'm here for 2 things: Telling and showing what I envision, and I would love to get your feedback. Don't spare me with your quistions: it's all not written in stone, so if you dare to dream with me than we certainly can make it better together.
+I'm Simon, have been an software engineer for years. Worked at companies big and small, and in the last 6 years I switched to DevOps and platform engineering in a smaller sized company: where we made the switch the Kubernetes. I don't work there anymore, since I learned that I was missing something. Something that I'm now trying to build. I'm here for 2 things: Showing what I've got, and asking for your feedback! Don't spare me with your questions: it's all not written in stone, so if you dare to dream with me than we certainly can make it better together.
 
 I would like to show you this little movie first: my sun agreed that I would show it, but I had to promise that I would tell you that he build it all by himself. Which is now did: well there are parallels. To me showing this idear here, showing the protoyp feels akward but also very liberating. I have a working prototpy and I have an idea.
 
-I like files, I like everything beeing a file. No need to use custom tool, editor choice yours. Turns out that LLMs also like files.
+I like files, I like everything beeing a file. No need to use closed tool, editor choice yours. Turns out that LLMs also like files.
 
-So naturally, I also like git. And I like the process that you get with it: get feedback of others, have full transparancy, again no need to use custom tools. 
+So naturally, I also like git. And I like the process that you get with it: feedback of others, full transparancy, rolling back problematic changes, at again no need to use custom tools. 
 
-But as a human (and others) I also like visuals: a nice user interface, clicking around to get things quickly. Easier and faster paths to set things up, most of these things actually somehow require an API -> a server that quickly responds, validates and also shields users from the actual core. We have internal developer platforms in all kind of different ways: and most of them use an API. And I believe that it is an important direction as well. But somehow we every time need to loose our beatiful simple world: our files are gone, and some database is buzzing.
+But as a human (and others) I also like visuals: a nice user interface, clicking around to get things quickly. Easier and faster paths to set things up, most of these things actually somehow require an API -> a server that quickly responds, validates and also shields users from the actual core. We have internal developer platforms in all kind of different ways: and most of them use an API. And I agree. But somehow this API move also involves loosing a few files. I'm not married to them, but wouldnt it be cool if we could keep them as well? But somehow we every time need to loose our beatiful simple world: our files are gone, and some database is buzzing.
 
 That's not bad in itself, but for things that don't change to often I like the process and transparancy of files much better. I see the need for the API but I'm believing and advocating that I would like to have both. I like files, and I like an API. Well certainly not every API: but the Kubernetes API is pretty cool. 
 
@@ -14,7 +14,7 @@ But wait, the Kubernetes API is very important to our workloads, we need to prot
 
 Humanity has invented GitOps for a reason didnt they? So that we never touch our Kubernetes API by hand, the clusters feed themselves with git state. Git is the single source of truth.
 
-Behind the Kubernetes API is the Kubernetes Resource Model (KRM). A very interesting design principle is that KRM resources are describing desired state. They have spec (and status). Most rest APIs that I worked with have both a url and body that need to be viewed togheter (make a curl call to the live weather in Adam). The inventors of the Kubernetes API took another route: they decided to decode both the body and the location in the body (make a live call to the Kubernetes API).
+Behind the Kubernetes API is the Kubernetes Resource Model (KRM). I didn't know it was called that: I guess it was my last [SO question](https://stackoverflow.com/questions/78458958/is-there-a-name-or-standard-for-the-yaml-format-used-to-describe-kubernetes-reso?noredirect=1#comment138321981_78458958) to ever ask. A very interesting design principle is that KRM resources are describing desired state. They have spec (and status). Most rest APIs that I worked with have both a url and body that need to be viewed togheter (make a curl call to the live weather in Adam). The inventors of the Kubernetes API took another route: they decided to decode both the body and the location in the body (make a live call to the Kubernetes API).
 
 Let it sink in: the location of your file doesnt matter, the name doesnt matter. It's just the content that matters. Which is also why you can place multiple files in a single file. kubectl apply -f and GitOps for that matter are your friends.
 
@@ -73,6 +73,8 @@ When preparing this I felt that this was not finished yet without actually bring
 So for this demo I'm using KRO: but it can be any platform tool you like, as long as it's able to work with plain KRM resources. Every Kubecon is amazing from that perspective, it allows me to learn a lot of new things as well. I won't explain more than needed: it has one definition, and then you can make one or more instances. We are deploying podinfo, and we can only adjust the color and shown text. 
 
 KRO allows you to define a 'template' and creates a new CRD out of it automatically. It's a real CRD under the hood (fact check). And you can work with them, just like we did earlier.
+
+3. GitOps still applies
 
 For this demo I went a bit further: let's create a pull request and we will do that by instructing gitops-reverser to watch for our new type. gitops-reverser can off course be instructed by KRM itself. I inspired it's design on the great work that FluxCD is doing on this (I'm a proud fan, perhaps I should make a picture of it in front of kubecon with my cap as fun joke?).
 

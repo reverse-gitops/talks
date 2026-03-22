@@ -1,8 +1,9 @@
 FROM node:24-bookworm
 
 ARG KUBECTL_NEAT_VERSION=v2.0.4
+ARG HTTPYAC_VERSION=6.16.7
 
-RUN apt-get update && apt-get install -y curl ca-certificates sudo && \
+RUN apt-get update && apt-get install -y curl ca-certificates httpie sudo && \
     echo "node ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/node && \
     chmod 0440 /etc/sudoers.d/node && \
     # kubectl
@@ -18,6 +19,8 @@ RUN apt-get update && apt-get install -y curl ca-certificates sudo && \
     # yq
     curl -sL "https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64" -o /usr/local/bin/yq && \
     chmod +x /usr/local/bin/yq && \
+    # httpyac
+    npm install -g "httpyac@${HTTPYAC_VERSION}" && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 
