@@ -15,7 +15,14 @@ watch --color -n 2 '
     sessionId="reverse-gitops-demo-terminal"
     :fontSize="12"
   />
-  <div class="clickable-code" style="position: absolute; bottom: 12px; right: 20px; z-index: 10; background: rgba(0,0,0,0.6); padding: 2px 8px; border-radius: 4px; color: #0f0; font-family: monospace;">echo hello</div>
+  <div
+    v-click="[1, 2]"
+    class="clickable-code"
+    data-terminal-session="reverse-gitops-demo-terminal"
+    style="position: absolute; bottom: 12px; right: 20px; z-index: 10; background: rgba(0,0,0,0.6); padding: 2px 8px; border-radius: 4px; color: #0f0; font-family: monospace;"
+  >
+    echo hello
+  </div>
 </div>
 
 ---
@@ -30,7 +37,12 @@ class: h-full flex flex-col min-h-0
 - Press `F2` to release keyboard control back to Slidev
 - This slide keeps the same PTY session as the full-screen slide
 
-<div class="clickable-code" style="display: inline-block; margin-top: 1rem; padding: 0.25rem 0.5rem; border-radius: 4px; background: rgba(0,0,0,0.65); color: #0f0; font-family: monospace;">
+<div
+  v-click="[1, 2]"
+  class="clickable-code"
+  data-terminal-session="reverse-gitops-demo-terminal"
+  style="display: inline-block; margin-top: 1rem; padding: 0.25rem 0.5rem; border-radius: 4px; background: rgba(0,0,0,0.65); color: #0f0; font-family: monospace;"
+>
   kubectl get pods -A
 </div>
 

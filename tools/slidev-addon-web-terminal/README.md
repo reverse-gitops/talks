@@ -10,6 +10,7 @@ This addon provides a `WebTerminal` component for [Slidev](https://sli.dev/) pre
 - **Zero-Config Dynamic Proxy**: Specify any `backendUrl` (including different domains and ports) in your markdown, and the addon handles CORS and proxying automatically.
 - **Managed Shared Sessions**: `backendUrl` mode shares one PTY across presenter/main windows and serializes same-tab creation and recovery.
 - **Click to Execute**: Commands are automatically sent to the terminal when clicking an element with the `.clickable-code` class (e.g. a wrapper around a code block).
+- **Presenter-driven Click Steps**: `clickable-code` blocks can also react to Slidev `v-click` steps, so the first reveal types the command and a later step can send `Enter`.
 - **Auto-fit**: Automatically resizes the terminal to fit the container.
 - **Theme Support**: Styled for dark mode by default.
 
@@ -162,6 +163,56 @@ To troubleshoot presenter/main synchronization, enable debug logs in one of thes
 - Prop: `<WebTerminal ... :debug="true" />`
 - Query parameter: append `?webTerminalDebug=1` to the Slidev URL
 - Local storage: `localStorage.setItem('webTerminalDebug', '1')`
+
+### Two-step `v-click` command playback
+
+If you want a command to be driven by the presenter instead of a literal mouse click, combine `.clickable-code` with a `v-click` range:
+
+```html
+<div
+  v-click="[1, 2]"
+  class="clickable-code"
+  data-terminal-session="reverse-gitops-demo-terminal"
+>
+  kubectl get pods -A
+</div>
+```
+
+With that setup:
+
+- click step `1` types `kubectl get pods -A`
+- click step `2` sends `Enter`
+
+`data-terminal-session` is optional when there is only one terminal on the slide, but it is recommended whenever multiple terminals might be present.
+
+Commands are typed character-by-character with small randomized delays so they feel more like live terminal input than a paste.
+
+If you do not want to show the real command on the slide, provide it via `data-terminal-command` instead:
+
+```html
+<div
+  v-click="[1, 2]"
+  class="clickable-code"
+  data-terminal-session="reverse-gitops-demo-terminal"
+  data-terminal-command="kubectl get pods -A"
+  style="display: none"
+></div>
+```
+
+You can also keep the element visible but show a friendlier label:
+
+```html
+<div
+  v-click="[1, 2]"
+  class="clickable-code"
+  data-terminal-session="reverse-gitops-demo-terminal"
+  data-terminal-command="kubectl get pods -A"
+>
+  Check cluster status
+</div>
+```
+
+When multiple commands share the same click step, use `data-terminal-order="1"`, `data-terminal-order="2"`, and so on to control the execution order.
 
 ## Development
 

@@ -13,6 +13,11 @@ import {
   type TerminalSessionSource,
 } from '../utils/terminalSessionController'
 import { createCursorWarmupRunner } from '../utils/cursorWarmup'
+import {
+  getClickableCodeCommand,
+  getClickableCodeAutomationTargets,
+  getClickableCodeStepAction,
+} from '../utils/clickableCodeAutomation'
 
 const props = withDefaults(defineProps<{
   wsUrl?: string
@@ -43,7 +48,7 @@ const isControlledElsewhere = ref(false)
 // with the shared PTY (e.g. sending a tiny resize that scrambles the shell output).
 // Falls back to false (full render) when running outside Slidev.
 const THUMBNAIL_CONTEXTS = new Set(['previewNext', 'overview'])
-const { $renderContext: renderContext } = useSlideContext()
+const { $clicks: slideClicks, $renderContext: renderContext } = useSlideContext()
 const isPlaceholder = THUMBNAIL_CONTEXTS.has(renderContext.value)
 
 let terminal: Terminal | null = null
@@ -60,6 +65,15 @@ let cursorEnsured = false
 let initRunId = 0
 let textareaFocusHandler: (() => void) | null = null
 let textareaBlurHandler: (() => void) | null = null
+let previousSlideClick = slideClicks.value
+
+type QueuedTerminalAction =
+  | { kind: 'pause'; delayMs: number }
+  | { kind: 'text'; animated: boolean; text: string }
+
+const pendingTerminalActions: QueuedTerminalAction[] = []
+let terminalActionRunner: Promise<void> | null = null
+let terminalActionRunId = 0
 
 const isElementVisible = (el: HTMLElement | null): boolean => {
     if (!el?.isConnected) return false
@@ -105,24 +119,6 @@ const logEvent = (event: string, details: Record<string, unknown> = {}) => {
         renderContext: renderContext.value,
         ...details,
     })
-}
-
-const summarizeSocketPayload = (payload: unknown) => {
-    if (typeof payload === 'string') {
-        const normalized = payload.replace(/\r/g, '\\r').replace(/\n/g, '\\n')
-        return {
-            kind: 'string',
-            length: payload.length,
-            preview: normalized.slice(0, 120),
-        }
-    }
-    if (payload instanceof ArrayBuffer) {
-        return { kind: 'arraybuffer', byteLength: payload.byteLength }
-    }
-    if (typeof Blob !== 'undefined' && payload instanceof Blob) {
-        return { kind: 'blob', size: payload.size, type: payload.type }
-    }
-    return { kind: typeof payload }
 }
 
 // Minimum pixel dimensions for a meaningful terminal fit.
@@ -229,6 +225,119 @@ const syncCursorVisualState = () => {
     })
 }
 
+const getAutomationSessionId = () => props.sessionId ?? props.backendUrl ?? props.wsUrl ?? null
+
+const getAutomationScopeRoot = () => {
+    const slideRoot = terminalContainer.value?.closest('[data-slidev-no], .slidev-page')
+    return slideRoot ?? document
+}
+
+const TYPING_DELAY_MIN_MS = 24
+const TYPING_DELAY_MAX_MS = 72
+const ENTER_DELAY_MIN_MS = 120
+const ENTER_DELAY_MAX_MS = 240
+
+const getRandomDelay = (minMs: number, maxMs: number) =>
+    Math.floor(Math.random() * (maxMs - minMs + 1)) + minMs
+
+const canWriteToTerminal = () => !!terminal && socket?.readyState === WebSocket.OPEN
+
+const writeTerminalData = (data: string) => {
+    if (!data || !canWriteToTerminal()) return
+    terminal!.input(data)
+}
+
+const sleep = (delayMs: number) => new Promise<void>(resolve => window.setTimeout(resolve, delayMs))
+
+const queueTerminalPause = (delayMs: number) => {
+    if (delayMs <= 0) return
+    pendingTerminalActions.push({ kind: 'pause', delayMs })
+    void flushPendingTerminalInputs()
+}
+
+const queueTerminalInput = (data: string, animated = false) => {
+    if (!data) return
+    pendingTerminalActions.push({ kind: 'text', text: data, animated })
+    void flushPendingTerminalInputs()
+}
+
+const flushPendingTerminalInputs = async () => {
+    if (terminalActionRunner || pendingTerminalActions.length === 0 || !canWriteToTerminal()) return
+
+    const runId = ++terminalActionRunId
+    const runner = (async () => {
+        while (pendingTerminalActions.length > 0) {
+            const action = pendingTerminalActions.shift()
+            if (!action) continue
+
+            if (action.kind === 'pause') {
+                await sleep(action.delayMs)
+                if (terminalActionRunId !== runId) return
+                continue
+            }
+
+            if (!action.animated || action.text.length <= 1) {
+                if (!canWriteToTerminal()) {
+                    pendingTerminalActions.unshift(action)
+                    return
+                }
+                writeTerminalData(action.text)
+                continue
+            }
+
+            for (let index = 0; index < action.text.length; index++) {
+                if (!canWriteToTerminal()) {
+                    const remainingText = action.text.slice(index)
+                    if (remainingText) {
+                        pendingTerminalActions.unshift({
+                            ...action,
+                            text: remainingText,
+                        })
+                    }
+                    return
+                }
+
+                writeTerminalData(action.text[index]!)
+
+                if (index < action.text.length - 1) {
+                    await sleep(getRandomDelay(TYPING_DELAY_MIN_MS, TYPING_DELAY_MAX_MS))
+                    if (terminalActionRunId !== runId) return
+                }
+            }
+        }
+    })()
+
+    terminalActionRunner = runner
+    await runner.finally(() => {
+        if (terminalActionRunner === runner) {
+            terminalActionRunner = null
+        }
+    })
+
+    if (pendingTerminalActions.length > 0 && canWriteToTerminal()) {
+        void flushPendingTerminalInputs()
+    }
+}
+
+const replayClickableCodeAutomation = (fromExclusive: number, toInclusive: number) => {
+    if (!terminal || renderContext.value !== 'slide' || toInclusive <= fromExclusive) return
+
+    const targets = getClickableCodeAutomationTargets(getAutomationScopeRoot(), getAutomationSessionId())
+    if (targets.length === 0) return
+
+    for (let step = fromExclusive + 1; step <= toInclusive; step++) {
+        for (const target of targets) {
+            const action = getClickableCodeStepAction(target, step)
+            if (action === 'type') {
+                queueTerminalInput(target.command, true)
+            } else if (action === 'enter') {
+                queueTerminalPause(getRandomDelay(ENTER_DELAY_MIN_MS, ENTER_DELAY_MAX_MS))
+                queueTerminalInput('\r')
+            }
+        }
+    }
+}
+
 const handleCodeClick = (e: MouseEvent) => {
   const target = e.target as HTMLElement
   // Only trigger if nested inside or is an element with class 'clickable-code'
@@ -238,10 +347,11 @@ const handleCodeClick = (e: MouseEvent) => {
     // Don't execute if it's inside the terminal itself
     if (terminalContainer.value?.contains(clickableElement)) return
 
-    const code = clickableElement.innerText.trim()
+    const code = getClickableCodeCommand(clickableElement).trim()
     if (code && terminal) {
-      // Use terminal.input() so bracketed paste mode and other xterm input handling is respected
-      terminal.input(code + '\n')
+      queueTerminalInput(code, true)
+      queueTerminalPause(getRandomDelay(ENTER_DELAY_MIN_MS, ENTER_DELAY_MAX_MS))
+      queueTerminalInput('\r')
       terminal.focus()
     }
   }
@@ -445,8 +555,6 @@ const connectWebSocket = (url: string, source: TerminalSessionSource | 'direct')
     const webSocket = new WebSocket(url)
     socket = webSocket
     logEvent('socket.connecting', { url, source })
-    webSocket.addEventListener('message', (event) => {
-    })
 
     webSocket.onopen = () => {
         if (socket !== webSocket) return
@@ -454,6 +562,7 @@ const connectWebSocket = (url: string, source: TerminalSessionSource | 'direct')
         if (terminal) {
             attachAddon = new AttachAddon(webSocket)
             terminal.loadAddon(attachAddon)
+            flushPendingTerminalInputs()
             safeFit('socket-open')
             syncCursorVisualState()
         }
@@ -545,6 +654,10 @@ const dispose = () => {
         terminal.dispose()
         terminal = null
     }
+    terminalActionRunId++
+    terminalActionRunner = null
+    pendingTerminalActions.length = 0
+    previousSlideClick = slideClicks.value
     logEvent('component.dispose.complete')
 }
 
@@ -568,6 +681,11 @@ watch(() => [props.wsUrl, props.backendUrl, props.sessionId], () => {
     logEvent('component.props.changed', { wsUrl: props.wsUrl, backendUrl: props.backendUrl, sessionId: props.sessionId })
     dispose()
     initTerminal()
+})
+
+watch(slideClicks, (currentClick) => {
+    replayClickableCodeAutomation(previousSlideClick, currentClick)
+    previousSlideClick = currentClick
 })
 
 </script>

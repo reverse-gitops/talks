@@ -1,17 +1,11 @@
 ---
-# try also 'default' to start simple
 theme: default
-# random image from a curated Unsplash collection by Anthony
-# like them? see https://unsplash.com/collections/94734566/slidev
-background: https://cover.sli.dev
-# some information about your slides (markdown enabled)
-title: "Reverse GitOps: The API Comes First, Git Remembers"
+background: /images/door-old.jpg
+title: The GitOps Paradox
 author: Simon Koudijs
-
 info: |
   ## Reverse GitOps
   The API comes first. Git remembers.
-# https://sli.dev/features/drawing
 drawings:
   persist: false
 # slide transition: https://sli.dev/guide/animations.html#slide-transitions
@@ -27,22 +21,8 @@ addons:
   - excalidraw-renderer
 ---
 
-# Reverse GitOps
-
-The API Comes First, Git Remembers
-
-<div @click="$slidev.nav.next" class="mt-12 py-1" hover:bg="white op-10">
-  Press Space for next page <carbon:arrow-right />
-</div>
-
-<div class="abs-br m-6 text-xl">
-  <button @click="$slidev.nav.openInEditor()" title="Open in Editor" class="slidev-icon-btn">
-    <carbon:edit />
-  </button>
-  <a href="https://github.com/configbutler/gitops-reverser" target="_blank" class="slidev-icon-btn">
-    <carbon:logo-github />
-  </a>
-</div>
+# The GitOps Paradox
+## Why Your Devs Need an API You Don't Want to Build
 
 <!--
 Hello everyone, I'm Simon Koudijs.
@@ -59,6 +39,90 @@ I want to show you a different operating model. One where humans and AI agents m
 
 That is what I call Reverse GitOps.
 -->
+
+---
+layout: image-left
+image: /images/simon.jpg
+class: two-third
+
+---
+
+<style>
+div.grid.grid-cols-2.w-full.h-full.auto-rows-fr:has(> .two-third) {
+  grid-template-columns: 2fr 3fr;
+}
+</style>
+
+## Who am I?
+
+* Simon Koudijs
+* 39 years old
+* Father of two
+
+## Experience
+
+* Sofware engineer
+* Platform team
+* Last job: smaller company (~30), creating a full self-service product
+
+## Founder
+
+* Quit my fulltime job to work on this fulltime
+* Implementing this idear in the open
+* ConfigButler
+
+---
+
+# What to expect
+
+* Explain CRD
+* 
+
+---
+layout: full
+---
+
+<RenderWhen context="slide">
+  <SlidevVideo class="w-full h-full object-cover" autoplay controls>
+    <source src="/images/rc-short.mp4" type="video/mp4" />
+  </SlidevVideo>
+</RenderWhen>
+
+<RenderWhen context="presenter">
+  <h2>Short movie</h2>
+  <p>The live presentation shows a video of self-build rc plane taking off and landing</p>
+</RenderWhen>
+
+--- #5
+
+# Reverse Gitops
+
+* Augmenting GitOps
+* You are among the first to see this
+* Will it take off?
+
+--- #6
+
+# GitOps Gives You
+
+| Capability | GitOps |
+| --- | --- |
+| Reproducable | <mdi-check /> |
+| Process | :white_check_mark: |
+| Full history | :white_check_mark: |
+| Rollbacks | :white_check_mark: |
+| Easy to change | |
+
+--- #7
+layout: fact
+
+---
+# I <mdi-heart /> GitOps
+
+
+--- #7
+
+
 
 ---
 
