@@ -72,11 +72,18 @@ div.grid.grid-cols-2.w-full.h-full.auto-rows-fr:has(> .two-third) {
 * Implementing this idear in the open
 * ConfigButler
 
+
+--- #7
+layout: fact
+
+---
+# I <mdi-heart /> GitOps
+
 ---
 
 # What to expect
 
-* Explain CRD
+* Kubernetes Resource Model (KRM)
 * 
 
 ---
@@ -114,12 +121,6 @@ layout: full
 | Rollbacks | :white_check_mark: |
 | Easy to change | |
 
---- #7
-layout: fact
-
----
-# I <mdi-heart /> GitOps
-
 ---
 
 layout: default
@@ -142,6 +143,40 @@ class: h-full
     />
   </div>
 </div>
+
+<div
+  v-click="[1, 2]"
+  class="clickable-code"
+  data-terminal-session="reverse-gitops-demo-terminal"
+  data-terminal-command="kubectl get nodes"
+  style="display: none;"
+></div>
+
+
+<div
+  v-click="[3, 4]"
+  class="clickable-code"
+  data-terminal-session="reverse-gitops-demo-terminal"
+  data-terminal-command='watch -n 2 "kubectl get quizsubmissions -A"'
+  style="display: none;"
+></div>
+
+<div
+  v-click="[7, 8]"
+  class="clickable-code"
+  data-terminal-session="reverse-gitops-demo-terminal"
+  data-terminal-command="cd ~/demo"
+  style="display: none;"
+></div>
+
+<div
+  v-click="[5, 6]"
+  class="clickable-code"
+  data-terminal-session="reverse-gitops-demo-terminal"
+  data-terminal-command='git log --oneline --graph --decorate --all --color=always | head -20'
+  style="display: none;"
+></div>
+
 
 
 ---

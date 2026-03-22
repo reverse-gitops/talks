@@ -16,6 +16,8 @@ Short movie of RC plane build and flown by my son
     Consider this is a test: does my plan fly?
     I would love your feedback
 
+I have a confession to make: I just like working with files, I like to review them, to search and replace, working in my own favourite editor. Why wouldnt my customers? Turns out that you also have humans that need a bit more.
+
 What's to show?
 * A manifest (https://reversegitops.dev/)
 * An concrete open source operator
