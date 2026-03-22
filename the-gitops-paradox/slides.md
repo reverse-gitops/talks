@@ -64,6 +64,7 @@ div.grid.grid-cols-2.w-full.h-full.auto-rows-fr:has(> .two-third) {
 * Sofware engineer
 * Platform team
 * Last job: smaller company (~30), creating a full self-service product
+* I missed this: the beatiful transparant file based approach also must be possible without even knowing it?
 
 ## Founder
 
@@ -119,9 +120,28 @@ layout: fact
 ---
 # I <mdi-heart /> GitOps
 
+---
 
---- #7
+layout: default
+class: h-full
 
+---
+
+<div
+  style="position: absolute; inset: 18px 24px 24px; display: grid; grid-template-columns: minmax(240px, 300px) minmax(0, 1fr); gap: 24px; align-items: stretch;"
+>
+  <div style="display: flex; align-items: center; justify-content: center;">
+    <VoteQRCode :showCountdown="false" />
+  </div>
+
+  <div style="min-width: 0; min-height: 0; display: flex; flex-direction: column;">
+    <WebTerminal
+      backendUrl="http://host.docker.internal:10001"
+      sessionId="reverse-gitops-demo-terminal"
+      :fontSize="14"
+    />
+  </div>
+</div>
 
 
 ---

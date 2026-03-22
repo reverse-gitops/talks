@@ -1,10 +1,72 @@
 import { defineConfig } from 'vite'
 import { createRequire } from 'module'
-import { exec } from 'child_process'
+import { exec, type ExecOptions } from 'child_process'
+import { mkdir, readFile } from 'fs/promises'
+import { dirname } from 'path'
+import { fileURLToPath } from 'url'
 
 const require = createRequire(import.meta.url)
 
 const VOTE_CODE_COMMAND = `kubectl get quizsession kubecon-2026 -n vote -o yaml | yq -r '.status.joinCode'`
+const LIVE_MANIFEST_FILE = fileURLToPath(new URL('./.generated/live-cluster-manifest.yaml', import.meta.url))
+const LIVE_MANIFEST_DISPLAY_COMMAND = `kubectl get quizsession kubecon-2026 -n vote -o yaml | yq 'del(.metadata.annotations, .metadata.labels)' > .generated/live-cluster-manifest.yaml`
+const LIVE_MANIFEST_COMMAND = `kubectl get quizsession kubecon-2026 -n vote -o yaml | yq 'del(.metadata.annotations, .metadata.labels)' > "${LIVE_MANIFEST_FILE}"`
+const LIVE_MANIFEST_CACHE_TTL_MS = 2000
+const LIVE_MANIFEST_COMMAND_TIMEOUT_MS = 4000
+
+type LiveManifestPayload = {
+    manifest: string
+    updatedAt: string
+    command: string
+}
+
+let liveManifestCache: LiveManifestPayload | null = null
+let liveManifestCachedAt = 0
+let liveManifestRefreshPromise: Promise<LiveManifestPayload> | null = null
+
+const sendJson = (res: any, statusCode: number, payload: unknown) => {
+    res.statusCode = statusCode
+    res.setHeader('Content-Type', 'application/json')
+    res.end(JSON.stringify(payload))
+}
+
+const runCommand = (command: string, options: ExecOptions = {}) =>
+    new Promise<void>((resolve, reject) => {
+        exec(command, options, (error) => {
+            if (error) {
+                reject(error)
+                return
+            }
+            resolve()
+        })
+    })
+
+const getLiveManifestPayload = async (): Promise<LiveManifestPayload> => {
+    const now = Date.now()
+    if (liveManifestCache && now - liveManifestCachedAt < LIVE_MANIFEST_CACHE_TTL_MS) {
+        return liveManifestCache
+    }
+
+    if (!liveManifestRefreshPromise) {
+        liveManifestRefreshPromise = (async () => {
+            await mkdir(dirname(LIVE_MANIFEST_FILE), { recursive: true })
+            await runCommand(LIVE_MANIFEST_COMMAND, { timeout: LIVE_MANIFEST_COMMAND_TIMEOUT_MS })
+            const manifest = await readFile(LIVE_MANIFEST_FILE, 'utf8')
+            const payload: LiveManifestPayload = {
+                manifest,
+                updatedAt: new Date().toISOString(),
+                command: LIVE_MANIFEST_DISPLAY_COMMAND,
+            }
+            liveManifestCache = payload
+            liveManifestCachedAt = Date.now()
+            return payload
+        })().finally(() => {
+            liveManifestRefreshPromise = null
+        })
+    }
+
+    return liveManifestRefreshPromise
+}
 
 export default defineConfig({
     plugins: [
@@ -14,14 +76,28 @@ export default defineConfig({
                 server.middlewares.use((req: any, res: any, next: any) => {
                     if (req.url === '/api/vote-code' && req.method === 'GET') {
                         exec(VOTE_CODE_COMMAND, (error, stdout) => {
-                            res.setHeader('Content-Type', 'application/json')
                             if (error) {
-                                res.statusCode = 500
-                                res.end(JSON.stringify({ error: error.message }))
+                                sendJson(res, 500, { error: error.message })
                                 return
                             }
-                            res.end(JSON.stringify({ code: stdout.trim() }))
+                            sendJson(res, 200, { code: stdout.trim() })
                         })
+                        return
+                    }
+
+                    if (req.url === '/api/live-cluster-manifest' && req.method === 'GET') {
+                        void (async () => {
+                            try {
+                                const payload = await getLiveManifestPayload()
+                                sendJson(res, 200, payload)
+                            } catch (error: any) {
+                                if (liveManifestCache) {
+                                    sendJson(res, 200, liveManifestCache)
+                                    return
+                                }
+                                sendJson(res, 500, { error: error?.message ?? 'Failed to refresh live manifest' })
+                            }
+                        })()
                         return
                     }
                     next()

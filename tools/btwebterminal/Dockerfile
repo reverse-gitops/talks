@@ -12,7 +12,8 @@ ENV KUBECTL_VERSION=v1.35.0 \
     KUSTOMIZE_VERSION=5.8.1 \
     K3D_VERSION=v5.8.3 \
     FLUX_VERSION=2.8.0 \
-    K9S_VERSION=v0.50.9
+    K9S_VERSION=v0.50.9 \
+    KUBECTL_NEAT_VERSION=v2.0.4
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
@@ -65,6 +66,12 @@ RUN curl -fsSLo /tmp/k9s.tar.gz "https://github.com/derailed/k9s/releases/downlo
     tar -xzf /tmp/k9s.tar.gz -C /usr/local/bin k9s && \
     chmod +x /usr/local/bin/k9s && \
     rm /tmp/k9s.tar.gz
+
+# Install kubectl-neat
+RUN curl -fsSLo /tmp/kubectl-neat.tar.gz "https://github.com/itaysk/kubectl-neat/releases/download/${KUBECTL_NEAT_VERSION}/kubectl-neat_linux_amd64.tar.gz" && \
+    tar -xzf /tmp/kubectl-neat.tar.gz -C /usr/local/bin kubectl-neat && \
+    chmod +x /usr/local/bin/kubectl-neat && \
+    rm /tmp/kubectl-neat.tar.gz
 
 # Install Starship prompt
 RUN curl -fsSL https://starship.rs/install.sh | sh -s -- --yes

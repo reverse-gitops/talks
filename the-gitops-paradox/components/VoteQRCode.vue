@@ -4,6 +4,12 @@ import { ref, onMounted, onUnmounted, computed } from 'vue'
 const BASE_URL = 'https://demo.configbutler.ai'
 const CODE_TTL = 30
 
+const props = withDefaults(defineProps<{
+  showCountdown?: boolean
+}>(), {
+  showCountdown: true,
+})
+
 const code = ref<string | null>(null)
 const countdown = ref(CODE_TTL)
 const fetchError = ref(false)
@@ -68,7 +74,7 @@ onUnmounted(() => {
       :dots-options="{ type: 'extra-rounded', color: 'grey' }"
     />
     <div class="text-sm font-mono text-gray-400 break-all text-center max-w-xs">{{ voteUrl.replace('https://', '') }}</div>
-    <div class="flex items-center gap-2 text-sm" :style="{ color: countdownColor }">
+    <div v-if="props.showCountdown" class="flex items-center gap-2 text-sm" :style="{ color: countdownColor }">
       <svg width="12" height="12" viewBox="0 0 12 12">
         <circle cx="6" cy="6" r="5" fill="none" stroke="currentColor" stroke-width="1.5"
           stroke-dasharray="31.4"
