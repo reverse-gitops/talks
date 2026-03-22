@@ -30,7 +30,7 @@ SLIDEV_ADDON_WEB_TERMINAL_FILES := $(shell find tools/slidev-addon-web-terminal 
 	-path 'tools/slidev-addon-web-terminal/example' -prune -o \
 	-type f -print)
 
-.PHONY: install-node-deps run-repo-sync run-btwebterminal run empty-demo-repo
+.PHONY: install-node-deps run-repo-sync tail-sync tail-btwebterminal run-btwebterminal run empty-demo-repo
 
 install-node-deps: $(NODE_TOOL_STAMPS) $(NODE_APP_STAMPS)
 
@@ -44,22 +44,26 @@ $(NODE_APP_STAMPS): %/node_modules/.install-stamp: %/package.json %/package-lock
 	$(NPM) install --prefix $*
 	@touch $@
 
-run-repo-sync:
+run-repo-sync: empty-demo-repo
 	docker build -f tools/gitea-sync/Dockerfile -t $(GITEA_SYNC_IMAGE) .
 	docker rm -f $(GITEA_SYNC_CONTAINER) >/dev/null 2>&1 || true
-	docker run -d \
-		--name $(GITEA_SYNC_CONTAINER) \
-		--add-host host.docker.internal:host-gateway \
-		-e REPO_NAME=$(REPO_NAME) \
-		-e SECRET_NAMESPACE=$(SECRET_NAMESPACE) \
-		-e CHECKOUT_DIR=/sync \
-		-e SYNC_INTERVAL_SECONDS=$(GITEA_SYNC_INTERVAL_SECONDS) \
-		-e SYNC_OWNER_UID=$(SYNC_OWNER_UID) \
-		-e SYNC_OWNER_GID=$(SYNC_OWNER_GID) \
-		-v $(DEMO_REPO_VOLUME):/sync \
-		-v $(KUBE_VOLUME):/root/.kube \
-		$(GITEA_SYNC_IMAGE)
+		docker run -d \
+			--name $(GITEA_SYNC_CONTAINER) \
+			--add-host host.docker.internal:host-gateway \
+			-e REPO_NAME=$(REPO_NAME) \
+			-e SECRET_NAMESPACE=$(SECRET_NAMESPACE) \
+			-e CHECKOUT_DIR=/sync \
+			-e KUBECONFIG=/kube/config \
+			-e SYNC_INTERVAL_SECONDS=$(GITEA_SYNC_INTERVAL_SECONDS) \
+			-e SYNC_OWNER_UID=$(SYNC_OWNER_UID) \
+			-e SYNC_OWNER_GID=$(SYNC_OWNER_GID) \
+			-v $(DEMO_REPO_VOLUME):/sync \
+			-v $(KUBE_VOLUME):/kube \
+			$(GITEA_SYNC_IMAGE)
 	@echo "Started $(GITEA_SYNC_CONTAINER) with volume $(DEMO_REPO_VOLUME)"
+
+tail-sync:
+	docker logs -f $(GITEA_SYNC_CONTAINER)
 
 run-btwebterminal: run-repo-sync
 	docker build -f tools/btwebterminal/Dockerfile -t $(BTWEBTERMINAL_IMAGE) tools/btwebterminal
@@ -76,6 +80,9 @@ run-btwebterminal: run-repo-sync
 		-v $(DEMO_REPO_VOLUME):/home/node/demo \
 		$(BTWEBTERMINAL_IMAGE)
 	@echo "Started $(BTWEBTERMINAL_CONTAINER) on http://host.docker.internal:$(BTWEBTERMINAL_PORT)"
+
+tail-btwebterminal:
+	docker logs -f $(BTWEBTERMINAL_CONTAINER)
 
 empty-demo-repo:
 	docker run --rm \

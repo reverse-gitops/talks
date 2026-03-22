@@ -2,6 +2,7 @@ FROM debian:bookworm-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV KUBECTL_VERSION=v1.35.0
+ENV KUBECONFIG=/kube/config
 ENV REPO_NAME=demo
 ENV SYNC_ROOT=/sync
 ENV SYNC_INTERVAL_SECONDS=5

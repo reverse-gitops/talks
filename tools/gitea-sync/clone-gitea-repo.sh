@@ -230,7 +230,8 @@ ensure_secret_credentials() {
 setup_repo_credentials() {
   local credential_file="$1"
 
-  git -C "${CHECKOUT_DIR}" config credential.helper "store --file=${credential_file}"
+  git -C "${CHECKOUT_DIR}" config credential.helper \
+    '!f() { path=$(git rev-parse --path-format=absolute --git-path .gitea-credentials) && git credential-store --file="$path" "$@"; }; f'
   git -C "${CHECKOUT_DIR}" config credential.useHttpPath true
   git -C "${CHECKOUT_DIR}" remote set-url origin "$(repo_url_with_auth)"
   printf '%s\n' "$(repo_url_with_auth)" > "${credential_file}"

@@ -20,6 +20,7 @@ transition: slide-left
 comark: true
 # duration of the presentation (5 minutes for questions)
 duration: 20m
+monaco: false # It can only write, and does not work yet together with the terminal itself
 addons:
   - web-terminal
   - qrcode
@@ -61,7 +62,7 @@ That is what I call Reverse GitOps.
 
 ---
 
-<<< @/snippets/test.yaml {height:100px}
+<<< snippets/test.yaml {2|3|7|12}{maxHeight:'200px'}
 
 ---
 
@@ -76,7 +77,7 @@ layout: two-cols
 
 ::right::
 
-<<< @/demo-repo/adam/rai/8f/examples.configbutler.ai/v1alpha1/quizsessions/vote/kubecon-2026.yaml yaml 
+<<< ./demo-repo/adam/rai/8f/examples.configbutler.ai/v1alpha1/quizsessions/vote/kubecon-2026.yaml yaml {2|3|7|12}{maxHeight:'200px'}
 
 
 ---
@@ -84,12 +85,6 @@ layout: two-cols
 # This is what you will commit?
 
 <<< ./demo-repo/adam/rai/8f/examples.configbutler.ai/v1alpha1/quizsubmissions/vote/kubecon-2026-sample.yaml yaml
-
----
-
-# Is that ok?
-
-<<< ./pages/test.yaml
 
 ---
 src: ./pages/terminal.md

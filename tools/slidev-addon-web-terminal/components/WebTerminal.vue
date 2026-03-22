@@ -61,10 +61,18 @@ let initRunId = 0
 let textareaFocusHandler: (() => void) | null = null
 let textareaBlurHandler: (() => void) | null = null
 
+const isElementVisible = (el: HTMLElement | null): boolean => {
+    if (!el?.isConnected) return false
+    return el.getClientRects().length > 0
+}
+
 const isTypingInEditable = (el: Element | null): boolean => {
-    if (!el) return false
+    if (!(el instanceof HTMLElement)) return false
+    if (!isElementVisible(el)) return false
     if (el instanceof HTMLTextAreaElement || el instanceof HTMLInputElement) return true
-    return !!(el as HTMLElement).closest?.('[contenteditable="true"]')
+
+    const contentEditable = el.closest?.('[contenteditable="true"]')
+    return contentEditable instanceof HTMLElement && isElementVisible(contentEditable)
 }
 const instanceId = Math.random().toString(36).slice(2, 8)
 
