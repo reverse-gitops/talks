@@ -1,3 +1,5 @@
+Intro
+
 I'm Simon, have been an software engineer for years. Worked at companies big and small, and in the last 6 years I switched to DevOps and platform engineering in a smaller sized company: where we made the switch the Kubernetes. I don't work there anymore, since I learned that I was missing something. Something that I'm now trying to build. I'm here for 2 things: Showing what I've got, and asking for your feedback! Don't spare me with your questions: it's all not written in stone, so if you dare to dream with me than we certainly can make it better together.
 
 I would like to show you this little movie first: my sun agreed that I would show it, but I had to promise that I would tell you that he build it all by himself. Which is now did: well there are parallels. To me showing this idear here, showing the protoyp feels akward but also very liberating. I have a working prototpy and I have an idea.
@@ -14,7 +16,7 @@ But wait, the Kubernetes API is very important to our workloads, we need to prot
 
 Humanity has invented GitOps for a reason didnt they? So that we never touch our Kubernetes API by hand, the clusters feed themselves with git state. Git is the single source of truth.
 
-Behind the Kubernetes API is the Kubernetes Resource Model (KRM). I didn't know it was called that: I guess it was my last [SO question](https://stackoverflow.com/questions/78458958/is-there-a-name-or-standard-for-the-yaml-format-used-to-describe-kubernetes-reso?noredirect=1#comment138321981_78458958) to ever ask. A very interesting design principle is that KRM resources are describing desired state. They have spec (and status). Most rest APIs that I worked with have both a url and body that need to be viewed togheter (make a curl call to the live weather in Adam). The inventors of the Kubernetes API took another route: they decided to decode both the body and the location in the body (make a live call to the Kubernetes API).
+Behind the Kubernetes API is the Kubernetes Resource Model (KRM). I didn't know it was called that: I guess it was my last [SO question](https://stackoverflow.com/questions/78458958/is-there-a-name-or-standard-for-the-yaml-format-used-to-describe-kubernetes-reso?noredirect=1#comment138321981_78458958) to ever ask. A very interesting design principle is that KRM resources are describing desired state. They have spec (and status). Most rest APIs that I worked with have both a url and body that need to be viewed togheter (make a curl call to the live weather in Adam). The inventors of the Kubernetes API took another route: they decided to decode both the body and the location in the body (demo 2 will show that!).
 
 Let it sink in: the location of your file doesnt matter, the name doesnt matter. It's just the content that matters. Which is also why you can place multiple files in a single file. kubectl apply -f and GitOps for that matter are your friends.
 
@@ -23,6 +25,10 @@ This is perfect: and this is also allowd me to sketch the actual GitOps paradox.
 I've been searching: but I failed to find something that totally does this: I also noticed that doing this inside a small companies engineering team was to distracting: it's not serving both ends. So that's why I decide to quit my full time job. And to work on this fulltime. Bringing KRM to the masses, helping people to use the Kubernetes API for their configuration.
 
 The core of this is luckly simple: place an extra Kubernetes cluster in front of the GitOps repo. And have an operator that translates the Kuberetes audit API into readable git commits. 
+
+---
+
+Demo 1
 
 Last week wednsday we had to vote in the Netherlands: it's a nice foto on a beatiful day, and I also have a voting app for this day. The demo is embedded in this presentation so we should be able to follow along pretty quickly. I, together with my AI, wrote a nice little operator that is going to open up a part of the Kubernetes API to you. Right now. Almost exactly as I'm advocating, except that I'm now not doing that in a seperate cluster. For production loads I would suggest you to do it differntly.
 
@@ -52,11 +58,15 @@ If now look a bit deeper in a git commit then you see support for this usecase. 
 
 There is a few uneasy truths if you want to make it so fluently going back and forth (between file and API resource). Let's go by them, and let's hope that you don't come up with more than I anticipated.
 
+---
+
 1. Who owns the truth?
 
 > Include the photograph of schietterein-close-up.jpg 
 
 I've designed the implementation to be as fast as it can get: so it's assuming that it's the most used write path. I could go into details, but I won't make it if I did. If it detects a write from the git side then it should be asking flux or argo to reconicle, and only then it will 'replay' the audit events that it pushed into a queue. If by some weird coindance the same change came in then the event won't result in a commit. It will be silently dropped. If the intent has changed of a resource: then you are unlucky, the git working tree is set the latest commit and all events are replayed (and resulting in commits) as is. (I'm wondering if this part is to technical, but it should help to give the idea some credability).
+
+---
 
 2. You need bi-directionality.
 
@@ -74,6 +84,8 @@ So for this demo I'm using KRO: but it can be any platform tool you like, as lon
 
 KRO allows you to define a 'template' and creates a new CRD out of it automatically. It's a real CRD under the hood (fact check). And you can work with them, just like we did earlier.
 
+---
+
 3. GitOps still applies
 
 For this demo I went a bit further: let's create a pull request and we will do that by instructing gitops-reverser to watch for our new type. gitops-reverser can off course be instructed by KRM itself. I inspired it's design on the great work that FluxCD is doing on this (I'm a proud fan, perhaps I should make a picture of it in front of kubecon with my cap as fun joke?).
@@ -81,7 +93,7 @@ For this demo I went a bit further: let's create a pull request and we will do t
 So we have a git-creds-demo secret, a GitDestination, a GitTarget and a WatchRule. Together they prepare gitops-reverser to do it's work. Every event is picked up and written to git. Do note that on startup it's also reconicling the current set of matching resources into git. Only if that is needed of course. I spend serious time to get the GitTarget in the right shape (vibe coding didnt helped me there!): it's now implemented in such a way that it will create the branch at the very first moment that a relevant commit needs writing. It will also bootstrap a .sops.yaml and README.md in the path that you defined. For everybody that doesnt know sops, it's a great CNCF project that allows you to store YAML encrypted. Which I only do for secrets. It's certainly not the only way that conceptually is possible, other implementations are certainly possible. But this has proven itself to be very reliable and fast.
 
 So we have an podinfos-intent namespace, this is where we will manage our intent. Let's create our first wave of intent. By throwing in a few different colors, for the sake of fun I made it a bit more visual appealing. To keep it simple I'm just applying these manifests: if your end users are technical they could do it as well. I've considered to also creae a little app for this, but the talk is dense enough as it is already.
-> Make a few colored circles with a dutch word in it, also include a deliberate typo.
+> Make a few colored circles with a dutch word in it, also include a deliberate typo in the first commit
 
 Now show immediatly that it actually works: create qr codes out of them and show the public it works.
 
@@ -96,6 +108,8 @@ Now I'm also skipping a few steps, and creating scripts just to speed the demo u
 I can also select all and then remove them, I also could revert it if my bi-directionaly support was already totally finsihed.
 
 (Note to self -> make sure to include the .gitkeep in the folder, if I'm removing the all the environments then it would break on stage).
+
+---
 
 So this is all very cool: and I'm happy that it came this far. For the last slide I have some questions, I'm very aware that the world is moving rapidly, I do need your feedback. Let me know your thoughts: especially if you feel the dream of getting both your file based openness with spledid API. A lot is possible.
 

@@ -10,6 +10,16 @@ Leave plenty of room for questions. Common ones to prepare for:
 -->
 
 ---
+layout: diagram-story-frame
+transition: view-transition
+drawFilePath: /story.excalidraw.json
+frame: "6"
+---
+
+# Moving changes back
+
+
+---
 
 # Is Git the source of truth?
 

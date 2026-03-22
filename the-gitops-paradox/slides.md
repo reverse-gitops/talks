@@ -71,35 +71,41 @@ div.grid.grid-cols-2.w-full.h-full.auto-rows-fr:has(> .two-third) {
 * Implementing this idear in the open
 * ConfigButler
 
-
---- #7
-layout: fact
+---
+src: ./pages-new/0-intro.md
 
 ---
-# I <mdi-heart /> GitOps
 
 ---
-layout: full
+src: ./pages-new/1-vote.md
+
 ---
 
-<RenderWhen context="slide">
-  <SlidevVideo class="w-full h-full object-cover" autoplay controls>
-    <source src="/images/rc-short.mp4" type="video/mp4" />
-  </SlidevVideo>
-</RenderWhen>
+---
+src: ./pages-new/2-api-first.md
 
-<RenderWhen context="presenter">
-  <h2>Short movie</h2>
-  <p>The live presentation shows a video of self-build rc plane taking off and landing</p>
-</RenderWhen>
 
---- #5
+---
 
-# Reverse Gitops
+---
+src: ./pages-new/3-abstractions.md
 
-* Augmenting GitOps
-* You are among the first to see this
-* Will it take off?
+---
+
+---
+src: ./pages-new/4-gitops.md
+
+---
+
+---
+
+# Thanks for watching
+
+Contact info
+This will be live for a while
+
+---
+
 
 --- #6
 
@@ -118,56 +124,6 @@ layout: full
 layout: default
 class: h-full
 
----
-
-<div
-  style="position: absolute; inset: 18px 24px 24px; display: grid; grid-template-columns: minmax(240px, 300px) minmax(0, 1fr); gap: 24px; align-items: stretch;"
->
-  <div style="display: flex; align-items: center; justify-content: center;">
-    <VoteQRCode :showCountdown="false" />
-  </div>
-
-  <div style="min-width: 0; min-height: 0; display: flex; flex-direction: column;">
-    <WebTerminal
-      backendUrl="http://host.docker.internal:10001"
-      sessionId="reverse-gitops-demo-terminal"
-      :fontSize="14"
-    />
-  </div>
-</div>
-
-<div
-  v-click="[1, 2]"
-  class="clickable-code"
-  data-terminal-session="reverse-gitops-demo-terminal"
-  data-terminal-command="kubectl get nodes"
-  style="display: none;"
-></div>
-
-
-<div
-  v-click="[3, 4]"
-  class="clickable-code"
-  data-terminal-session="reverse-gitops-demo-terminal"
-  data-terminal-command='watch -n 2 "kubectl get quizsubmissions -A"'
-  style="display: none;"
-></div>
-
-<div
-  v-click="[7, 8]"
-  class="clickable-code"
-  data-terminal-session="reverse-gitops-demo-terminal"
-  data-terminal-command="cd ~/demo"
-  style="display: none;"
-></div>
-
-<div
-  v-click="[5, 6]"
-  class="clickable-code"
-  data-terminal-session="reverse-gitops-demo-terminal"
-  data-terminal-command='git log --oneline --graph --decorate --all --color=always | head -20'
-  style="display: none;"
-></div>
 
 
 
@@ -188,66 +144,14 @@ layout: two-cols
 
 ::right::
 
-<<< ./demo-repo/adam/rai/8f/examples.configbutler.ai/v1alpha1/quizsessions/vote/kubecon-2026.yaml yaml {2|3|7|12}{maxHeight:'200px'}
+<<< ./demo-repo/adam/rai/8f/examples.configbutler.ai/v1alpha1/quizsessions/vote/demo.yaml yaml {2|3|7|12}{maxHeight:'200px'}
 
 
 ---
 
 # This is what you will commit?
 
-<<< ./demo-repo/adam/rai/8f/examples.configbutler.ai/v1alpha1/quizsubmissions/vote/kubecon-2026-sample.yaml yaml
-
----
-src: ./pages/terminal.md
----
-
----
-src: ./pages/0-intro.md
----
-
-# this is ignored
-
----
-src: ./pages/1-voting.md
----
-
-# this is ignored
-
----
-src: ./pages/2-problems.md
----
-
-# this is ignored
-
----
-src: ./pages/3-api-first.md
----
-
-# this is ignored
-
----
-src: ./pages/4-abstractions.md
----
-
-# this is ignored
-
----
-src: ./pages/5-gitops-compatbile.md
----
-
-# this is ignored
-
----
-src: ./pages/6-to-reverse-or-not.md
----
-
-# this is ignored
-
----
-src: ./pages/7-feedback.md
----
-
-# this is ignored
+<<< ./demo-repo/adam/rai/8f/examples.configbutler.ai/v1alpha1/quizsubmissions/vote/example.yaml yaml
 
 ---
 src: ./pages/8-questions.md
