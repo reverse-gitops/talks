@@ -1,5 +1,4 @@
 steps:
-  - run: cd ~/demo
+  - run: kubectl apply -f intent.yaml
   - run: watch --color -n 2 "git log --oneline --graph --decorate --all --color=always | head -30"
   - keys: ctrl+c
-  - run: git show --no-patch --format=raw HEAD

@@ -1,4 +1,5 @@
 ---
+routeAlias: questions
 layout: center
 class: text-center
 ---
@@ -14,11 +15,9 @@ layout: diagram-story-frame
 transition: view-transition
 drawFilePath: /story.excalidraw.json
 frame: "6"
-hide: true
 ---
 
 # Moving changes back
-
 
 ---
 
@@ -28,7 +27,7 @@ The hard question, in my designing I have chosen to have the intent cluster as t
 
 And what happens with merge conflicts? Since the cluster is the ultimate souce of truth:
 
-Yes — in Reverse GitOps, Git is still the authoritative record.
+Yes - in Reverse GitOps, Git is still the authoritative record.
 
 The controller writes intent objects into Git. That is your source of truth. The Kubernetes cluster is derived from it, same as standard GitOps.
 
@@ -38,7 +37,7 @@ The controller writes intent objects into Git. That is your source of truth. The
 
 Well: it's the source of record, I would say that the intent control plane is the state store. All activity is immedialy reconciled to git: but also can go in the other direction. It's an engineering choice: at this moment I'm intervening with a validation webhook. But I'm in the process of switching to the Kubernetes API audit event stream (which is the only fully reliabe way of getting both the users name and what happened).
 
---- 
+---
 
 # Why not a database?
 
@@ -52,7 +51,7 @@ And don't forgot that the Kubernetes API also needs a database.
 
 The Kubernetes API has native OIDC support. You can hook up your existing auth system and know exactly who submitted each intent object.
 
-RBAC applies at the API level — before anything reaches Git.
+RBAC applies at the API level - before anything reaches Git.
 
 <!--
 Well OIDC is interesting to mention
@@ -82,6 +81,6 @@ Getting all your operational data in KRM is a very interesting thought: but opti
 
 # Does it work with ArgoCD / Flux?
 
-Yes. The controller writes clean YAML into Git. Any GitOps reconciler picks it up from there — it has no idea the change came from an API rather than a human editing a file.
+Yes. The controller writes clean YAML into Git. Any GitOps reconciler picks it up from there - it has no idea the change came from an API rather than a human editing a file.
 
 That is the point.

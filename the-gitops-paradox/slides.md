@@ -104,9 +104,9 @@ src: ./pages-new/3-3-gitops.md
 
 ---
 
-<div class="w-full h-full grid grid-cols-[minmax(0,1fr)_320px] gap-10 items-center">
+<div class="w-full h-full grid grid-cols-[minmax(0,1fr)_380px] gap-8 items-center">
   <div>
-    <h1 class="!mb-4">Thanks for watching</h1>
+    <h1 class="!mb-4">That's it</h1>
     <div class="text-2xl leading-relaxed opacity-90">
       I would love your feedback.
     </div>
@@ -119,12 +119,10 @@ src: ./pages-new/3-3-gitops.md
   </div>
 
   <div class="flex justify-center">
-    <VoteQRCode session="feedback" :showCountdown="false" />
+    <VoteQRCode
+      session="feedback"
+      :showCountdown="false"
+      linkClass="text-xs font-mono text-gray-400 break-all text-center max-w-sm leading-tight tracking-tight"
+    />
   </div>
 </div>
-
----
-src: ./pages/8-questions.md
----
-
-# this is ignored

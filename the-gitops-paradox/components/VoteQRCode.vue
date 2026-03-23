@@ -7,9 +7,11 @@ const CODE_TTL = 30
 const props = withDefaults(defineProps<{
   session?: string
   showCountdown?: boolean
+  linkClass?: string
 }>(), {
   session: 'demo',
   showCountdown: true,
+  linkClass: 'text-sm font-mono text-gray-400 break-all text-center max-w-xs',
 })
 
 const code = ref<string | null>(null)
@@ -79,7 +81,7 @@ onUnmounted(() => {
       :margin="10"
       :dots-options="{ type: 'extra-rounded', color: 'grey' }"
     />
-    <div class="text-sm font-mono text-gray-400 break-all text-center max-w-xs">{{ voteUrl.replace('https://', '') }}</div>
+    <div :class="props.linkClass">{{ voteUrl.replace('https://', '') }}</div>
     <div v-if="props.showCountdown" class="flex items-center gap-2 text-sm" :style="{ color: countdownColor }">
       <svg width="12" height="12" viewBox="0 0 12 12">
         <circle cx="6" cy="6" r="5" fill="none" stroke="currentColor" stroke-width="1.5"
