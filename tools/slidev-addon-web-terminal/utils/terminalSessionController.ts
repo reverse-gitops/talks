@@ -32,6 +32,7 @@ interface TerminalSessionControllerOptions {
   sessionId: string
   debug?: boolean
   sharedUrlTimeoutMs?: number
+  getInitialSize?: () => { cols: number; rows: number } | null
   logger?: (event: string, details?: Record<string, unknown>) => void
 }
 
@@ -51,16 +52,43 @@ const parsePidFromConnectionUrl = (connectionUrl: string): string | null => {
 const isTerminalNotFoundClose = (event: CloseEvent) =>
   event.code === 4404 || event.reason === 'terminal-not-found'
 
+const getValidatedInitialSize = (
+  getInitialSize?: () => { cols: number; rows: number } | null,
+) => {
+  const size = getInitialSize?.() ?? null
+  if (!size) return null
+
+  const cols = Math.floor(size.cols)
+  const rows = Math.floor(size.rows)
+  if (!Number.isFinite(cols) || !Number.isFinite(rows) || cols <= 0 || rows <= 0) {
+    return null
+  }
+
+  return { cols, rows }
+}
+
 const createPtySession = async (
   backendUrl: string,
+  initialSize: { cols: number; rows: number } | null,
   logger?: (event: string, details?: Record<string, unknown>) => void,
 ): Promise<string | null> => {
   try {
     const cleanBackendUrl = getCleanBackendUrl(backendUrl)
-    logger?.('session.create.start', { backendUrl: cleanBackendUrl })
-    const response = await fetch(`${cleanBackendUrl}/api/terminals`, { method: 'POST' })
+    const requestUrl = new URL(`${cleanBackendUrl}/api/terminals`, window.location.href)
+    if (initialSize) {
+      requestUrl.searchParams.set('cols', String(initialSize.cols))
+      requestUrl.searchParams.set('rows', String(initialSize.rows))
+    }
+    logger?.('session.create.start', { backendUrl: cleanBackendUrl, initialSize, requestUrl: requestUrl.toString() })
+    const response = await fetch(requestUrl.toString(), { method: 'POST' })
     if (!response.ok) {
-      logger?.('session.create.error', { backendUrl: cleanBackendUrl, status: response.status, statusText: response.statusText })
+      logger?.('session.create.error', {
+        backendUrl: cleanBackendUrl,
+        initialSize,
+        requestUrl: requestUrl.toString(),
+        status: response.status,
+        statusText: response.statusText,
+      })
       return null
     }
 
@@ -80,6 +108,7 @@ const createPtySession = async (
   } catch (error) {
     logger?.('session.create.error', {
       backendUrl,
+      initialSize,
       error: error instanceof Error ? error.message : String(error),
     })
     return null
@@ -109,6 +138,7 @@ export function createTerminalSessionController(
     debug,
     logger,
     sharedUrlTimeoutMs = DEFAULT_SHARED_URL_TIMEOUT_MS,
+    getInitialSize,
   } = options
 
   const bridge = acquireBridge(sessionId, {
@@ -150,7 +180,10 @@ export function createTerminalSessionController(
       }
     }
 
-    const createdUrl = await ensureSessionUrl(sessionId, () => createPtySession(backendUrl, logger))
+    const createdUrl = await ensureSessionUrl(
+      sessionId,
+      () => createPtySession(backendUrl, getValidatedInitialSize(getInitialSize), logger),
+    )
     return createdUrl ? toResolvedConnection(createdUrl, 'created') : null
   }
 
@@ -178,7 +211,11 @@ export function createTerminalSessionController(
       if (disposed || !isTerminalNotFoundClose(event)) return null
 
       logger?.('session.recover.start', { sessionId, staleUrl: currentUrl, code: event.code, reason: event.reason })
-      const result = await recoverSessionUrl(sessionId, currentUrl, () => createPtySession(backendUrl, logger))
+      const result = await recoverSessionUrl(
+        sessionId,
+        currentUrl,
+        () => createPtySession(backendUrl, getValidatedInitialSize(getInitialSize), logger),
+      )
       if (!result.url || disposed) return null
 
       const connection = toResolvedConnection(result.url, 'recovered')

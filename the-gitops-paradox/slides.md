@@ -82,76 +82,46 @@ src: ./pages-new/1-vote.md
 ---
 
 ---
-src: ./pages-new/2-api-first.md
+src: ./pages-new/2-paradox.md
 
 
 ---
 
 ---
-src: ./pages-new/3-abstractions.md
+src: ./pages-new/3-1-api-first.md
 
 ---
 
 ---
-src: ./pages-new/4-gitops.md
+src: ./pages-new/3-2-capture-intent.md
+
+---
+
+---
+src: ./pages-new/3-3-gitops.md
 
 ---
 
 ---
 
-# Thanks for watching
+<div class="w-full h-full grid grid-cols-[minmax(0,1fr)_320px] gap-10 items-center">
+  <div>
+    <h1 class="!mb-4">Thanks for watching</h1>
+    <div class="text-2xl leading-relaxed opacity-90">
+      I would love your feedback.
+    </div>
+    <div class="mt-6 text-lg opacity-75">
+      This QR stays live for a while after the talk.
+    </div>
+    <div class="mt-10 text-base opacity-70">
+      simon@configbutler.ai
+    </div>
+  </div>
 
-Contact info
-This will be live for a while
-
----
-
-
---- #6
-
-# GitOps Gives You
-
-| Capability | GitOps |
-| --- | --- |
-| Reproducable | <mdi-check /> |
-| Process | :white_check_mark: |
-| Full history | :white_check_mark: |
-| Rollbacks | :white_check_mark: |
-| Easy to change | |
-
----
-
-layout: default
-class: h-full
-
-
-
-
----
-
-<<< snippets/test.yaml {2|3|7|12}{maxHeight:'200px'}
-
----
-
-```ts {monaco}
-console.log('HelloWorld')
-```
-
----
-layout: two-cols
----
-# Let's do a cloud native
-
-::right::
-
-<<< ./demo-repo/adam/rai/8f/examples.configbutler.ai/v1alpha1/quizsessions/vote/demo.yaml yaml {2|3|7|12}{maxHeight:'200px'}
-
-
----
-
-# This is what you will commit?
-
-<<< ./demo-repo/adam/rai/8f/examples.configbutler.ai/v1alpha1/quizsubmissions/vote/example.yaml yaml
+  <div class="flex justify-center">
+    <VoteQRCode session="feedback" :showCountdown="false" />
+  </div>
+</div>
 
 ---
 src: ./pages/8-questions.md

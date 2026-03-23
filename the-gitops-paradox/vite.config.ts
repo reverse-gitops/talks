@@ -7,10 +7,8 @@ import { fileURLToPath } from 'url'
 
 const require = createRequire(import.meta.url)
 
-const VOTE_CODE_COMMAND = `kubectl get quizsession kubecon-2026 -n vote -o yaml | yq -r '.status.joinCode'`
-const LIVE_MANIFEST_FILE = fileURLToPath(new URL('./.generated/live-cluster-manifest.yaml', import.meta.url))
-const LIVE_MANIFEST_DISPLAY_COMMAND = `kubectl get quizsession kubecon-2026 -n vote -o yaml | yq 'del(.metadata.annotations, .metadata.labels)' > .generated/live-cluster-manifest.yaml`
-const LIVE_MANIFEST_COMMAND = `kubectl get quizsession kubecon-2026 -n vote -o yaml | yq 'del(.metadata.annotations, .metadata.labels)' > "${LIVE_MANIFEST_FILE}"`
+const DEFAULT_QUIZ_SESSION = 'demo'
+const QUIZ_SESSION_NAMESPACE = 'vote'
 const LIVE_MANIFEST_CACHE_TTL_MS = 2000
 const LIVE_MANIFEST_COMMAND_TIMEOUT_MS = 4000
 
@@ -20,15 +18,43 @@ type LiveManifestPayload = {
     command: string
 }
 
-let liveManifestCache: LiveManifestPayload | null = null
-let liveManifestCachedAt = 0
-let liveManifestRefreshPromise: Promise<LiveManifestPayload> | null = null
+const liveManifestCache = new Map<string, LiveManifestPayload>()
+const liveManifestCachedAt = new Map<string, number>()
+const liveManifestRefreshPromises = new Map<string, Promise<LiveManifestPayload>>()
 
 const sendJson = (res: any, statusCode: number, payload: unknown) => {
     res.statusCode = statusCode
     res.setHeader('Content-Type', 'application/json')
     res.end(JSON.stringify(payload))
 }
+
+const isValidSessionName = (value: string) =>
+    /^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(value)
+
+const parseRequestUrl = (req: any) =>
+    new URL(req.url ?? '/', 'http://localhost')
+
+const getRequestedSession = (req: any) => {
+    const session = parseRequestUrl(req).searchParams.get('session')?.trim() || DEFAULT_QUIZ_SESSION
+
+    if (!isValidSessionName(session)) {
+        return { error: 'Invalid session name' as const, statusCode: 400 as const }
+    }
+
+    return { session }
+}
+
+const buildVoteCodeCommand = (session: string) =>
+    `kubectl get quizsession ${session} -n ${QUIZ_SESSION_NAMESPACE} -o yaml | yq -r '.status.joinCode'`
+
+const buildLiveManifestKubectlCommand = (session: string) =>
+    `kubectl get quizsession ${session} -n ${QUIZ_SESSION_NAMESPACE} -o yaml | yq 'del(.metadata.annotations, .metadata.labels)'`
+
+const getLiveManifestFile = (session: string) =>
+    fileURLToPath(new URL(`./.generated/live-cluster-manifest-${session}.yaml`, import.meta.url))
+
+const buildLiveManifestCommand = (session: string) =>
+    `${buildLiveManifestKubectlCommand(session)} > "${getLiveManifestFile(session)}"`
 
 const runCommand = (command: string, options: ExecOptions = {}) =>
     new Promise<void>((resolve, reject) => {
@@ -41,31 +67,39 @@ const runCommand = (command: string, options: ExecOptions = {}) =>
         })
     })
 
-const getLiveManifestPayload = async (): Promise<LiveManifestPayload> => {
+const getLiveManifestPayload = async (session: string): Promise<LiveManifestPayload> => {
     const now = Date.now()
-    if (liveManifestCache && now - liveManifestCachedAt < LIVE_MANIFEST_CACHE_TTL_MS) {
-        return liveManifestCache
+    const cachedPayload = liveManifestCache.get(session)
+    const cachedAt = liveManifestCachedAt.get(session) ?? 0
+
+    if (cachedPayload && now - cachedAt < LIVE_MANIFEST_CACHE_TTL_MS) {
+        return cachedPayload
     }
 
-    if (!liveManifestRefreshPromise) {
-        liveManifestRefreshPromise = (async () => {
-            await mkdir(dirname(LIVE_MANIFEST_FILE), { recursive: true })
-            await runCommand(LIVE_MANIFEST_COMMAND, { timeout: LIVE_MANIFEST_COMMAND_TIMEOUT_MS })
-            const manifest = await readFile(LIVE_MANIFEST_FILE, 'utf8')
+    let refreshPromise = liveManifestRefreshPromises.get(session)
+
+    if (!refreshPromise) {
+        refreshPromise = (async () => {
+            const liveManifestFile = getLiveManifestFile(session)
+            await mkdir(dirname(liveManifestFile), { recursive: true })
+            await runCommand(buildLiveManifestCommand(session), { timeout: LIVE_MANIFEST_COMMAND_TIMEOUT_MS })
+            const manifest = await readFile(liveManifestFile, 'utf8')
             const payload: LiveManifestPayload = {
                 manifest,
                 updatedAt: new Date().toISOString(),
-                command: LIVE_MANIFEST_DISPLAY_COMMAND,
+                command: buildLiveManifestKubectlCommand(session),
             }
-            liveManifestCache = payload
-            liveManifestCachedAt = Date.now()
+            liveManifestCache.set(session, payload)
+            liveManifestCachedAt.set(session, Date.now())
             return payload
         })().finally(() => {
-            liveManifestRefreshPromise = null
+            liveManifestRefreshPromises.delete(session)
         })
+
+        liveManifestRefreshPromises.set(session, refreshPromise)
     }
 
-    return liveManifestRefreshPromise
+    return refreshPromise
 }
 
 export default defineConfig({
@@ -74,25 +108,40 @@ export default defineConfig({
             name: 'dynamic-terminal-proxy',
             configureServer(server) {
                 server.middlewares.use((req: any, res: any, next: any) => {
-                    if (req.url === '/api/vote-code' && req.method === 'GET') {
-                        exec(VOTE_CODE_COMMAND, (error, stdout) => {
+                    const requestUrl = parseRequestUrl(req)
+
+                    if (requestUrl.pathname === '/api/vote-code' && req.method === 'GET') {
+                        const sessionResult = getRequestedSession(req)
+                        if ('error' in sessionResult) {
+                            sendJson(res, sessionResult.statusCode, { error: sessionResult.error })
+                            return
+                        }
+
+                        exec(buildVoteCodeCommand(sessionResult.session), (error, stdout) => {
                             if (error) {
                                 sendJson(res, 500, { error: error.message })
                                 return
                             }
-                            sendJson(res, 200, { code: stdout.trim() })
+                            sendJson(res, 200, { code: stdout.trim(), session: sessionResult.session })
                         })
                         return
                     }
 
-                    if (req.url === '/api/live-cluster-manifest' && req.method === 'GET') {
+                    if (requestUrl.pathname === '/api/live-cluster-manifest' && req.method === 'GET') {
+                        const sessionResult = getRequestedSession(req)
+                        if ('error' in sessionResult) {
+                            sendJson(res, sessionResult.statusCode, { error: sessionResult.error })
+                            return
+                        }
+
                         void (async () => {
                             try {
-                                const payload = await getLiveManifestPayload()
+                                const payload = await getLiveManifestPayload(sessionResult.session)
                                 sendJson(res, 200, payload)
                             } catch (error: any) {
-                                if (liveManifestCache) {
-                                    sendJson(res, 200, liveManifestCache)
+                                const cachedPayload = liveManifestCache.get(sessionResult.session)
+                                if (cachedPayload) {
+                                    sendJson(res, 200, cachedPayload)
                                     return
                                 }
                                 sendJson(res, 500, { error: error?.message ?? 'Failed to refresh live manifest' })

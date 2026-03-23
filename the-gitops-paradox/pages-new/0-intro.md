@@ -46,12 +46,45 @@ layout: fact
 ---
 # I <mdi-heart /> GitOps
 
+--- #7
+layout: fact
+
+---
+
+# I need `x`: pfff now I need to create a PR with the right YAML ☹️
+
+<!-- The pivot, it's not easy for everyone! I remember my technical tech savy front end collegau saying this. The sigh was very real, and he was certainly not unable. But mental bandwidth is a certain thing. -->
+--- #6
+
+# Why?
+
+|  | GitOps | Reverse GitOps
+| --- | --- | --- |
+| Reproducable | <mdi-check /> | <mdi-check /> |
+| Process | <mdi-check /> | <mdi-check /> |
+| Full history | <mdi-check /> | <mdi-check /> |
+| Rollbacks | <mdi-check /> | <mdi-check /> |
+| API First 😊 | | <mdi-check /> |
+| Fast type checking | | <mdi-check /> |
+
+<!-- Let's add notes here -->
+
 ---
 layout: diagram-story-frame
 transition: view-transition
 drawFilePath: /1-gitops-reverser.excalidraw.json
 frame: "A"
 ---
+
+<!--
+This might be a lot
+
+I'm showing an implementation
+And an idea
+
+The implementation hopefully will help. Perhaps I should show the gitops reverser after the demo.
+-->
+
 
 ---
 layout: full
@@ -65,30 +98,6 @@ layout: full
   </a>
 </div>
 
-<!-- Here are the slide notes-->
+<!-- It's all open source, you can try it. Let me know how it works for you. I'm not at 1.0 so more changes are on it's way. -->
 
----
-layout: diagram-story-frame
-transition: view-transition
-drawFilePath: /1-gitops-reverser.excalidraw.json
-frame: "B"
 
----
-
-<!--This shows the website behind the movement that I would like to start around this: it's not about me, my company, my implementation -> it's about getting the idea to a higher level-->
-
-<!-- Here are the slide notes-->
-
----
-layout: full
-
----
-
-<!--This shows the website behind the movement that I would like to start around this: it's not about me, my company, my implementation -> it's about getting the idea to a higher level-->
-<div class="w-full h-full flex items-center justify-center p-4">
-  <a href="https://reversegitops.dev" target="_blank" rel="noopener noreferrer" class="w-full h-full flex items-center justify-center">
-    <img src="/images/screenshot-reversegitopsdev.png" alt="gitops-reverser screenshot" class="block w-auto h-full max-w-full max-h-full object-contain"></img>
-  </a>
-</div>
-
-<!-- Here are the slide notes-->

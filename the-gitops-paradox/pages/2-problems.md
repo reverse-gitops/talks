@@ -7,7 +7,7 @@ class: text-center
 
 <div class="flex items-center justify-center gap-12 mt-6">
 <div>
-  <VoteQRCode />
+  <VoteQRCode session="demo" />
 </div>
 <div class="text-left max-w-xs">
 

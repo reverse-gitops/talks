@@ -5,8 +5,10 @@ const BASE_URL = 'https://demo.configbutler.ai'
 const CODE_TTL = 30
 
 const props = withDefaults(defineProps<{
+  session?: string
   showCountdown?: boolean
 }>(), {
+  session: 'demo',
   showCountdown: true,
 })
 
@@ -18,7 +20,7 @@ let countdownInterval: ReturnType<typeof setInterval> | null = null
 
 async function fetchCode() {
   try {
-    const res = await fetch('/api/vote-code')
+    const res = await fetch(`/api/vote-code?session=${encodeURIComponent(props.session)}`)
     const data = await res.json()
     if (data.error) throw new Error(data.error)
     code.value = data.code
@@ -41,8 +43,12 @@ function startCycle() {
   }, 1000)
 }
 
+const sessionPath = computed(() => props.session.replace(/^\/+|\/+$/g, ''))
+
 const voteUrl = computed(() =>
-  code.value ? `${BASE_URL}?code=${code.value}` : BASE_URL
+  code.value
+    ? `${BASE_URL}/${sessionPath.value}?code=${encodeURIComponent(code.value)}`
+    : `${BASE_URL}/${sessionPath.value}`
 )
 
 const countdownColor = computed(() => {

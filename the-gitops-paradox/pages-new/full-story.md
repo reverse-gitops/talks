@@ -26,7 +26,7 @@ I've been searching: but I failed to find something that totally does this: I al
 
 The core of this is luckly simple: place an extra Kubernetes cluster in front of the GitOps repo. And have an operator that translates the Kuberetes audit API into readable git commits. 
 
----
+--- (1-vote.md)
 
 Demo 1
 
@@ -58,7 +58,9 @@ If now look a bit deeper in a git commit then you see support for this usecase. 
 
 There is a few uneasy truths if you want to make it so fluently going back and forth (between file and API resource). Let's go by them, and let's hope that you don't come up with more than I anticipated.
 
----
+--- (1-api-first.md)
+
+I feel that there is something very valuable in all of this. I want to make it bigger than only me, or my company. What if it fails? Other people may embrace it, please let me know what you think. Starts with introducing reverse gitops -> the manifesto to state that we need a both: an API and the goodness of Gitops.
 
 1. Who owns the truth?
 
@@ -66,9 +68,9 @@ There is a few uneasy truths if you want to make it so fluently going back and f
 
 I've designed the implementation to be as fast as it can get: so it's assuming that it's the most used write path. I could go into details, but I won't make it if I did. If it detects a write from the git side then it should be asking flux or argo to reconicle, and only then it will 'replay' the audit events that it pushed into a queue. If by some weird coindance the same change came in then the event won't result in a commit. It will be silently dropped. If the intent has changed of a resource: then you are unlucky, the git working tree is set the latest commit and all events are replayed (and resulting in commits) as is. (I'm wondering if this part is to technical, but it should help to give the idea some credability).
 
----
+--- (3-capture-intent.md)
 
-2. You need bi-directionality.
+2. You need bi-directionality. (include picture of train already)
 
 > Include the photograph of the train -> it can drive in both directions without turning it around.
 
@@ -84,9 +86,9 @@ So for this demo I'm using KRO: but it can be any platform tool you like, as lon
 
 KRO allows you to define a 'template' and creates a new CRD out of it automatically. It's a real CRD under the hood (fact check). And you can work with them, just like we did earlier.
 
----
+--- (3-capture-intent.md)
 
-3. GitOps still applies
+3. GitOps still applies (picuture of a nice door is already there).
 
 For this demo I went a bit further: let's create a pull request and we will do that by instructing gitops-reverser to watch for our new type. gitops-reverser can off course be instructed by KRM itself. I inspired it's design on the great work that FluxCD is doing on this (I'm a proud fan, perhaps I should make a picture of it in front of kubecon with my cap as fun joke?).
 
@@ -109,7 +111,7 @@ I can also select all and then remove them, I also could revert it if my bi-dire
 
 (Note to self -> make sure to include the .gitkeep in the folder, if I'm removing the all the environments then it would break on stage).
 
----
+--- (back to ../slides.md)
 
 So this is all very cool: and I'm happy that it came this far. For the last slide I have some questions, I'm very aware that the world is moving rapidly, I do need your feedback. Let me know your thoughts: especially if you feel the dream of getting both your file based openness with spledid API. A lot is possible.
 

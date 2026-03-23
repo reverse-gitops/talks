@@ -2,8 +2,17 @@
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useSlideContext } from '@slidev/client'
 
+const props = withDefaults(defineProps<{
+  session?: string
+}>(), {
+  session: 'demo',
+})
+
+const getManifestCommand = (session: string) =>
+  `kubectl get quizsession ${session} -n vote -o yaml | yq 'del(.metadata.annotations, .metadata.labels)'`
+
 const manifest = ref('Loading manifest from the cluster...')
-const command = ref(`kubectl get quizsession kubecon-2026 -n vote -o yaml | yq 'del(.metadata.annotations, .metadata.labels)'`)
+const command = ref(getManifestCommand(props.session))
 const fetchError = ref<string | null>(null)
 const updatedAt = ref<string | null>(null)
 const { $renderContext: renderContext } = useSlideContext()
@@ -61,7 +70,7 @@ async function fetchManifest() {
 
   activeRequest = (async () => {
   try {
-    const res = await fetch('/api/live-cluster-manifest', {
+    const res = await fetch(`/api/live-cluster-manifest?session=${encodeURIComponent(props.session)}`, {
       cache: 'no-store',
       signal: abortController?.signal,
     })
@@ -72,7 +81,7 @@ async function fetchManifest() {
     }
 
     manifest.value = data.manifest
-    command.value = data.command ?? command.value
+    command.value = data.command ?? getManifestCommand(props.session)
     updatedAt.value = data.updatedAt ?? null
     fetchError.value = null
   } catch (error) {
@@ -106,6 +115,12 @@ watch(shouldPoll, enabled => {
   }
   void fetchManifest()
 }, { immediate: false })
+
+watch(() => props.session, session => {
+  command.value = getManifestCommand(session)
+  if (!shouldPoll.value) return
+  void fetchManifest()
+})
 </script>
 
 <template>

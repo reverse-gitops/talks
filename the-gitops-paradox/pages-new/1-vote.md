@@ -39,7 +39,7 @@ transition: fade
   style="position: absolute; inset: 18px 24px 24px; display: grid; grid-template-columns: minmax(240px, 300px) minmax(0, 1fr); gap: 24px; align-items: stretch;"
 >
   <div style="display: flex; align-items: center; justify-content: center;">
-    <VoteQRCode :showCountdown="false" />
+    <VoteQRCode session="demo" :showCountdown="false" />
   </div>
 
   <div style="min-width: 0; min-height: 0; display: flex; flex-direction: column;">
@@ -105,5 +105,4 @@ transition: fade
     style="display: none;"
   ></div>
 </div>
-
 

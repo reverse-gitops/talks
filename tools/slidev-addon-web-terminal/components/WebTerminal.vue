@@ -517,6 +517,7 @@ const initTerminal = async () => {
             backendUrl: props.backendUrl,
             sessionId: props.sessionId ?? props.backendUrl,
             debug: isDebugEnabled(),
+            getInitialSize: () => terminal ? { cols: terminal.cols, rows: terminal.rows } : null,
             logger: (event, details) => logEvent(event, details),
         })
         controlOwnerCleanup?.()

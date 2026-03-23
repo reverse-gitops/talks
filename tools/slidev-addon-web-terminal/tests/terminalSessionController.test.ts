@@ -170,4 +170,33 @@ describe('terminalSessionController', () => {
 
     controller.dispose()
   })
+
+  it('creates a PTY with the fitted terminal size when available', async () => {
+    const fetchMock = vi.fn(async (input: string | URL, init?: RequestInit) => {
+      const url = String(input)
+      if (url === `${backendUrl}/api/terminals?cols=120&rows=40` && init?.method === 'POST') {
+        return new Response('pty-12', { status: 200 })
+      }
+      throw new Error(`Unexpected fetch: ${url}`)
+    })
+    vi.stubGlobal('fetch', fetchMock)
+
+    const controller = createTerminalSessionController({
+      backendUrl,
+      sessionId: 'deck',
+      sharedUrlTimeoutMs: 1,
+      getInitialSize: () => ({ cols: 120, rows: 40 }),
+    })
+
+    const resolved = await controller.resolveConnection()
+
+    expect(fetchMock).toHaveBeenCalledTimes(1)
+    expect(resolved).toEqual({
+      url: createdTerminalUrl('pty-12'),
+      pid: 'pty-12',
+      source: 'created',
+    })
+
+    controller.dispose()
+  })
 })
