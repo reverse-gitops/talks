@@ -6,16 +6,18 @@ image: /images/schietterein.jpg
 
 # The paradox
 
-<!-- The photograph shows a military practice facility, it's a place where you cannot go. I dont really want to give attention to it -->
-
-* Shield people from the Kubernetes API
-* Require them to use Git.
-* There is a need for a good API
-* Let's open up the Kubernetes API
-* Don't shoot me yet, I've spelled this out in an manifesto -> which I also would not accept
+* We shield people from the Kubernetes API.
+* We force them to use Git as the write path.
+* Then we build custom APIs and portals anyway.
+* So why not use Kubernetes itself as the typed API for intent?
+* Keep GitOps. Change the front door.
 
 <!--
-
+This is the paradox I am trying to name.<br/>
+We do not trust people with the Kubernetes API,<br/>
+but we still need a good API for self-service.<br/>
+So platform teams keep rebuilding one next to Kubernetes.<br/>
+My claim is: often, Kubernetes already is the API we need.
 -->
 
 ---
@@ -23,14 +25,20 @@ layout: full
 
 ---
 
-<!--This shows the website behind the movement that I would like to start around this: it's not about me, my company, my implementation -> it's about getting the idea to a higher level-->
+# reversegitops.dev
+
 <div class="w-full h-full flex items-center justify-center p-4">
   <a href="https://reversegitops.dev" target="_blank" rel="noopener noreferrer" class="w-full h-full flex items-center justify-center">
     <img src="/images/screenshot-reversegitopsdev.png" alt="gitops-reverser screenshot" class="block w-auto h-full max-w-full max-h-full object-contain"></img>
   </a>
 </div>
 
-<!-- So I love this idea, and thats why I thought it would be a good idea to summarize what it does as a manifest, an augemention for gitops-->
+<!--
+I wanted to make this bigger than one implementation.<br/>
+That is why I wrote it down as a small manifesto.<br/>
+Not to replace GitOps,<br/>
+but to argue that GitOps needs a better write interface.
+-->
 
 ---
 layout: diagram-story-frame
@@ -40,9 +48,9 @@ frame: "B"
 
 ---
 
-<!--This shows the technical diagram from before the demo. Hopefull its clear that I'm trying to make it a bi more abstract: I do this by two big circles to show git reverse gitops is augmenting gitops-->
-
 <!-- 
-Let's circle back to what we just have seen
-An easy 'editor' for git managed resources
+What we just saw was not a toy voting app.<br/>
+It was an example of a different operating model.<br/>
+Reverse GitOps is an extra layer in front of GitOps:<br/>
+an easier write path for resources that still end up in Git.
 -->

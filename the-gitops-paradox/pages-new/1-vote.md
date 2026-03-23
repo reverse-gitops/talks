@@ -7,14 +7,15 @@ transition: fade
 
 # Voting demo
 
-* Last week we voted in the Netherlands
-* A voting app is always nice
+* A live voting app is always nice
 * This one is truly cloud native
 * The presentation as well
 
 <!--
-Last week we had elections in the Netherlands
-
+Let me make this concrete.<br/>
+Instead of debating the model in the abstract,<br/>
+let's use it.<br/>
+You are going to write to the API yourselves in a moment.
 -->
 
 
@@ -27,10 +28,14 @@ transition: fade
 
 # Voting demo
 
-<!-- This file shows an example of what a vote submission looks like, I highlight the spec and the connection to the session object that we can also see in the demo pane -->
-
 <!-- <<< ../demo-repo/adam/rai/8f/examples.configbutler.ai/v1alpha1/quizsessions/vote/demo.yaml yaml {2|3|7|12}{maxHeight:'300px'} -->
 <<< ../demo-repo/adam/rai/8f/examples.configbutler.ai/v1alpha1/quizsubmissions/vote/example.yaml yaml {7-15|16-19}{lines:true}{maxHeight:'300px'}
+
+<!--
+This is what a vote looks like as a typed resource.<br/>
+There is a clear spec.<br/>
+And it connects back to the session object that defines the question.
+-->
 
 ---
 layout: image-right
@@ -58,6 +63,13 @@ transition: fade
   </div>
 </div>
 
+<!--
+The QR code gives you a tiny client on top of the Kubernetes API.<br/>
+The terminal shows the writes coming in live.<br/>
+So this is not a mockup:<br/>
+you are interacting with the API right now.
+-->
+
 ---
 layout: image-right
 image: /images/stemlokaal-step.jpg
@@ -73,3 +85,10 @@ transition: fade
     :fontSize="12"
   />
 </div>
+
+<!--
+And now the second half of the story:<br/>
+if this is GitOps, where is Git?<br/>
+In the background, those API writes are being turned into commits.<br/>
+That is the bridge into the rest of the talk.
+-->

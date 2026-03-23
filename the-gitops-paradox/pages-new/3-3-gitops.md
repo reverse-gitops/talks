@@ -5,20 +5,18 @@ transition: fade
 
 ---
 
-<!--
-Basically https://reversegitops.dev/ principle 3
-The picture shows a lot of logs: there are many different ways to approach this.
--->
-
 # 3. GitOps Applies
 
-* The folder with your 'simple' intent is valuable.
-* That folder can be input to any gitops based process that you already have
-* I'm going to show an example: but if you can work with YAML manifests then you can do it.
+* Git still gives you review, history, rollback, and promotion
+* The intent folder stays valuable and portable
+* Existing GitOps tooling can keep doing the delivery
+* The write path changes, not the deployment model
 
 <!--
-It's a differnt way to manage your folder in git: but GitOps compatible
-Reverse GitOps only wants to extend GitOps 
+This is principle three.<br/>
+Reverse GitOps is not trying to remove GitOps.<br/>
+It changes how intent gets written,<br/>
+but Git can still stay the place for review, promotion, and distribution.
 -->
 
 ---
@@ -29,7 +27,11 @@ frame: "A"
 
 ---
 
-<!-- Let's throw in some manifest in the intent cluster with kubectl apply -f -->
+<!--
+Let me show that this still behaves like GitOps.<br/>
+I will write a few intent resources into the API.<br/>
+Everything after that should look familiar.
+-->
 
 ---
 layout: image-right
@@ -49,6 +51,12 @@ transition: fade
   </div>
 </div>
 
+<!--
+This is the write step.<br/>
+I am not editing files directly here.<br/>
+I am writing intent to the API.
+-->
+
 ---
 layout: diagram-story-frame
 transition: view-transition
@@ -57,7 +65,11 @@ frame: "B"
 
 ---
 
-<!-- Automatically add it to git -->
+<!--
+Now the bridge kicks in.<br/>
+Those API writes are turned into commits automatically.<br/>
+So Git is still getting the full story.
+-->
 
 ---
 layout: diagram-story-frame
@@ -67,7 +79,12 @@ frame: "C"
 
 ---
 
-<!-- Make adjustement you like (FreeLens!), just like any ephemeral or preview environment -->
+<!--
+And because the intent is reversible,<br/>
+I can also adjust it through the API side.<br/>
+That is the whole point:<br/>
+easy writes first, Git-compatible flow second.
+-->
 
 ---
 layout: image-right
@@ -87,6 +104,12 @@ transition: fade
   </div>
 </div>
 
+<!--
+This is the second write step.<br/>
+Same model, same API,<br/>
+just another change to intent.
+-->
+
 ---
 layout: diagram-story-frame
 transition: view-transition
@@ -95,10 +118,8 @@ frame: "D"
 
 ---
 
-<!-- Showing the final step and merging the branch into production -->
-
-
-
-# 3. GitOps Applies
-
-
+<!--
+And the last step is completely normal again.<br/>
+Review it, merge it, promote it.<br/>
+GitOps still applies.
+-->

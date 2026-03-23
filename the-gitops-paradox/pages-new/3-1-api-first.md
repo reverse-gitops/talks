@@ -5,21 +5,17 @@ transition: fade
 
 ---
 
-<!--
-Basically https://reversegitops.dev/ principle 1 -> so please read it and make sure that I don't make up stuff. But it's good that I elaborate a bit when needed.
-
-The picture shows a nice pictures door, which might not even recognizble as a door.
--->
-
 # 1. API First
 
-* Kubernetes API as front door
-* It's universal and restfull
-* Keep cluster seperated
-* Embrace auth standards (e.g. OIDC)
+* Use Kubernetes as the front door
+* Give humans, GUIs, and AI one typed write path
+* Keep it separate from your workload clusters
+* Reuse auth, authz, CRDs, status, and controllers
 
 <!--
-Manifesto statement 1
-The new frontdoor for your gitops folder
-Don't run this inside your precious workload clusters: keep it a small and focused cluster
+This is principle one.<br/>
+If we need an API anyway, building yet another one is often wasteful.<br/>
+Kubernetes already gives us typing, validation, auth, status, and controller patterns.<br/>
+I am not saying: expose your production clusters to everyone.<br/>
+I am saying: use a small, focused Kubernetes control plane as the front door for intent.
 -->

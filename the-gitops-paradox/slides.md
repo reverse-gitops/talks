@@ -25,19 +25,10 @@ addons:
 ## Why Your Devs Need an API You Don't Want to Build
 
 <!--
-Hello everyone, I'm Simon Koudijs.
-
-This talk is about a very simple idea.
-
-GitOps gave us something genuinely valuable: reproducibility, auditability, promotion, rollback, and a shared declarative model for change.
-
-But I think one assumption inside GitOps is starting to crack a bit — not the assumption that declarative state is good, not that versioned history is good, not that reconciliation is good.
-
-The assumption that is starting to fail is this: that Git itself should be the primary front door for every change.
-
-I want to show you a different operating model. One where humans and AI agents make validated changes through a typed API, while Git still records the result cleanly in the background.
-
-That is what I call Reverse GitOps.
+GitOps gave us something genuinely valuable.<br/>
+I do not want to replace GitOps.<br/>
+I want to challenge one assumption inside it:<br/>
+that Git itself must be the front door for every change.
 -->
 
 ---
@@ -56,20 +47,24 @@ div.grid.grid-cols-2.w-full.h-full.auto-rows-fr:has(> .two-third) {
 ## Who am I?
 
 * Simon Koudijs
-* 39 years old
+* ConfigButler
 
 ## Experience
 
-* Sofware engineer
-* Platform team
-* Last job: smaller company (~30), creating a full self-service product
-* I missed this: the beatiful transparant file based approach also must be possible without even knowing it?
+* Sofware engineer / DevOps engineer
 
 ## Founder
 
 * Quit my fulltime job to work on this fulltime
 * Implementing this idear in the open
 * ConfigButler
+
+<!--
+I have worked as a software engineer and on platform teams.<br/>
+A lot of that work was about self-service.<br/>
+And I kept feeling this tension:<br/>
+why do we keep rebuilding APIs around workflows that Kubernetes already models so well?
+-->
 
 ---
 src: ./pages-new/0-intro.md

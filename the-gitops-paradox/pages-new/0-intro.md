@@ -16,8 +16,10 @@ layout: full
 </RenderWhen>
 
 <!--
-My son spend serious time on building his own rc plane, and as you can see it worked. It even landed well.
-Showing a prototype that is still rough feels awkward, but also liberating.
+My son built this plane himself.<br/>
+It is still a prototype, but it flies.<br/>
+That is a bit how this talk feels as well:<br/>
+rough in places, but real.
 -->
 
 --- #7
@@ -27,10 +29,10 @@ layout: fact
 # Will mine fly as well?
 
 <!--
-For me this is a big moment
-It's the first time that I tell publicly about my vision
-Don't expect a flashed out story, it's rough and has edges
-I would love to receive your feedback
+This is the first time I am sharing this vision this publicly.<br/>
+So I am not presenting a finished doctrine.<br/>
+I am showing you something that works,<br/>
+and I am asking you whether the idea deserves to fly.
 -->
 
 --- #7
@@ -39,17 +41,37 @@ layout: fact
 ---
 # I <mdi-heart /> Files
 
+<!--
+I love files because they stay open.<br/>
+They are easy to inspect, easy to diff, and easy to automate.<br/>
+Humans like that.<br/>
+And honestly, AI likes that too.
+-->
+
 --- #7
 layout: fact
 
 ---
 # I <mdi-heart /> Git
 
+<!--
+I love Git because it gives us history, collaboration, and rollback.<br/>
+It gives us a process around change.<br/>
+That part is not the problem.
+-->
+
 --- #7
 layout: fact
 
 ---
 # I <mdi-heart /> GitOps
+
+<!--
+And I genuinely love GitOps.<br/>
+Reproducibility, promotion, auditability, reconciliation:<br/>
+those are real strengths.<br/>
+I want to keep them.
+-->
 
 --- #7
 layout: fact
@@ -59,10 +81,10 @@ layout: fact
 # Pfff now I need to create a PR with the right YAML ☹️
 
 <!-- 
-The pivot, it's not easy for everyone! 
-I remember my technical tech savy front end collegau saying this. 
-The sigh was very real, and he was certainly not 'unable'.
-It wasnt easy enough for him
+But then reality hits.<br/>
+For many people, this is simply not a good write interface.<br/>
+Not because they are incapable,<br/>
+but because expressing intent through Git and hand-crafted YAML is too much friction.
 -->
 --- #6
 
@@ -78,7 +100,11 @@ It wasnt easy enough for him
 | Fast type checking | | <mdi-check /> |
 
 <!-- 
-Git deservers a central place in our configuration 
+So my question is not whether GitOps is valuable.<br/>
+My question is: should Git be the primary input path for every change?<br/>
+Humans want a usable interface.<br/>
+AI wants a typed interface.<br/>
+And most platform teams end up building an API anyway.
 -->
 
 ---
@@ -88,18 +114,11 @@ drawFilePath: /1-gitops-reverser.excalidraw.json
 frame: "A"
 ---
 
-<!-- This is the important picture: 
-From left to right:
-1. it shows actors (end-users, engineers and AI, that can use kubectl, GUI and MCP, which in under the hood all translates into API calls)
-2. It shows a intent Kubernetes cluster (control-plane only)
-3. It shows the gitops-reverser, an operator that syncs Kuberentes API activity live into GitOps compatible YAML
-4. And then the Git repo
-5. And then the normal clusters, which are synced in a all possible normal GitOps ways.
-
 <!--
-Personally I like it to jump into examples
-So here is a concrete implementation of the "Reverse GitOps" addition
-Hold on: you all have the change do some API calls in a moment
+This is the core idea.<br/>
+Let humans, tools, and AI talk to a typed Kubernetes API.<br/>
+Capture that intent there.<br/>
+Then let Git record, review, promote, and distribute the result.
 -->
 
 ---
@@ -107,7 +126,6 @@ layout: full
 
 ---
 
-<!-- This shows the gitops-reverser implemenation in GitHub-->
 <div class="w-full h-full flex items-center justify-center p-4">
   <a href="https://github.com/ConfigButler/gitops-reverser" target="_blank" rel="noopener noreferrer">
     <img src="/images/screenshot-gitops-reverser.png" alt="gitops-reverser screenshot" class="max-w-full max-h-full object-contain"></img>
@@ -115,11 +133,8 @@ layout: full
 </div>
 
 <!-- 
-It's created in the open
-Runtime behavior is deterministic. The operator does not use AI or heuristics at runtime.
-Fully open source
-I've quit my full time job to work on this last summer. I am trying to build a company on top of it: 
-  * help implementing it,
-  * getthing the authentication layer right, coupling it to OIDC
-  * offering it as a SaaS solution
-  -->
+This is not just a thought experiment.<br/>
+I built a working implementation of it in the open.<br/>
+Runtime behavior is deterministic. The operator does not use AI or heuristics at runtime.<br/>
+Today I want to show you what that operating model feels like.
+-->
