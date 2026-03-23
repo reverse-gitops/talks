@@ -12,6 +12,10 @@ transition: fade
 * This one is truly cloud native
 * The presentation as well
 
+<!--
+Last week we had elections in the Netherlands
+
+-->
 
 
 ---
@@ -22,6 +26,8 @@ transition: fade
 ---
 
 # Voting demo
+
+<!-- This file shows an example of what a vote submission looks like, I highlight the spec and the connection to the session object that we can also see in the demo pane -->
 
 <!-- <<< ../demo-repo/adam/rai/8f/examples.configbutler.ai/v1alpha1/quizsessions/vote/demo.yaml yaml {2|3|7|12}{maxHeight:'300px'} -->
 <<< ../demo-repo/adam/rai/8f/examples.configbutler.ai/v1alpha1/quizsubmissions/vote/example.yaml yaml {7-15|16-19}{lines:true}{maxHeight:'300px'}

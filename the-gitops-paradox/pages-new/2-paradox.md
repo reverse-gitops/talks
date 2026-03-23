@@ -6,11 +6,17 @@ image: /images/schietterein.jpg
 
 # The paradox
 
+<!-- The photograph shows a military practice facility, it's a place where you cannot go. I dont really want to give attention to it -->
+
 * Shield people from the Kubernetes API
 * Require them to use Git.
 * There is a need for a good API
 * Let's open up the Kubernetes API
 * Don't shoot me yet, I've spelled this out in an manifesto -> which I also would not accept
+
+<!--
+
+-->
 
 ---
 layout: full
@@ -36,4 +42,7 @@ frame: "B"
 
 <!--This shows the technical diagram from before the demo. Hopefull its clear that I'm trying to make it a bi more abstract: I do this by two big circles to show git reverse gitops is augmenting gitops-->
 
-<!-- Let's circle back to what we just have seen-->
+<!-- 
+Let's circle back to what we just have seen
+An easy 'editor' for git managed resources
+-->

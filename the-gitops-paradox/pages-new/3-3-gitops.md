@@ -1,16 +1,25 @@
 ---
 layout: image-right
-image: /images/door-nice.jpg
+image: /images/wood-do-not-climb.jpg
 transition: fade
 
 ---
 
+<!--
+Basically https://reversegitops.dev/ principle 3
+The picture shows a lot of logs: there are many different ways to approach this.
+-->
+
 # 3. GitOps Applies
 
-* Simple yaml, no irreversable transformations
-* Apply intent straight to the API
-* Git catches up in the background
-* 'Normal GitOps' applies it
+* The folder with your 'simple' intent is valuable.
+* That folder can be input to any gitops based process that you already have
+* I'm going to show an example: but if you can work with YAML manifests then you can do it.
+
+<!--
+It's a differnt way to manage your folder in git: but GitOps compatible
+Reverse GitOps only wants to extend GitOps 
+-->
 
 ---
 layout: diagram-story-frame

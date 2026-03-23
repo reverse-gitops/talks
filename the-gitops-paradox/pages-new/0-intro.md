@@ -1,15 +1,8 @@
 ---
-layout: image
-image: /images/houtstapel-do-not-climb.jpg
-
----
-
-<!-- Shows the image of a pile of wood, or showing the prototype of my son flying (18 seconds)-->
-# Showing a prototype that is still rough feels awkward, but also liberating.”
-
----
 layout: full
 ---
+
+<!-- This is 18 second video without sound: it shows me, my son (from the back) and a big RC plane that slowly takes off and lands nicely. -->
 
 <RenderWhen context="slide">
   <SlidevVideo class="w-full h-full object-cover" autoplay controls>
@@ -22,11 +15,23 @@ layout: full
   <p>The live presentation shows a video of self-build rc plane taking off and landing</p>
 </RenderWhen>
 
+<!--
+My son spend serious time on building his own rc plane, and as you can see it worked. It even landed well.
+Showing a prototype that is still rough feels awkward, but also liberating.
+-->
+
 --- #7
 layout: fact
 
 ---
 # Will mine fly as well?
+
+<!--
+For me this is a big moment
+It's the first time that I tell publicly about my vision
+Don't expect a flashed out story, it's rough and has edges
+I would love to receive your feedback
+-->
 
 --- #7
 layout: fact
@@ -51,9 +56,14 @@ layout: fact
 
 ---
 
-# I need `x`: pfff now I need to create a PR with the right YAML ☹️
+# Pfff now I need to create a PR with the right YAML ☹️
 
-<!-- The pivot, it's not easy for everyone! I remember my technical tech savy front end collegau saying this. The sigh was very real, and he was certainly not unable. But mental bandwidth is a certain thing. -->
+<!-- 
+The pivot, it's not easy for everyone! 
+I remember my technical tech savy front end collegau saying this. 
+The sigh was very real, and he was certainly not 'unable'.
+It wasnt easy enough for him
+-->
 --- #6
 
 # Why?
@@ -67,7 +77,9 @@ layout: fact
 | API First 😊 | | <mdi-check /> |
 | Fast type checking | | <mdi-check /> |
 
-<!-- Let's add notes here -->
+<!-- 
+Git deservers a central place in our configuration 
+-->
 
 ---
 layout: diagram-story-frame
@@ -76,15 +88,19 @@ drawFilePath: /1-gitops-reverser.excalidraw.json
 frame: "A"
 ---
 
+<!-- This is the important picture: 
+From left to right:
+1. it shows actors (end-users, engineers and AI, that can use kubectl, GUI and MCP, which in under the hood all translates into API calls)
+2. It shows a intent Kubernetes cluster (control-plane only)
+3. It shows the gitops-reverser, an operator that syncs Kuberentes API activity live into GitOps compatible YAML
+4. And then the Git repo
+5. And then the normal clusters, which are synced in a all possible normal GitOps ways.
+
 <!--
-This might be a lot
-
-I'm showing an implementation
-And an idea
-
-The implementation hopefully will help. Perhaps I should show the gitops reverser after the demo.
+Personally I like it to jump into examples
+So here is a concrete implementation of the "Reverse GitOps" addition
+Hold on: you all have the change do some API calls in a moment
 -->
-
 
 ---
 layout: full
@@ -98,6 +114,12 @@ layout: full
   </a>
 </div>
 
-<!-- It's all open source, you can try it. Let me know how it works for you. I'm not at 1.0 so more changes are on it's way. -->
-
-
+<!-- 
+It's created in the open
+Runtime behavior is deterministic. The operator does not use AI or heuristics at runtime.
+Fully open source
+I've quit my full time job to work on this last summer. I am trying to build a company on top of it: 
+  * help implementing it,
+  * getthing the authentication layer right, coupling it to OIDC
+  * offering it as a SaaS solution
+  -->

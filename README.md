@@ -1,6 +1,13 @@
 # Talks
 
-the-gitops-paradox/ -> Planned on March 23 2026
+the-gitops-paradox/ -> Kubecon Amsterdam March 23
+
+# Relevant links
+
+I am at Kubecon Amsterdam 2026!
+* Feel free to [book a meeting](https://calendar.app.google/FgYaoZog1dFpRG9Z7) to share your thoughts.
+* Take a look at the [manifesto](https://reversegitops.dev/) ⭐ or the [concrete open source implemention](https://github.com/ConfigButler/gitops-reverser) ⭐.
+* Let me know what you think, I'm on [LinkedIn](https://www.linkedin.com/in/simonkoudijs/).
 
 # Attributions
 
