@@ -1,0 +1,4 @@
+steps:
+  - run: kubectl proxy --port=8001 >/tmp/gitops-applies-kubectl-proxy.log 2>&1 &
+  - run: |
+      http POST http://127.0.0.1:8001/apis/kro.run/v1alpha1/namespaces/podinfos-intent/podinfoapps apiVersion=kro.run/v1alpha1 kind=PodInfoApp metadata:="{\"name\":\"fiets7\",\"namespace\":\"podinfos-intent\"}" spec:="{\"replicas\":1,\"message\":\"The Dutch word for bicycle is \\\"fiets\\\". We have a lot of them.\",\"color\":\"#115711\"}"

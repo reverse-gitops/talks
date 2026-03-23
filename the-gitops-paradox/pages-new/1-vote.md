@@ -43,37 +43,14 @@ transition: fade
   </div>
 
   <div style="min-width: 0; min-height: 0; display: flex; flex-direction: column;">
-    <WebTerminal
+    <DemoTerminal
       backendUrl="http://host.docker.internal:10001"
       sessionId="reverse-gitops-demo-terminal"
+      script-file="/demo-scripts/voting-demo-terminal.yaml"
       :fontSize="14"
     />
   </div>
 </div>
-
-<div
-  v-click="[1, 2]"
-  class="clickable-code"
-  data-terminal-session="reverse-gitops-demo-terminal"
-  data-terminal-command="kubectl get nodes"
-  style="display: none;"
-></div>
-
-<div
-  v-click="[3, 4]"
-  class="clickable-code"
-  data-terminal-session="reverse-gitops-demo-terminal"
-  data-terminal-command='kubectl get quizsessions -A'
-  style="display: none;"
-></div>
-
-<div
-  v-click="[5, 6]"
-  class="clickable-code"
-  data-terminal-session="reverse-gitops-demo-terminal"
-  data-terminal-command='kubectl get quizsubmissions -A --watch'
-  style="display: none;"
-></div>
 
 ---
 layout: image-right
@@ -83,26 +60,10 @@ transition: fade
 ---
 
 <div style="position: absolute; inset: 6px; display: flex; flex-direction: column;">
-  <WebTerminal
+  <DemoTerminal
     backendUrl="http://host.docker.internal:10001"
     sessionId="reverse-gitops-demo-terminal-2"
+    script-file="/demo-scripts/voting-demo-terminal-2.yaml"
     :fontSize="12"
   />
-
-  <div
-  v-click="[1, 2]"
-  class="clickable-code"
-  data-terminal-session="reverse-gitops-demo-terminal-2"
-  data-terminal-command="cd ~/demo"
-  style="display: none;"
-  ></div>
-
-  <div
-    v-click="[3, 4]"
-    class="clickable-code"
-    data-terminal-session="reverse-gitops-demo-terminal-2"
-    data-terminal-command='watch --color -n 2 "git log --oneline --graph --decorate --all --color=always | head -30"'
-    style="display: none;"
-  ></div>
 </div>
-

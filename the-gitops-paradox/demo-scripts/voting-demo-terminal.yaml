@@ -1,0 +1,4 @@
+steps:
+  - run: kubectl get nodes
+  - run: kubectl get quizsessions -A
+  - run: kubectl get quizsubmissions -A --watch

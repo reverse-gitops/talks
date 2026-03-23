@@ -114,7 +114,7 @@ src: ./pages-new/3-3-gitops.md
       This QR stays live for a while after the talk.
     </div>
     <div class="mt-10 text-base opacity-70">
-      simon@configbutler.ai
+      https://calendar.app.google/FgYaoZog1dFpRG9Z7
     </div>
   </div>
 

@@ -12,12 +12,8 @@ import {
   type TerminalSessionController,
   type TerminalSessionSource,
 } from '../utils/terminalSessionController'
+import { shouldForceManagedResize } from '../utils/resizePolicy'
 import { createCursorWarmupRunner } from '../utils/cursorWarmup'
-import {
-  getClickableCodeCommand,
-  getClickableCodeAutomationTargets,
-  getClickableCodeStepAction,
-} from '../utils/clickableCodeAutomation'
 
 const props = withDefaults(defineProps<{
   wsUrl?: string
@@ -36,8 +32,13 @@ const props = withDefaults(defineProps<{
    *  E.g. activationKey="t". If not set, the terminal will not auto-focus on mount. */
   activationKey?: string
 }>(), {
+  backendUrl: undefined,
+  fontFamily: undefined,
+  fontSize: undefined,
   releaseKey: 'F2',
   activationKey: 't',
+  sessionId: undefined,
+  wsUrl: undefined,
 })
 
 const terminalContainer = ref<HTMLElement | null>(null)
@@ -48,7 +49,7 @@ const isControlledElsewhere = ref(false)
 // with the shared PTY (e.g. sending a tiny resize that scrambles the shell output).
 // Falls back to false (full render) when running outside Slidev.
 const THUMBNAIL_CONTEXTS = new Set(['previewNext', 'overview'])
-const { $clicks: slideClicks, $renderContext: renderContext } = useSlideContext()
+const { $renderContext: renderContext } = useSlideContext()
 const isPlaceholder = THUMBNAIL_CONTEXTS.has(renderContext.value)
 
 let terminal: Terminal | null = null
@@ -65,7 +66,6 @@ let cursorEnsured = false
 let initRunId = 0
 let textareaFocusHandler: (() => void) | null = null
 let textareaBlurHandler: (() => void) | null = null
-let previousSlideClick = slideClicks.value
 
 type QueuedTerminalAction =
   | { kind: 'pause'; delayMs: number }
@@ -137,7 +137,12 @@ const safeFit = (reason: string) => {
     }
     fitAddon.fit()
     if (terminal && !THUMBNAIL_CONTEXTS.has(renderContext.value)) {
-        sessionController?.requestResize(terminal.cols, terminal.rows, reason)
+        sessionController?.requestResize(
+            terminal.cols,
+            terminal.rows,
+            reason,
+            shouldForceManagedResize(renderContext.value, reason),
+        )
     }
 }
 
@@ -225,12 +230,10 @@ const syncCursorVisualState = () => {
     })
 }
 
-const getAutomationSessionId = () => props.sessionId ?? props.backendUrl ?? props.wsUrl ?? null
-
-const getAutomationScopeRoot = () => {
-    const slideRoot = terminalContainer.value?.closest('[data-slidev-no], .slidev-page')
-    return slideRoot ?? document
-}
+const getClickableCodeCommand = (element: HTMLElement) =>
+    element.dataset.terminalCommand
+    ?? element.getAttribute('data-terminal-command')
+    ?? element.innerText.trim()
 
 const TYPING_DELAY_MIN_MS = 24
 const TYPING_DELAY_MAX_MS = 72
@@ -259,6 +262,35 @@ const queueTerminalInput = (data: string, animated = false) => {
     if (!data) return
     pendingTerminalActions.push({ kind: 'text', text: data, animated })
     void flushPendingTerminalInputs()
+}
+
+const getQueuedActionRunId = () =>
+    terminalActionRunner || pendingTerminalActions.length > 0
+        ? terminalActionRunId
+        : terminalActionRunId + 1
+
+const waitForTerminalActionsToDrain = async (expectedRunId: number) => {
+    while (pendingTerminalActions.length > 0 || terminalActionRunner) {
+        await sleep(10)
+        if (expectedRunId !== terminalActionRunId && pendingTerminalActions.length === 0 && !terminalActionRunner) {
+            return false
+        }
+    }
+    return expectedRunId === terminalActionRunId
+}
+
+const queueTerminalInputAndWait = async (data: string, animated = false) => {
+    if (!data) return true
+    const runId = getQueuedActionRunId()
+    queueTerminalInput(data, animated)
+    return waitForTerminalActionsToDrain(runId)
+}
+
+const queueTerminalPauseAndWait = async (delayMs: number) => {
+    if (delayMs <= 0) return true
+    const runId = getQueuedActionRunId()
+    queueTerminalPause(delayMs)
+    return waitForTerminalActionsToDrain(runId)
 }
 
 const flushPendingTerminalInputs = async () => {
@@ -319,24 +351,29 @@ const flushPendingTerminalInputs = async () => {
     }
 }
 
-const replayClickableCodeAutomation = (fromExclusive: number, toInclusive: number) => {
-    if (!terminal || renderContext.value !== 'slide' || toInclusive <= fromExclusive) return
+const terminalKeySequences = {
+    'ctrl+c': '\u0003',
+    'ctrl+d': '\u0004',
+    tab: '\t',
+    escape: '\u001b',
+    up: '\u001b[A',
+    down: '\u001b[B',
+    left: '\u001b[D',
+    right: '\u001b[C',
+} as const
 
-    const targets = getClickableCodeAutomationTargets(getAutomationScopeRoot(), getAutomationSessionId())
-    if (targets.length === 0) return
+type TerminalKeySequence = keyof typeof terminalKeySequences
 
-    for (let step = fromExclusive + 1; step <= toInclusive; step++) {
-        for (const target of targets) {
-            const action = getClickableCodeStepAction(target, step)
-            if (action === 'type') {
-                queueTerminalInput(target.command, true)
-            } else if (action === 'enter') {
-                queueTerminalPause(getRandomDelay(ENTER_DELAY_MIN_MS, ENTER_DELAY_MAX_MS))
-                queueTerminalInput('\r')
-            }
-        }
-    }
+const typeText = (text: string, animated = true) => queueTerminalInputAndWait(text, animated)
+
+const pressEnter = async () => {
+    const pauseCompleted = await queueTerminalPauseAndWait(getRandomDelay(ENTER_DELAY_MIN_MS, ENTER_DELAY_MAX_MS))
+    if (!pauseCompleted) return false
+    return queueTerminalInputAndWait('\r')
 }
+
+const sendKeys = (keys: TerminalKeySequence) =>
+    queueTerminalInputAndWait(terminalKeySequences[keys] ?? '', false)
 
 const handleCodeClick = (e: MouseEvent) => {
   const target = e.target as HTMLElement
@@ -523,6 +560,9 @@ const initTerminal = async () => {
         controlOwnerCleanup?.()
         controlOwnerCleanup = sessionController.onControlOwnerChange((ownerId) => {
             isControlledElsewhere.value = !!ownerId && ownerId !== instanceId
+            if (!ownerId) {
+                safeFit('control-owner-cleared')
+            }
             syncCursorVisualState()
         })
         isControlledElsewhere.value = (() => {
@@ -658,11 +698,17 @@ const dispose = () => {
     terminalActionRunId++
     terminalActionRunner = null
     pendingTerminalActions.length = 0
-    previousSlideClick = slideClicks.value
     logEvent('component.dispose.complete')
 }
 
-defineExpose({ focus: focusTerminal, blur: () => terminal?.blur() })
+defineExpose({
+    blur: () => terminal?.blur(),
+    focus: focusTerminal,
+    isReady: () => !!terminal,
+    pressEnter,
+    sendKeys,
+    typeText,
+})
 
 onMounted(() => {
     debugLog('Component mounted', { renderContext: renderContext.value })
@@ -682,11 +728,6 @@ watch(() => [props.wsUrl, props.backendUrl, props.sessionId], () => {
     logEvent('component.props.changed', { wsUrl: props.wsUrl, backendUrl: props.backendUrl, sessionId: props.sessionId })
     dispose()
     initTerminal()
-})
-
-watch(slideClicks, (currentClick) => {
-    replayClickableCodeAutomation(previousSlideClick, currentClick)
-    previousSlideClick = currentClick
 })
 
 </script>

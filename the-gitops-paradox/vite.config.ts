@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite'
 import { createRequire } from 'module'
 import { exec, type ExecOptions } from 'child_process'
-import { mkdir, readFile } from 'fs/promises'
-import { dirname } from 'path'
+import { mkdir, readdir, readFile, stat } from 'fs/promises'
+import { dirname, join, relative } from 'path'
 import { fileURLToPath } from 'url'
 
 const require = createRequire(import.meta.url)
@@ -11,6 +11,7 @@ const DEFAULT_QUIZ_SESSION = 'demo'
 const QUIZ_SESSION_NAMESPACE = 'vote'
 const LIVE_MANIFEST_CACHE_TTL_MS = 2000
 const LIVE_MANIFEST_COMMAND_TIMEOUT_MS = 4000
+const DEMO_SCRIPTS_ROUTE_PREFIX = '/demo-scripts/'
 
 type LiveManifestPayload = {
     manifest: string
@@ -55,6 +56,45 @@ const getLiveManifestFile = (session: string) =>
 
 const buildLiveManifestCommand = (session: string) =>
     `${buildLiveManifestKubectlCommand(session)} > "${getLiveManifestFile(session)}"`
+
+const getDemoScriptsRoot = () =>
+    fileURLToPath(new URL('./demo-scripts/', import.meta.url))
+
+const getDemoScriptFileFromRequestPath = (pathname: string) => {
+    if (!pathname.startsWith(DEMO_SCRIPTS_ROUTE_PREFIX)) {
+        return null
+    }
+
+    const relativePath = pathname.slice(DEMO_SCRIPTS_ROUTE_PREFIX.length)
+    if (!relativePath || relativePath.includes('..')) {
+        return null
+    }
+
+    return join(getDemoScriptsRoot(), relativePath)
+}
+
+const collectDemoScriptAssets = async (dir: string): Promise<Array<{ fileName: string, source: string }>> => {
+    const entries = await readdir(dir, { withFileTypes: true })
+    const assets = await Promise.all(entries.map(async (entry) => {
+        const fullPath = join(dir, entry.name)
+        if (entry.isDirectory()) {
+            return collectDemoScriptAssets(fullPath)
+        }
+
+        if (!entry.isFile()) {
+            return []
+        }
+
+        const source = await readFile(fullPath, 'utf8')
+        const relativePath = relative(getDemoScriptsRoot(), fullPath).split('\\').join('/')
+        return [{
+            fileName: `demo-scripts/${relativePath}`,
+            source,
+        }]
+    }))
+
+    return assets.flat()
+}
 
 const runCommand = (command: string, options: ExecOptions = {}) =>
     new Promise<void>((resolve, reject) => {
@@ -104,6 +144,54 @@ const getLiveManifestPayload = async (session: string): Promise<LiveManifestPayl
 
 export default defineConfig({
     plugins: [
+        {
+            name: 'demo-script-assets',
+            configureServer(server) {
+                server.middlewares.use((req: any, res: any, next: any) => {
+                    const requestUrl = parseRequestUrl(req)
+                    if (req.method !== 'GET' || !requestUrl.pathname.startsWith(DEMO_SCRIPTS_ROUTE_PREFIX)) {
+                        next()
+                        return
+                    }
+
+                    const filePath = getDemoScriptFileFromRequestPath(requestUrl.pathname)
+                    if (!filePath) {
+                        res.statusCode = 400
+                        res.end('Invalid demo script path')
+                        return
+                    }
+
+                    void (async () => {
+                        try {
+                            const fileInfo = await stat(filePath)
+                            if (!fileInfo.isFile()) {
+                                res.statusCode = 404
+                                res.end('Not found')
+                                return
+                            }
+
+                            const source = await readFile(filePath, 'utf8')
+                            res.statusCode = 200
+                            res.setHeader('Content-Type', 'application/yaml; charset=utf-8')
+                            res.end(source)
+                        } catch {
+                            res.statusCode = 404
+                            res.end('Not found')
+                        }
+                    })()
+                })
+            },
+            async generateBundle() {
+                const assets = await collectDemoScriptAssets(getDemoScriptsRoot())
+                for (const asset of assets) {
+                    this.emitFile({
+                        type: 'asset',
+                        fileName: asset.fileName,
+                        source: asset.source,
+                    })
+                }
+            },
+        },
         {
             name: 'dynamic-terminal-proxy',
             configureServer(server) {

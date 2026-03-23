@@ -14,6 +14,7 @@ layout: diagram-story-frame
 transition: view-transition
 drawFilePath: /story.excalidraw.json
 frame: "6"
+hide: true
 ---
 
 # Moving changes back

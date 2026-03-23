@@ -10,7 +10,7 @@ This addon provides a `WebTerminal` component for [Slidev](https://sli.dev/) pre
 - **Zero-Config Dynamic Proxy**: Specify any `backendUrl` (including different domains and ports) in your markdown, and the addon handles CORS and proxying automatically.
 - **Managed Shared Sessions**: `backendUrl` mode shares one PTY across presenter/main windows and serializes same-tab creation and recovery.
 - **Click to Execute**: Commands are automatically sent to the terminal when clicking an element with the `.clickable-code` class (e.g. a wrapper around a code block).
-- **Presenter-driven Click Steps**: `clickable-code` blocks can also react to Slidev `v-click` steps, so the first reveal types the command and a later step can send `Enter`.
+- **DemoTerminal Controller**: A dedicated `DemoTerminal` component drives forward-only terminal demos from external YAML scripts, with `.` as the default advance key.
 - **Auto-fit**: Automatically resizes the terminal to fit the container.
 - **Theme Support**: Styled for dark mode by default.
 
@@ -127,6 +127,20 @@ Then use the component in your slides. You can point to any backend URL directly
 <WebTerminal wsUrl="wss://my-websocket-host.example.com/terminals/preallocated" />
 ```
 
+For scripted live demos, import a YAML file as a URL and use `DemoTerminal` instead:
+
+```vue
+<script setup>
+import demoScriptUrl from './demo-scripts.yaml?url'
+</script>
+
+<DemoTerminal
+  backendUrl="http://localhost:10001"
+  sessionId="demo-terminal"
+  :script-file="demoScriptUrl"
+/>
+```
+
 ### Props
 
 | Prop | Type | Default | Description |
@@ -140,6 +154,19 @@ Then use the component in your slides. You can point to any backend URL directly
 
 If both `wsUrl` and `backendUrl` are provided, `wsUrl` takes precedence and the
 component logs a warning because managed sharing is disabled in that case.
+
+### `DemoTerminal` props
+
+`DemoTerminal` wraps `WebTerminal` and adds demo-step control on top of the live PTY.
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `sessionId` | `string` | - | Stable identifier used for both the shared PTY session and the shared demo-step controller. |
+| `scriptFile` | `string` | - | URL to a YAML demo script. In Slidev, the most reliable pattern is `import demoScriptUrl from './demo-scripts.yaml?url'`. |
+| `advanceKey` | `string` | `'.'` | Keyboard key that advances the terminal demo when the active slide contains this component. |
+| `showStepHint` | `boolean` | `true` | Shows the lower-right presenter hint such as `Demo 2/5 - press . to run`. |
+| `backendUrl` / `wsUrl` | `string` | - | Passed through to `WebTerminal`. |
+| `fontSize`, `fontFamily`, `releaseKey`, `activationKey`, `debug` | same as `WebTerminal` | - | Passed through to `WebTerminal`. |
 
 ### Presenter mode / TTY sharing
 
@@ -164,55 +191,26 @@ To troubleshoot presenter/main synchronization, enable debug logs in one of thes
 - Query parameter: append `?webTerminalDebug=1` to the Slidev URL
 - Local storage: `localStorage.setItem('webTerminalDebug', '1')`
 
-### Two-step `v-click` command playback
+### Demo script format
 
-If you want a command to be driven by the presenter instead of a literal mouse click, combine `.clickable-code` with a `v-click` range:
+`DemoTerminal` uses a small flat YAML format:
 
-```html
-<div
-  v-click="[1, 2]"
-  class="clickable-code"
-  data-terminal-session="reverse-gitops-demo-terminal"
->
-  kubectl get pods -A
-</div>
+```yaml
+steps:
+  - run: kubectl get nodes
+
+  - run: |
+      kubectl get quizsubmissions -A --watch
+
+  - keys: ctrl+c
 ```
 
-With that setup:
+Supported step kinds:
 
-- click step `1` types `kubectl get pods -A`
-- click step `2` sends `Enter`
+- `run`: types the command and, by default, waits for a second `.` press before sending `Enter`
+- `keys`: sends one of `ctrl+c`, `ctrl+d`, `tab`, `escape`, `up`, `down`, `left`, or `right`
 
-`data-terminal-session` is optional when there is only one terminal on the slide, but it is recommended whenever multiple terminals might be present.
-
-Commands are typed character-by-character with small randomized delays so they feel more like live terminal input than a paste.
-
-If you do not want to show the real command on the slide, provide it via `data-terminal-command` instead:
-
-```html
-<div
-  v-click="[1, 2]"
-  class="clickable-code"
-  data-terminal-session="reverse-gitops-demo-terminal"
-  data-terminal-command="kubectl get pods -A"
-  style="display: none"
-></div>
-```
-
-You can also keep the element visible but show a friendlier label:
-
-```html
-<div
-  v-click="[1, 2]"
-  class="clickable-code"
-  data-terminal-session="reverse-gitops-demo-terminal"
-  data-terminal-command="kubectl get pods -A"
->
-  Check cluster status
-</div>
-```
-
-When multiple commands share the same click step, use `data-terminal-order="1"`, `data-terminal-order="2"`, and so on to control the execution order.
+Set `waitForEnter: false` on a `run` step to type and submit it in one advance.
 
 ## Development
 
