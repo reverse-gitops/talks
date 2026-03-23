@@ -7,6 +7,7 @@ Usage: merge-holland-stuff.sh [repo-dir]
 
 Checks out the holland-stuff branch, merges it into main with a merge commit,
 pushes main, and then deletes holland-stuff both locally and on origin.
+Before doing any Git operations, it ensures the Gitea port-forward is ready.
 
 Defaults:
   repo-dir: current directory
@@ -22,6 +23,20 @@ require_cmd() {
     echo "ERROR: required command not found: ${cmd}" >&2
     exit 1
   }
+}
+
+ensure_gitea_port_forward() {
+  local script_dir pf_script
+
+  script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  pf_script="${script_dir}/pf-gitea.sh"
+
+  [[ -f "${pf_script}" ]] || {
+    echo "ERROR: required helper script not found: ${pf_script}" >&2
+    exit 1
+  }
+
+  bash "${pf_script}"
 }
 
 ensure_clean_worktree() {
@@ -68,6 +83,9 @@ REPO_DIR="${1:-$PWD}"
 GIT_REMOTE="${GIT_REMOTE:-origin}"
 SOURCE_BRANCH="${SOURCE_BRANCH:-holland-stuff}"
 TARGET_BRANCH="${TARGET_BRANCH:-main}"
+
+echo "0/5 Ensuring Gitea port-forward"
+ensure_gitea_port_forward
 
 ensure_repo "${REPO_DIR}"
 ensure_clean_worktree "${REPO_DIR}"
