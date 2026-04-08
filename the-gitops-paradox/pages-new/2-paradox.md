@@ -27,9 +27,9 @@ layout: full
 
 # reversegitops.dev
 
-<div class="w-full h-full flex items-center justify-center p-4">
-  <a href="https://reversegitops.dev" target="_blank" rel="noopener noreferrer" class="w-full h-full flex items-center justify-center">
-    <img src="/images/screenshot-reversegitopsdev.png" alt="gitops-reverser screenshot" class="block w-auto h-full max-w-full max-h-full object-contain"></img>
+<div style="position: absolute; inset: 5.8rem 2rem 2.2rem; display: flex; align-items: center; justify-content: center;">
+  <a href="https://reversegitops.dev" target="_blank" rel="noopener noreferrer" style="display: inline-flex; height: 100%; max-width: 100%; align-items: center; justify-content: center; line-height: 0; text-decoration: none; border: 0; outline: 0;">
+    <img src="/images/screenshot-reversegitopsdev.png" alt="reversegitops.dev screenshot" style="display: block; width: auto; height: 100%; max-width: 100%; object-fit: contain;" />
   </a>
 </div>
 

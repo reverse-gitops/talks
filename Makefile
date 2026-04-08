@@ -30,7 +30,7 @@ SLIDEV_ADDON_WEB_TERMINAL_FILES := $(shell find tools/slidev-addon-web-terminal 
 	-path 'tools/slidev-addon-web-terminal/example' -prune -o \
 	-type f -print)
 
-.PHONY: install-node-deps run-repo-sync tail-sync tail-btwebterminal run-btwebterminal run empty-demo-repo
+.PHONY: install-node-deps run-repo-sync tail-sync tail-btwebterminal run-btwebterminal run run-frozen export-pdf empty-demo-repo
 
 install-node-deps: $(NODE_TOOL_STAMPS) $(NODE_APP_STAMPS)
 
@@ -93,3 +93,9 @@ empty-demo-repo:
 
 run: install-node-deps run-btwebterminal
 	cd the-gitops-paradox && npm run dev
+
+run-frozen: install-node-deps
+	cd the-gitops-paradox && npx slidev --entry slides-pdf.md --remote --no-open
+
+export-pdf: install-node-deps
+	cd the-gitops-paradox && npx slidev export slides-pdf.md --output ../dist/the-gitops-paradox.pdf

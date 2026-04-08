@@ -3,7 +3,46 @@ FROM node:24-bookworm
 ARG KUBECTL_NEAT_VERSION=v2.0.4
 ARG HTTPYAC_VERSION=6.16.7
 
-RUN apt-get update && apt-get install -y curl ca-certificates httpie sudo && \
+RUN apt-get update && apt-get install -y \
+    curl \
+    ca-certificates \
+    httpie \
+    sudo \
+    fonts-freefont-ttf \
+    fonts-ipafont-gothic \
+    fonts-liberation \
+    fonts-noto-color-emoji \
+    fonts-tlwg-loma-otf \
+    fonts-unifont \
+    fonts-wqy-zenhei \
+    libasound2 \
+    libatk1.0-0 \
+    libatk-bridge2.0-0 \
+    libatspi2.0-0 \
+    libcairo2 \
+    libcups2 \
+    libdbus-1-3 \
+    libdrm2 \
+    libfontconfig1 \
+    libfreetype6 \
+    libgbm1 \
+    libgl1 \
+    libglib2.0-0 \
+    libnspr4 \
+    libnss3 \
+    libpango-1.0-0 \
+    libx11-6 \
+    libxcb1 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxext6 \
+    libxfixes3 \
+    libxkbcommon0 \
+    libxrandr2 \
+    libxshmfence1 \
+    poppler-utils \
+    xfonts-scalable \
+    xvfb && \
     echo "node ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/node && \
     chmod 0440 /etc/sudoers.d/node && \
     # kubectl

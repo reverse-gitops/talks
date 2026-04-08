@@ -99,4 +99,7 @@ fi
 log "Installing npm dependencies via make"
 make -C "${workspace_dir}" install-node-deps
 
+log "Installing Playwright Chromium browser"
+(cd "${workspace_dir}/the-gitops-paradox" && npx playwright install chromium)
+
 log "post-create completed"
