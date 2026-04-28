@@ -99,25 +99,12 @@ src: ./pages/3-3-gitops-frozen.md
 
 ---
 
-<div class="w-full h-full grid grid-cols-[minmax(0,1fr)_380px] gap-8 items-center">
-  <div>
-    <h1 class="!mb-4">That's it</h1>
-    <div class="text-2xl leading-relaxed opacity-90">
-      I would love your feedback.
-    </div>
-    <div class="mt-6 text-lg opacity-75">
-      This QR stays live for a while after the talk.
-    </div>
-    <div class="mt-10 text-base opacity-70">
-      https://calendar.app.google/FgYaoZog1dFpRG9Z7
-    </div>
-  </div>
+# Key takeaways
 
-  <div class="flex justify-center">
-    <VoteQRCode
-      session="feedback"
-      :showCountdown="false"
-      linkClass="text-xs font-mono text-gray-400 break-all text-center max-w-sm leading-tight tracking-tight"
-    />
-  </div>
-</div>
+- Reverse GitOps: API first, Git remembers
+- Git and GitOps keep working as they do today
+- Simple changes can happen via API, GUI, or `kubectl`
+
+Questions or feedback: [koudijs.dev](https://koudijs.dev) or [LinkedIn](https://www.linkedin.com/in/simonkoudijs/)
+
+More: [reversegitops.dev](https://reversegitops.dev) or the OSS prototype [ConfigButler/gitops-reverser](https://github.com/ConfigButler/gitops-reverser)

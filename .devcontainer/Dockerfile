@@ -1,6 +1,7 @@
 FROM node:24-bookworm
 
 ARG KUBECTL_NEAT_VERSION=v2.0.4
+ARG K3D_VERSION=v5.8.3
 ARG HTTPYAC_VERSION=6.16.7
 
 RUN apt-get update && apt-get install -y \
@@ -54,7 +55,7 @@ RUN apt-get update && apt-get install -y \
     install -o root -g root -m 0755 /tmp/kubectl-neat /usr/local/bin/kubectl-neat && \
     rm -f /tmp/kubectl-neat /tmp/kubectl-neat.tar.gz && \
     # k3d
-    curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash && \
+    curl -fsSL https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | TAG="${K3D_VERSION}" bash && \
     # yq
     curl -sL "https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64" -o /usr/local/bin/yq && \
     chmod +x /usr/local/bin/yq && \
