@@ -1,0 +1,108 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+log() {
+  echo "[post-create] $*"
+}
+
+fail() {
+  echo "[post-create] ERROR: $*" >&2
+  exit 1
+}
+
+workspace_dir="${1:-${containerWorkspaceFolder:-${WORKSPACE_FOLDER:-$(pwd)}}}"
+log "Using workspace directory: ${workspace_dir}"
+
+# Resolve Git identity from effective config first, then fallback env vars.
+git_name="$(git config --get user.name || true)"
+git_email="$(git config --get user.email || true)"
+
+if [ -z "${git_name}" ] && [ -n "${GIT_USER_NAME:-}" ]; then
+  git_name="${GIT_USER_NAME}"
+fi
+
+if [ -z "${git_email}" ] && [ -n "${GIT_USER_EMAIL:-}" ]; then
+  git_email="${GIT_USER_EMAIL}"
+fi
+
+if [ -z "${git_name}" ] || [ -z "${git_email}" ]; then
+  fail "Missing Git identity. Set user.name and user.email in Git, or provide GIT_USER_NAME and GIT_USER_EMAIL to the devcontainer environment."
+fi
+
+# Persist identity globally in the container if it is not already configured there.
+if ! git config --global --get user.name >/dev/null 2>&1; then
+  git config --global user.name "${git_name}"
+fi
+
+if ! git config --global --get user.email >/dev/null 2>&1; then
+  git config --global user.email "${git_email}"
+fi
+
+# Require SSH agent forwarding for signing.
+if [ -z "${SSH_AUTH_SOCK:-}" ]; then
+  fail "SSH agent not available in the devcontainer. Start ssh-agent on your machine, load your key with ssh-add, then reopen the devcontainer."
+fi
+
+agent_keys_file="$(mktemp)"
+trap 'rm -f "${agent_keys_file}"' EXIT
+
+if ! ssh-add -L >"${agent_keys_file}" 2>/dev/null; then
+  fail "Could not read SSH keys from agent. Make sure your key is loaded on your machine with ssh-add, then reopen the devcontainer."
+fi
+
+if ! grep -qE '^ssh-' "${agent_keys_file}"; then
+  fail "SSH agent is running but has no keys loaded. Run ssh-add ~/.ssh/id_ed25519 on your machine, then reopen the devcontainer."
+fi
+
+first_pubkey="$(head -n 1 "${agent_keys_file}")"
+
+# Enforce SSH commit signing.
+git config --global gpg.format ssh
+git config --global commit.gpgsign true
+
+mkdir -p /home/node/.config/git /home/node/.ssh
+printf '%s\n' "${first_pubkey}" > /home/node/.ssh/devcontainer_signing_key.pub
+chmod 600 /home/node/.ssh/devcontainer_signing_key.pub
+git config --global user.signingkey /home/node/.ssh/devcontainer_signing_key.pub
+
+# Useful for local verification output.
+printf '%s <%s> %s\n' "${git_name}" "${git_email}" "${first_pubkey}" > /home/node/.config/git/allowed_signers
+chmod 600 /home/node/.config/git/allowed_signers
+git config --global gpg.ssh.allowedSignersFile /home/node/.config/git/allowed_signers
+
+log "Git identity and SSH signing configured"
+
+shared_home_dir="/home/node/shared"
+fix_permissions_script="${workspace_dir}/.devcontainer/fix-mounted-permissions.sh"
+
+# Persist the ~/.claude.json file by making it a symlink (this trick can be used for other potenial config file in the home folder as well)
+if [ -L "${shared_home_dir}" ]; then
+  rm -f "${shared_home_dir}"
+fi
+mkdir -p "${shared_home_dir}"
+touch "${shared_home_dir}/.claude.json"
+rm -f /home/node/.claude.json
+ln -s "${shared_home_dir}/.claude.json" /home/node/.claude.json
+
+log "Fixing dotkube volume permissions"
+chmod -R a+r /home/node/.kube && find /home/node/.kube -type d -exec chmod a+x {} +
+
+log "Fixing mounted repo volume permissions"
+if [ -r "${fix_permissions_script}" ]; then
+  # Run via bash so this still works when the bind-mounted workspace drops execute bits.
+  bash "${fix_permissions_script}" "${workspace_dir}"
+else
+  fail "Missing or unreadable permissions helper: ${fix_permissions_script}"
+fi
+
+log "Installing npm dependencies via make"
+make -C "${workspace_dir}" install-node-deps
+
+log "Installing Playwright Chromium browser"
+(cd "${workspace_dir}/the-gitops-paradox" && npx playwright install chromium)
+
+log "Installing img2pdf (used by make export-pdf PNG pipeline)"
+pip3 install --quiet --break-system-packages img2pdf
+
+log "post-create completed"

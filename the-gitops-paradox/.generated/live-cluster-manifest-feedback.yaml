@@ -1,0 +1,69 @@
+apiVersion: examples.configbutler.ai/v1alpha1
+kind: QuizSession
+metadata:
+  creationTimestamp: "2026-03-22T23:13:17Z"
+  generation: 1
+  name: feedback
+  namespace: vote
+  resourceVersion: "10315"
+  uid: 5d532209-bdb3-48f0-99e4-033224fffd7a
+spec:
+  questions:
+    - choices:
+        - Very clear
+        - Mostly clear
+        - Interesting but fuzzy
+        - I got lost
+      id: q1
+      required: true
+      title: How clear was the main idea of the talk?
+      type: singleChoice
+    - choices:
+        - Very promising
+        - Somewhat promising
+        - Interesting, but I am skeptical
+        - I do not think this solves a real problem
+      id: q2
+      required: true
+      title: How promising does this idea feel to you?
+      type: singleChoice
+    - choices:
+        - Security / cluster exposure
+        - Source of truth conflicts
+        - Too much complexity
+        - Poor fit with existing tooling
+        - Hard to explain to teams
+        - I am not worried, I want this now
+      id: q3
+      title: What worries you most about this approach?
+      type: multiChoice
+    - choices:
+        - Internal developer platforms
+        - Self-service infrastructure
+        - Safer production workflows
+        - Faster developer UX
+        - Audit / compliance
+        - I am not sure yet
+      id: q4
+      required: true
+      title: Where do you see value?
+      type: multiChoice
+    - id: q5
+      placeholder: Short and specific…
+      title: What is the first thing you would challenge, change, or ask for?
+      type: freeText
+    - choices:
+        - "No"
+        - Yes, feel free to contact me
+      id: q6
+      required: true
+      title: Would you like me to follow up with you?
+      type: singleChoice
+    - id: q7
+      placeholder: Only if you want follow-up…
+      title: Your email or LinkedIn (optional)
+      type: freeText
+  state: live
+  title: KubeCon 2026 Feedback
+status:
+  joinCode: d24x

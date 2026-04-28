@@ -1,0 +1,54 @@
+{
+  "name": "Talks DevContainer",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+  },
+  "forwardPorts": [3030],
+  "portsAttributes": {
+    "3030": {
+      "label": "Slidev",
+      "onAutoForward": "silent"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+      },
+      "extensions": [
+        "antfu.slidev",
+        "vue.volar",
+        "openai.chatgpt",
+        "anthropic.claude-code"
+      ]
+    }
+  },
+    "runArgs": [
+    "--add-host=host.docker.internal:host-gateway"
+  ],
+  "postCreateCommand": "bash .devcontainer/post-create.sh '${containerWorkspaceFolder}'",
+  "postStartCommand": "bash .devcontainer/fix-mounted-permissions.sh '${containerWorkspaceFolder}'",
+  "containerUser": "node",
+  "remoteUser": "node",
+  "updateRemoteUserUID": true,
+  "mounts": [
+    "source=talks-npmcache,target=/home/node/.npm,type=volume",
+    "source=talks-codexconfig,target=/home/node/.codex,type=volume",
+    "source=talks-claudeconfig,target=/home/node/.claude,type=volume",
+    "source=dotkube,target=/home/node/.kube,type=volume",
+    "source=talks-persisted-home,target=/home/node/shared,type=volume",
+    "source=talks-demo-repo,target=/workspaces/talks/the-gitops-paradox/demo-repo,type=volume"
+  ],
+  "containerEnv": {
+    "HOST_PROJECT_PATH": "${localWorkspaceFolder}",
+    "PROJECT_PATH": "/workspaces/${localWorkspaceFolderBasename}",
+    "GIT_USER_NAME": "${localEnv:GIT_USER_NAME}",
+    "GIT_USER_EMAIL": "${localEnv:GIT_USER_EMAIL}"
+  }
+}

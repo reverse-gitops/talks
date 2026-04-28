@@ -1,0 +1,49 @@
+{
+  "name": "slidev-addon-web-terminal",
+  "version": "0.3.0",
+  "description": "A Slidev addon that provides a web terminal using xterm.js",
+  "keywords": [
+    "slidev-addon",
+    "slidev",
+    "terminal",
+    "xterm"
+  ],
+  "scripts": {
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "license": "MIT",
+  "slidev": {
+    "components": [
+      "components"
+    ]
+  },
+  "files": [
+    "components",
+    "utils",
+    "vite.config.ts",
+    "README.md"
+  ],
+  "dependencies": {
+    "@xterm/addon-attach": "^0.12.0",
+    "@xterm/addon-fit": "^0.11.0",
+    "@xterm/addon-web-links": "^0.12.0",
+    "@xterm/addon-webgl": "^0.19.0",
+    "@xterm/xterm": "^6.0.0"
+  },
+  "peerDependencies": {
+    "@slidev/cli": ">=0.40.0",
+    "vue": "^3.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@slidev/cli": "^52.11.3",
+    "@slidev/theme-default": "latest",
+    "eslint": "^9.0.0",
+    "eslint-plugin-vue": "^9.0.0",
+    "typescript-eslint": "^8.0.0",
+    "vitest": "^4.0.18",
+    "vue-eslint-parser": "^9.0.0"
+  }
+}

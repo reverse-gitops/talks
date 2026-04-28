@@ -1,0 +1,10 @@
+apiVersion: kro.run/v1alpha1
+kind: PodInfoApp
+metadata:
+  name: fiets
+  namespace: podinfos-intent
+spec:
+  replicas: 1
+  message: The Dutch word for bicycle is "fiets". We have a lot of them. 🚲
+  color: "#115711"
+  logoURL: https://demo.configbutler.ai/podinfo-assets/podinfos-fiets.jpg

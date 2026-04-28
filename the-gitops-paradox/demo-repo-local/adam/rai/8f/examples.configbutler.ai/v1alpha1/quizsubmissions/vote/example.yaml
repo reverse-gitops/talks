@@ -1,0 +1,20 @@
+apiVersion: examples.configbutler.ai/v1alpha1
+kind: QuizSubmission
+metadata:
+  name: example
+  namespace: vote
+spec:
+  answers:
+  - questionId: q1
+    singleChoice: Software engineer
+  - questionId: q2
+    singleChoice: Git
+  - questionId: q3
+    singleChoice: "No"
+  - questionId: q4
+    singleChoice: Curious
+  sessionRef:
+    group: examples.configbutler.ai
+    kind: QuizSession
+    name: demo
+  submittedAt: "2026-02-05T12:34:00Z"
