@@ -51,7 +51,7 @@ transition: fade
     <div style="margin-bottom: 0.75rem;">
       <span style="color: #4ec9b0;">$</span> <span style="color: #9cdcfe;">watch -n2 "git log --oneline --graph --decorate --all --color"</span>
     </div>
-    <div style="color: #ce9178;">* <span style="color: #b5cea8;">07a6eed</span> <span style="color: #4ec9b0;">(origin/holland-stuff)</span> [CREATE] kro.run/v1alpha1/podinfoapps/paal</div>
+    <div style="color: #ce9178;">* <span style="color: #b5cea8;">07a6eed</span> <span style="color: #4ec9b0;">(origin/nl-stuff)</span> [CREATE] kro.run/v1alpha1/podinfoapps/paal</div>
     <div style="color: #ce9178;">* <span style="color: #b5cea8;">12f268e</span> [CREATE] kro.run/v1alpha1/podinfoapps/gevel</div>
     <div style="color: #ce9178;">* <span style="color: #b5cea8;">2aeac44</span> [CREATE] kro.run/v1alpha1/podinfoapps/fiets</div>
     <div style="color: #ce9178;">* <span style="color: #b5cea8;">29e747e</span> <span style="color: #4ec9b0;">(HEAD -&gt; main, origin/main)</span> [UPDATE] v1/namespaces/vote</div>
@@ -106,14 +106,14 @@ transition: fade
 <div style="position: absolute; inset: 18px 24px 24px; display: flex; flex-direction: column; gap: 0.5rem;">
   <div style="flex: 1; min-height: 0; margin-top: 3.5rem; background: #1a1a1a; border-radius: 6px; padding: 1rem; font-family: monospace; font-size: 12px; color: #d4d4d4; overflow: auto;">
     <div style="margin-bottom: 0.75rem;">
-      <span style="color: #4ec9b0;">$</span> <span style="color: #9cdcfe;">merge-holland-stuff.sh</span>
+      <span style="color: #4ec9b0;">$</span> <span style="color: #9cdcfe;">merge-nl-stuff.sh</span>
     </div>
     <div style="color: #888;">0/5 Ensuring Gitea port-forward</div>
     <div style="color: #888;">1/5 Fetching origin</div>
-    <div style="color: #888;">2/5 Checking out holland-stuff</div>
+    <div style="color: #888;">2/5 Checking out nl-stuff</div>
     <div style="color: #888;">3/5 Checking out main</div>
-    <div style="color: #888;">4/5 Merging holland-stuff into main</div>
-    <div style="color: #888; margin-bottom: 1.25rem;">Done: holland-stuff merged into main and deleted locally and on origin</div>
+    <div style="color: #888;">4/5 Merging nl-stuff into main</div>
+    <div style="color: #888; margin-bottom: 1.25rem;">Done: nl-stuff merged into main and deleted locally and on origin</div>
     <div style="margin-bottom: 0.75rem;">
       <span style="color: #4ec9b0;">$</span> <span style="color: #9cdcfe;">watch -n2 "kubectl get podinfoapps -A"</span>
     </div>

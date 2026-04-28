@@ -1,0 +1,10 @@
+apiVersion: kro.run/v1alpha1
+kind: PodInfoApp
+metadata:
+  name: gevel
+  namespace: podinfos-intent
+spec:
+  replicas: 1
+  message: Amsterdam is full of beautiful narrow facades, called "gevels". 🏠
+  color: "#8B5E3C"
+  logoURL: https://demo.configbutler.ai/podinfo-assets/podinfos-begijnhof.jpg

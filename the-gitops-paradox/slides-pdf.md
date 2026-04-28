@@ -67,33 +67,33 @@ why do we keep rebuilding APIs around workflows that Kubernetes already models s
 -->
 
 ---
-src: ./pages-new/0-intro.md
+src: ./pages/0-intro.md
 
 ---
 
 ---
-src: ./pages-new/1-vote-frozen.md
+src: ./pages/1-vote-frozen.md
 
 ---
 
 ---
-src: ./pages-new/2-paradox.md
+src: ./pages/2-paradox.md
 
 
 ---
 
 ---
-src: ./pages-new/3-1-api-first.md
+src: ./pages/3-1-api-first.md
 
 ---
 
 ---
-src: ./pages-new/3-2-capture-intent.md
+src: ./pages/3-2-capture-intent.md
 
 ---
 
 ---
-src: ./pages-new/3-3-gitops-frozen.md
+src: ./pages/3-3-gitops-frozen.md
 
 ---
 

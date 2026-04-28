@@ -1,0 +1,3 @@
+steps:
+  - run: kubectl apply -f fiets.yaml
+  - run: kubectl get podinfoapps -A

@@ -98,4 +98,6 @@ run-frozen: install-node-deps
 	cd the-gitops-paradox && npx slidev --entry slides-pdf.md --remote --no-open
 
 export-pdf: install-node-deps
-	cd the-gitops-paradox && npx slidev export slides-pdf.md --output ../dist/the-gitops-paradox.pdf
+	rm -rf /tmp/slidev-export-png && mkdir -p /tmp/slidev-export-png
+	cd the-gitops-paradox && npx slidev export slides-pdf.md --format png --output /tmp/slidev-export-png --scale 2 --timeout 60000
+	ls -v /tmp/slidev-export-png/*.png | xargs /home/node/.local/bin/img2pdf -o dist/the-gitops-paradox.pdf

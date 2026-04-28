@@ -3,16 +3,16 @@ set -euo pipefail
 
 usage() {
   cat <<'EOF'
-Usage: merge-holland-stuff.sh [repo-dir]
+Usage: merge-nl-stuff.sh [repo-dir]
 
-Checks out the holland-stuff branch, merges it into main with a merge commit,
-pushes main, and then deletes holland-stuff both locally and on origin.
+Checks out the nl-stuff branch, merges it into main with a merge commit,
+pushes main, and then deletes nl-stuff both locally and on origin.
 Before doing any Git operations, it ensures the Gitea port-forward is ready.
 
 Defaults:
   repo-dir: current directory
   GIT_REMOTE=origin
-  SOURCE_BRANCH=holland-stuff
+  SOURCE_BRANCH=nl-stuff
   TARGET_BRANCH=main
 EOF
 }
@@ -81,7 +81,7 @@ require_cmd git
 
 REPO_DIR="${1:-$PWD}"
 GIT_REMOTE="${GIT_REMOTE:-origin}"
-SOURCE_BRANCH="${SOURCE_BRANCH:-holland-stuff}"
+SOURCE_BRANCH="${SOURCE_BRANCH:-nl-stuff}"
 TARGET_BRANCH="${TARGET_BRANCH:-main}"
 
 echo "0/5 Ensuring Gitea port-forward"

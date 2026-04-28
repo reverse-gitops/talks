@@ -102,4 +102,7 @@ make -C "${workspace_dir}" install-node-deps
 log "Installing Playwright Chromium browser"
 (cd "${workspace_dir}/the-gitops-paradox" && npx playwright install chromium)
 
+log "Installing img2pdf (used by make export-pdf PNG pipeline)"
+pip3 install --quiet --break-system-packages img2pdf
+
 log "post-create completed"

@@ -1,0 +1,10 @@
+apiVersion: kro.run/v1alpha1
+kind: PodInfoApp
+metadata:
+  name: paal
+  namespace: podinfos-intent
+spec:
+  replicas: 1
+  message: These iconic Amsterdam bollards are called "Amsterdammertjes". They are everywhere. 🚧
+  color: "#C1272D"
+  logoURL: https://demo.configbutler.ai/podinfo-assets/podinfos-xxx.jpg
