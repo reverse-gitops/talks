@@ -1,5 +1,5 @@
-Intro
+https://www.youtube.com/watch?v=dkyjOq-I7Zs)
 
-Why
+What If Every Cozystack Change Became a Commit? | Simon Koudijs - Founder and Engineer, configbutler.ai
 
-How?
+Cozystack exposes platform services as Kubernetes API resources, e.g. Postgres, Redis, Bucket, Kubernetes. Users interact in the usual ways: kubectl, a GUI (Cozystack dashboard), or even feeding their AI agents through an MCP. But who is making all these changes? And why did they do it? Git seems far away. But it doesn't have to be. What if every platform change automatically appeared as clean YAML in Git? Fully automated. Just a silent layer that turns API activity into a durable, readable history of infrastructure intent. The immediate win is auditability: instead of digging through logs or dashboards, teams get versioned history they can inspect, diff, and share. Think of it as reverse GitOps: instead of Git driving the platform, the platform continuously writes its intent back to Git. In this talk, I'll explain why Cozystack is a natural fit for this model, show it live, and explore what platforms gain when Git stops being the interface — and starts being the memory.
