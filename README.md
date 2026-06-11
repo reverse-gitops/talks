@@ -2,7 +2,7 @@
 
 # Rendered Slides
 
-* [CozySummit](talks/cozystack/slides.pdf)
+* [CozySummit](cozystack/slides.pdf)
 * [The GitOps Paradox](dist/the-gitops-paradox.pdf)
 
 # I would love your feedback!
