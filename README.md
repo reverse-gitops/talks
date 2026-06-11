@@ -1,5 +1,9 @@
 # Talks
 
+## Cozysummit 2026
+
+[Read the PDF slides](talks/cozystack/slides.pdf)
+
 ## the-gitops-paradox
 
 [Read the PDF slides](dist/the-gitops-paradox.pdf)
