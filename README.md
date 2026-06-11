@@ -1,12 +1,9 @@
 # Talks
 
-## Cozysummit 2026
+# Rendered Slides
 
-[Read the PDF slides](talks/cozystack/slides.pdf)
-
-## the-gitops-paradox
-
-[Read the PDF slides](dist/the-gitops-paradox.pdf)
+* [CozySummit](talks/cozystack/slides.pdf)
+* [The GitOps Paradox](dist/the-gitops-paradox.pdf)
 
 # I would love your feedback!
 
