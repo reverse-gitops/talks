@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Config
+preferences: {}
+clusters:
+- name: audit-webhook
+  cluster:
+    server: https://192.168.x.31:9444/audit-webhook
+    certificate-authority-data: LS0tLS1...redacted
+    tls-server-name: gitops-reverser-audit.gitops-reverser.svc
+contexts:
+- name: webhook
+  context:
+    cluster: audit-webhook
+    user: kube-apiserver
+current-context: webhook
+users:
+- name: kube-apiserver
+  user:
+    client-certificate-data: LS0tLS...redacted
+    client-key-data: LS0tLS1...redacted
