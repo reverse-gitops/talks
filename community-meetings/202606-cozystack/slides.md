@@ -1,448 +1,394 @@
 ---
-theme: default
-title: GitOps Reverser × Cozystack
-info: |
-  API-first Kubernetes, with a Git audit trail that just happens.
-  Pitch deck — starting point. Render with Slidev.
-class: text-center
-transition: slide-left
-mdc: true
-drawings:
-  persist: false
+marp: true
+theme: gaia
+paginate: true
+title: What If Every Cozystack Change Became a Commit?
+author: Simon Koudijs
 ---
 
-# GitOps Reverser × Cozystack
+<!--
+_class: lead
+_color: white
+-->
 
-### API-first Kubernetes — with a Git audit trail that *just happens*
+![bg contains](./images/train.jpg)
 
-Every change to the cluster becomes a clean, attributed Git commit.
-No new workflow for users. No giving up history.
+# gitops-reverser in CozyStack?
 
-<div class="pt-8 text-sm opacity-60">
-Run this deck: <code>npm install && npm run dev</code>
-</div>
+![width:150px](./images/logo.svg) ![width:150px](./images/logo_owl.svg)
+
+**Reverse GitOps for platform changes**
+
+Simon Koudijs, ConfigButler
 
 <!--
-One-liner: keep using the API. We turn live API activity into reviewable YAML in Git,
-with the human's name on every commit. Today is about fit for Cozystack, not a live demo.
+Hook: open with the question. Don't answer it yet.
+-->
+
+---
+![bg right:38%](./images/simon-portret.jpg)
+
+# Who am I?
+
+`[Software|Product|Cloud|AI] engineer`
+
+- Worked in startups, consultancy, and SaaS
+- Left my job last summer to pursue building my own company
+
+<!--
+Since last summer: working open source, speaking to spread the word
 -->
 
 ---
 
-## Agenda
+# What do I do?
 
-1. What it is — the reverse-GitOps pattern
-2. What I showed last time — *you* generated the data
-3. **What's new since then** — the build log
-4. Why **Cozystack** is a near-ideal fit
-5. Attribution — and the **no-audit** mode
-6. **Trust the source:** mutual TLS on the audit channel
-7. **`CommitRequest`** + the **configuration resources**
-8. **API** state, **file layout**, and a clean **install**
-9. Secrets, open questions, and what we defer
+- [koudijs.dev](https://koudijs.dev/)
+  - consultancy, training
+- [ConfigButler](https://configbutler.ai/)
+  - startup, open source first
+  - helps you build high quality configuration
+- [Reverse GitOps](https://reversegitops.dev/) pioneer
+  - manifest, feel free to comment! :slightly_smiling_face:
 
 ---
 
-## What it is
-
-> Classic GitOps: Git is the source of truth, a controller applies it to the cluster.
-> **Reverse GitOps: the cluster API is the source of truth, we project it into Git.**
-
-```mermaid {scale: 0.85}
-flowchart LR
-    subgraph Normal["Classic GitOps"]
-        direction LR
-        G1[(Git)] -->|Flux / Argo apply| C1[Cluster]
-    end
-    subgraph Reverse["Reverse GitOps — this tool"]
-        direction LR
-        C2[Cluster API] -->|observe + commit| G2[(Git)]
-    end
-```
-
-Teams keep an **API-first** workflow (GUI, `kubectl`, operators) and still get a
-reviewable, versioned, **attributed** history — for free.
-
-> **The cluster API is the single source of truth — not Git.**
-> So there are **no merge conflicts, ever.** Git is a projection: when the live
-> state changes, we just **overwrite** the file to match. The cluster always wins.
-
-<!-- The pattern page: reversegitops.dev. The "API is source of truth" line is the
-     answer to "but what about merge conflicts / two-way sync?" — there is no two-way
-     sync. One direction only. The cluster decides; Git records. -->
-
----
-
-## What I showed last time — *you* made the data
-
-**Last time, the room generated the demo.** You scanned a QR, answered a warm-up
-quiz, and **every answer landed in the cluster as a real CR** — a `QuizSubmission`,
-arriving through the **API** exactly like a Cozystack `Postgres` or `Bucket` would.
-
-- You submit an answer in the browser →
-- it hits the kube-apiserver as a real resource →
-- within seconds a sanitized YAML commit lands in Git, **attributed to you**.
-
-We captured **the public's own settings, live**, and they became Git history in
-front of you. Then, in the dashboard, `git blame` showed the **OIDC user's name** —
-not a robot. **It was boring. It just worked.** That is exactly the pitch.
-
-> Today: **no live demo.** I'll show last time's result — *your* commits and the repo.
+![bg contains](./images/dashboard.png)
 
 <!--
-The callback: the audience IS the demo. Their quiz answers were captured as CRs and
-turned into commits in real time. Lean into "boring" — a change-capture tool that is
-dramatic is failing. It's invisible until you need the history, then it's all there.
--->
+## API First
 
----
-layout: two-cols
----
+Cozystack exposes platform services as Kubernetes API resources:
 
-## Last time — the artifacts
+- Postgres
+- Redis
+- Bucket
+- Kubernetes (clusters as a resource)
 
-**The room's quiz answers, as commits.** Each `QuizSubmission` arrived through
-the API and was captured automatically — authored by the attendee.
-
-![Quiz submission commits authored by attendees](./images/cozysummit-answers.png){.rounded .shadow .mt-2}
-
-Real example commit →
-[`800a51e…`](https://github.com/ConfigButler/example-audit/commit/800a51e5a8edcccbc85c94d5fef7ef7cc8381b7b)
-
-::right::
-
-**The same mechanism on real Cozystack resources.** `HelmRelease`s and `apps`
-captured with the **OIDC user's real name** (`sunib`) — not a bot.
-
-![Cozystack resources captured with real OIDC author](./images/cozysummit-examples.png){.rounded .shadow .mt-2}
-
-<!-- These are the actual artifacts from last time. Left: the audience-capture (quiz
-     submissions, attendee authors). Right: the same flow on Cozystack CRs with real
-     OIDC attribution. Walk one commit: human author, sanitized body, sensible path. -->
-
----
-
-## What's new since last time
-
-I didn't just talk about it — since the last meeting it grew **more honest history**
-and **more control**:
-
-- **`CommitRequest`** — batch the pending changes into **one commit** with your own
-  message + ticket references.
-- **Resource ↔ file mapping** — every resource maps to a **known file**; I can go from a
-  live object to its exact path, and back.
-- **Many files per folder** — a folder can hold lots of resources and stay readable.
-- **Configurable file placement** *(in progress)* — decide how new files land:
-  per namespace, per type, per tenant.
-- **State via API** — ask the operator where a resource lives in Git (path, last commit,
-  history link).
-- **Trust hardening** — **mutual TLS** on the audit channel, so attribution is provably
-  from the real apiserver.
-
-<!-- The "build log" slide. Each item is detailed on a later slide. Land that this is a
-     working tool that moved forward, not a concept. -->
-
----
-
-## How it works (live path)
-
-```mermaid {scale: 0.8}
-flowchart LR
-    U["User via GUI / kubectl<br/>(OIDC identity)"] --> API[kube-apiserver]
-    API -->|audit webhook| OP[GitOps Reverser]
-    API -->|watch / list| OP
-    OP --> SAN[Sanitize + attribute]
-    SAN --> Q[(Valkey / Redis<br/>ordered queue)]
-    Q --> COMMIT["Commit<br/>author = OIDC user"]
-    COMMIT --> GIT[(Git repo)]
-```
-
-- **Audit webhook** answers *who changed it* (the human).
-- **Watch / list** answers *what the object actually is* (full, clean body).
-- Sanitization strips runtime noise; Redis keeps writes ordered; commits can be SSH-signed.
-
----
-
-## Trust the source: mutual TLS
-
-I care about producing output you can **trust**. A name on a commit is only worth as
-much as the **channel the audit events arrive on**.
-
-```mermaid {scale: 0.8}
-flowchart LR
-    API[kube-apiserver] -->|"audit events over mTLS"| OP[GitOps Reverser]
-    OP -. "verifies apiserver client cert" .-> API
-    API -. "verifies reverser server cert" .-> OP
-```
-
-- **Without mutual TLS:** anything that reaches the webhook could **forge** audit events
-  → fake human names in your history.
-- **With mTLS:** the apiserver presents a client cert the reverser verifies → events are
-  **provably from the real apiserver**.
-- A little fiddly to set up — **but honestly not hard.** I ship a working example.
-
-> Worked example → [`examples/audit-webhook-mtls.md`](examples/audit-webhook-mtls.md)
-
-<!-- Trust is the product. mTLS is the thing that lets you *believe* the name on a commit.
-     Don't gloss this — it's the difference between an audit trail and a nice-looking one. -->
-
----
-
-## Why Cozystack is a near-ideal fit
-
-The hardest install step everywhere else is **configuring the kube-apiserver audit
-webhook** — managed clouds won't let you.
-
-**Cozystack owns its own apiserver.** That friction disappears.
-
-- The high-fidelity, **OIDC-attributed** mode (the wow from the demo) is fully available.
-- The distro can ship a **curated audit policy** tuned for Cozystack's own controllers.
-- Multi-tenant by design → natural per-tenant repos / paths.
-
-> We're usually a "poor fit for managed control planes." Cozystack is the opposite of that.
-
----
-
-## The main question: how much do we care about attribution?
-
-**My answer: a lot. It's the difference between two products.**
-
-|  | Without user names | With user names |
-|---|---|---|
-| What you get | A Git **mirror** of cluster state | An **accountable audit trail** |
-| `git blame` says | `gitops-reverser-bot` | **the actual person** |
-| Value | "what is configured" | "who changed what, when, and why" |
-
-The catch: real user names require the **audit webhook** to be configured.
-That's the one thing that raises the bar — and it's exactly the thing Cozystack
-can do *for* the user.
-
-<!--
-This is the crux slide. Attribution is the moat. It is also the cost. On Cozystack the
-cost is paid by the distro, not the end user — so we get the high-value mode by default.
+Users interact via **kubectl**, the **dashboard**, or even an **MCP** feeding an AI agent.
 -->
 
 ---
 
-## Attribution is a confidence decision, not a guess
+# Why these resources?
 
-```mermaid {scale: 0.8}
-flowchart TD
-    EV[Change observed on watch] --> Q{Audit fact present<br/>+ strong match?}
-    Q -->|Real user| A["Author = person (OIDC)"]
-    Q -->|Service account| B["Author = named controller<br/>e.g. kustomize-controller"]
-    Q -->|No / weak / conflict| C["Author = bot<br/>(reason recorded)"]
-```
+- 🕐 When? :white_check_mark:
+- 👤 Who? ❌
+- 🤔 Why? ❌
 
-- A **wrong** name is worse than **no** name → we only name on strong evidence.
-- A controller is a *named* author, not "unknown" → history reads as
-  **human edits vs reconciles**.
-
-> **Supported mode: no audit ingestion at all.** Simpler to install — but every commit
-> is the **bot**, with *no* human names. It works… and honestly, **I find it a shame**:
-> the names are most of the value.
-
----
-layout: two-cols
----
-
-## `CommitRequest` — let humans say *why*
-
-Attribution gives us **who** and **when**. The last gap is **why**.
-
-**A `CommitRequest`** lets anyone bundle the **current set of pending changes**
-into a **single commit with their own message** — intent, not just a diff.
-
-- Group several edits → **one meaningful commit**, not a scatter of robot commits.
-- Reference an **internal ticket**, an incident, an RFC — whatever context matters.
-- Turns the history from *a log of changes* into a **reviewed, explained changelog**.
-
-::right::
-
-You already saw the seed of this last time, in the **app edit**: the storefront
-editor asked *"why are you making this change?"* — `CommitRequest` makes that
-first-class, for **any** change in the cluster.
-
-![Storefront config edit asking 'why are you making this change?'](./images/config-change.png){.rounded .shadow .mt-2}
+Git seems far away.
 
 <!--
-CommitRequest is the answer to the old When/Who/WHY motif. Who+when come from the audit
-webhook; why comes from the human writing a message. Batching pending changes into one
-commit is what makes the history read like a changelog instead of a firehose. The ticket
-reference is the bridge to whatever the org already tracks work in.
--->
-
----
-layout: two-cols
----
-
-## Configurable, not hard-coded
-
-`CommitRequest` is one of a small set of **configuration resources**. Everything is
-driven by CRDs, so the same engine flexes to very different setups.
-
-| Resource | What it controls |
-|---|---|
-| `GitProvider` | How to reach the Git host + credentials |
-| `GitTarget` | Repo / branch / path to write to |
-| `WatchRule` | Which namespaced resources to capture |
-| `ClusterWatchRule` | Which cluster-scoped resources to capture |
-| `CommitRequest` | Batch changes into one explained commit |
-
-Per-tenant repos, per-type paths, capture-this-skip-that — **all configuration, no code.**
-
-::right::
-
-![GitTarget resources and the configuration CRDs in the dashboard](./images/freelens-gittargets.png){.rounded .shadow .mt-12}
-
-Opinionated defaults on top: most users get a profile, power users get the full surface.
-
-<!-- The freelens sidebar shows these CRDs live. The pitch: flexibility comes from a small,
-     composable CRD set — not forks or config flags. -->
-
----
-
-## Returning state via an API call
-
-*The ask from last time: "can I get something about that state from an API?"* — yes.
-
-```mermaid {scale: 0.78}
-flowchart LR
-    GUI[Cozystack dashboard] -->|"GET /v1/resources/.../{ns}/{name}"| OP[GitOps Reverser<br/>read API]
-    OP -->|"{ gitPath, lastCommitSha, author, historyUrl }"| GUI
-    OP -. already maintains .- STATE[(materialization state)]
-    GUI -->|"history link = path + host URL"| GITHOST[(Git host)]
-```
-
-- The operator **already knows** each resource's file path + last commit SHA —
-  on both the live and reconcile paths. Nothing to duplicate.
-- The GUI gets a **"view history"** link per resource for free.
-- **Read-only:** we don't write annotations back into the cluster (no second writer,
-  no feedback loop).
-
----
-
-## Resources → files: a readable tree
-
-Every captured resource maps to a **known file** in the repo — and the mapping goes
-**both ways**: from a live object to its path, and from a file back to its object.
-
-- A single **folder can hold many files** (e.g. a whole namespace) and stay readable.
-- **Configurable file placement** *(in progress)*: choose how new files land —
-  by namespace, by type, by tenant — to match how your team already thinks.
-- Stable, predictable paths are what make **`CommitRequest`** and the **history link**
-  point at exactly the right thing.
-
-<!-- File layout isn't cosmetic: stable paths are what make diffs reviewable and the
-     state-via-API history links resolve. Configurable placement is the active work. -->
-
----
-
-## What a new install could look like
-
-```mermaid {scale: 0.7}
-flowchart TB
-    subgraph CP["Cozystack control plane (distro-owned)"]
-        APISERVER["kube-apiserver<br/>+ audit webhook wired by the distro"]
-    end
-    subgraph APP["GitOps Reverser (one app)"]
-        OP[Operator]
-        REDIS[(Valkey)]
-    end
-    GITEA[(in-cluster Git, e.g. Gitea)]
-    GUI[Dashboard]
-    APISERVER --> OP
-    OP --> REDIS
-    OP --> GITEA
-    GUI --> OP
-    GUI --> GITEA
-```
-
-**Goal: one opinionated profile**, not the full CRD surface on day one.
-
----
-
-## Install walkthrough (the experience we want)
-
-1. **Install the app** — operator + Valkey + an in-cluster Git host, bundled.
-2. **Distro wires the audit webhook** to the operator (Cozystack's superpower).
-3. **One `GitProvider` + `GitTarget`** pre-created → repo exists, bot can push.
-4. **Default capture set**: the tenant-facing CR types, *not* internal plumbing.
-5. Done — the GUI shows "view history" links; commits carry real names.
-
-> Open question I want to settle: **can this just be a Cozystack "application"?**
-> If yes, the whole thing is a one-click install with sane defaults.
-
-<!--
-The "install as an application" question is genuine. If Cozystack's app model can carry
-the operator + valkey + gitea + the pre-created CRs, install friction → near zero.
+Land the pain. Pause here.
+Who added this huge resource? Why did he/she do this?
+Kubernetes API makes it easier: but it's not easy, and it would help if you at least would know users intent!
 -->
 
 ---
 
-## Secrets: "use secrets for secrets"
+## Your options
 
-- `Secret`s (and opted-in Secret-shaped CRs) are **encrypted with SOPS + age** before commit. ✅
-- The gap: **credentials inlined into a CR `spec`.** Common best practice to avoid — but
-  *not guaranteed*, especially across bundled apps.
+- Accept it
+- Periodic reset 
+- Limited access
+- Audit files ([kube-api](https://kubernetes.io/docs/tasks/debug/debug-cluster/audit/) to the rescue)
 
-**Plan (no fragile field-level encryption at launch):**
+<!--
+Accept it: "it's not important, we can live with uncertainty, it's for experiments, people don't do weird stuff
+Periodic reset: wipe it every night to a known state, it's only for shorter experiments.
+Limited acces: only a select group of people with good docs, run books, manual changelogs are making adjustments
+Configur audit logs: kube-api has a lot of options to push important resources, and changes into audit log files. They do provide answers: but it does take skills to find what you need.
 
-- Contract: *sensitive data belongs in `Secret`s.*
-- Escape hatch: mark a whole CR **type** sensitive → encrypt it wholesale, **or** redact/skip.
-- **Fail closed:** never commit plaintext; skip or redact instead.
-
-Field-level encryption stays a later opt-in — it raises the bar the wrong way.
-
----
-
-## Open questions (and where I lean)
-
-| Question | Lean |
-|---|---|
-| **Where to host Git?** | In-cluster, auto-provisioned (Gitea); external remotes still supported. |
-| **How to configure without friction?** | One opinionated distro profile; full CRDs for power users. |
-| **Path back (Git → cluster via Flux)?** | **Defer.** Works in e2e, but it's the "two writers" trap until ownership is crisp. |
-| **Aggregated APIs / the audit proxy?** | On its way out — watch carries the full object body. |
-| **HA?** | Start single-replica (leader-elected); seams exist, don't oversell. |
+These work, but they trade autonomy for control. Could be fine, but it could also be painfull
+-->
 
 ---
 
-## What we deliberately defer
+## Your options: GitOps
 
-- **Path back** (edit in Git → Flux reconciles into the cluster). Premature; nice future story.
-- **Field-level secret encryption.** Coarse, fail-closed handling first.
-- **External-cluster / managed-control-plane support.** Cozystack doesn't need it.
-- **Multi-writer HA.** Single-writer-per-type ownership is the one real deferred item.
+Flip the interface: **Git is the only way in**.
 
-> Honest scope sells better than a wishlist.
+- YAML files / PRs
+- Controllers (Argo, Flux)
 
----
-layout: center
-class: text-center
----
+But: edits can't go through kubectl, dashboard, MCP. The GUI and the API stop being the front door. Git is your `interface`.
 
-## The pitch, in short
+<!--
+This is the classic answer. It works — but it asks every user to speak YAML.
+Controllers sync from git to cluster
 
-1. **It already does the headline on Cozystack's home turf:** API-first writes →
-   clean, **OIDC-attributed** Git history, on a distro that can wire the audit webhook.
-2. **Attribution is the moat** — and Cozystack pays its one cost for the user.
-3. **`CommitRequest` adds the *why*:** batch edits into one explained commit, with a
-   ticket reference — history becomes a reviewed changelog, not a firehose.
-4. **State via API** answers last time's question: path, SHA, history link, content — read-only.
-5. **Fewer moving parts:** proxy on its way out; install is one opinionated app.
+-->
 
 ---
-layout: center
-class: text-center
+
+![bg contain](./images/dashboard-cross.png)
+
+<!--
+Shows a picture of the dashboard with a big red cross to indicate that you would loose it!
+
+Pure GitOps is pretty hard when you want to use a GUI as well (at least for editting)
+-->
+
 ---
 
-## Backup / details
+## Where we are now
 
-Full positioning note → [cozystack-integration-pitch.md](cozystack-integration-pitch.md)
-Architecture deep-dive → [watch-only-ingestion-architecture.md](watch-only-ingestion-architecture.md)
-Audit webhook over mutual TLS → [examples/audit-webhook-mtls.md](examples/audit-webhook-mtls.md)
-The pattern → [reversegitops.dev](https://reversegitops.dev)
-Live example repo → `github.com/ConfigButler/example-audit`
+We have seen three things:
 
-# Questions?
+1. Kubernetes audit events can show **exactly what happened**
+2. gitops-reverser can turn those events into **readable Git history**
+3. The coffee-app demo made that concrete in a Cozystack-shaped workflow
+
+<!--
+This is the bridge from the earlier "Git seems far away" problem.
+The point is not "please abandon the dashboard". The point is that we can keep
+the dashboard and still have a durable trail.
+-->
+
+---
+
+![bg contain](./images/cozysummit-answers.png)
+
+<!--
+First proof: incoming Kubernetes API resources become a Git repository.
+You can track what is going on without forcing the user to start in Git.
+-->
+
+---
+
+## First proof: audit capture
+
+The audit log gives the missing context:
+
+- actor from OIDC
+- verb and resource
+- request and response
+- timestamp from the API server
+
+That is enough to write an attributed commit.
+
+<!--
+This is the technical core. Watch alone can tell you final state. Audit tells
+you who asked the API server to make the change.
+-->
+
+---
+
+![bg contain](./images/gh-configbutler-bot.png)
+
+<!--
+Show that the commit exists and that the bot is the committer.
+The important distinction: the bot writes, but the human remains the author
+when the audit identity is trusted.
+-->
+
+---
+
+## Reverse GitOps
+
+Classic GitOps: **Git -> Platform**
+
+Reverse GitOps: **Platform -> Git**
+
+Git stops being the interface.
+Git becomes the memory.
+
+<!--
+Keep this short. Cozystack is already API-first. The story is stronger when
+we do not fight that.
+-->
+
+---
+
+![bg contain](./images/reverser-overview.excalidraw.svg)
+
+<!--
+The operator observes API activity, writes clean files, and preserves the
+connection between a live resource and the Git evidence.
+-->
+
+---
+
+## Then: the coffee app
+
+Together we used the coffee-app demo:
+
+- create higher-level platform resources
+- change configuration through the normal interface
+- resolve merge conflicts as we go
+
+---
+
+![bg contain](./images/config-change.png)
+
+<!--
+This is the "why" slide. A configuration change is much easier to discuss
+when it is a normal Git diff.
+-->
+
+---
+
+## What we learned
+
+- We can answer **when**
+- We can answer **who**
+- With good resource diffs, we can often answer **why**
+
+And we can do that without making Git the only front door.
+
+---
+
+![bg contain](./images/freelens-gittargets.png)
+
+<!--
+GitTarget keeps the repository layout configurable.
+For a Cozystack integration, I would prefer one opinionated default profile
+over asking every user to understand all of the knobs.
+-->
+
+---
+
+## New feature idea
+
+For every captured resource, serve provenance back by API:
+
+```http
+GET /resources/{group}/{version}/{resource}/{namespace}/{name}
+```
+
+```json
+{
+  "gitPath": "clusters/demo/apps/coffee/order.yaml",
+  "lastCommitUrl": "https://git/.../commit/abc123",
+  "historyUrl": "https://git/.../commits/main/.../order.yaml"
+}
+```
+
+<!--
+This answers the request for file location and the last URL.
+The GUI can call this and show "open in Git" or "view history" without us
+writing annotations back into live objects.
+-->
+
+---
+
+## Why API, not annotations?
+
+Annotations are tempting, but they make the reverser a writer in the cluster.
+
+- every annotation write creates another event
+- the operator has to filter its own changes
+- live objects become coupled to Git layout
+
+A read API keeps the mirror read-only.
+
+<!--
+This is a product boundary slide. Staying read-only is part of the value.
+-->
+
+---
+
+## Trust boundary
+
+I want this to be a **trustable source**.
+
+If a commit says "Noa changed the coffee config", that should mean:
+
+- the API server authenticated Noa
+- the audit event really came from that API server
+- the commit author was derived from that trusted event
+
+<!--
+Credibility matters here. The whole product becomes weaker if people can
+forge audit events into the webhook.
+-->
+
+---
+
+## The annoying part: mTLS
+
+The kube-apiserver audit webhook should use mutual TLS:
+
+- apiserver verifies the reverser endpoint
+- reverser verifies the apiserver client certificate
+- only verified audit facts attach a human name to a commit
+
+This is hard and annoying for easy rollout.
+
+<!--
+Say this plainly. mTLS is not the fun demo part. But it is what lets the
+system claim to be more than a nice log collector.
+-->
+
+---
+
+```yaml
+apiServer:
+  extraArgs:
+    audit-policy-file: /var/audit-policy.yaml
+    audit-webhook-config-file: /var/audit-webhook.yaml
+    audit-webhook-batch-max-wait: 1s
+    audit-webhook-batch-max-size: "100"
+```
+
+<!--
+This is the concrete Cozystack/Talos angle. On managed clusters this is often
+the blocker. In Cozystack, the distro can own the apiserver wiring.
+-->
+
+---
+
+## Is it worth it?
+
+For generic Kubernetes: maybe not for everyone.
+
+For Cozystack: I think yes.
+
+- Cozystack owns the kube-apiserver
+- the dashboard already uses the Kubernetes API
+- high-level resources create human-readable diffs
+- the distro can hide the difficult default setup
+
+---
+
+## What I would propose
+
+Start with a focused integration:
+
+- read-only mirror of selected Cozystack resources
+- OIDC-attributed commits from verified audit events
+- default GitProvider and GitTarget
+- GUI links to file location, latest commit, and history
+
+No Git -> cluster write-back yet.
+
+<!--
+This keeps the scope honest. The repo becomes useful immediately as history
+and desired-state backup, while avoiding the two-writers problem.
+-->
+
+---
+
+## Open questions
+
+- Which Cozystack resources should be captured first?
+- Where should the default Git repository live?
+- What should be visible per tenant?
+- How much of the audit/mTLS setup can Cozystack ship as defaults?
+
+---
+
+## Takeaways
+
+1. Keep Cozystack API-first
+2. Use Git as trustworthy memory
+3. Make provenance visible from the GUI
+4. Treat mTLS as the price of trustworthy attribution
+
+---
+<!-- 
+_class: lead 
+_backgroundColor: white
+-->
+
+Contact details and presentation at https://koudijs.dev
