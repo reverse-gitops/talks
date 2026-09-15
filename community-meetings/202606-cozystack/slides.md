@@ -372,6 +372,7 @@ and desired-state backup, while avoiding the two-writers problem.
 ## Open questions
 
 - Which Cozystack resources should be captured first?
+- Can `apps.cozystack.io/v1alpha1` secret fields be removed?
 - Where should the default Git repository live?
 - What should be visible per tenant?
 - How much of the audit/mTLS setup can Cozystack ship as defaults?
@@ -381,8 +382,8 @@ and desired-state backup, while avoiding the two-writers problem.
 ## Takeaways
 
 1. Keep Cozystack API-first
-2. Use Git as trustworthy memory
-3. Make provenance visible from the GUI
+2. Git as trustworthy memory
+3. Make provenance visible from the GUI by adding a link
 4. Treat mTLS as the price of trustworthy attribution
 
 ---

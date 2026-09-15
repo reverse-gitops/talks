@@ -80,7 +80,7 @@
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section data-paginate="true" data-theme="gaia" lang="en-US" data-marpit-pagination="8" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="28" data-marpit-advanced-background="background"><div data-marpit-advanced-background-container="true" data-marpit-advanced-background-direction="horizontal"><figure style="background-image:url(&quot;./images/dashboard-cross.png&quot;);background-size:contain;"></figure></div></section></foreignObject><foreignObject width="1280" height="720"><section id="8" data-paginate="true" data-theme="gaia" lang="en-US" data-marpit-pagination="8" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="28" data-marpit-advanced-background="content"></section>
 </foreignObject><foreignObject width="1280" height="720" data-marpit-advanced-background="pseudo"><section data-paginate="true" data-theme="gaia" lang="en-US" data-marpit-pagination="8" style="" data-marpit-pagination-total="28" data-marpit-advanced-background="pseudo"></section></foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="9" data-paginate="true" data-theme="gaia" lang="en-US" data-marpit-pagination="9" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="28">
 <h2 id="where-we-are-now">Where we are now</h2>
-<p>We have seen three useful things:</p>
+<p>We have seen three things:</p>
 <ol>
 <li>Kubernetes audit events can show <strong>exactly what happened</strong></li>
 <li>gitops-reverser can turn those events into <strong>readable Git history</strong></li>
@@ -114,9 +114,8 @@ Git becomes the memory.</p>
 <ul>
 <li>create higher-level platform resources</li>
 <li>change configuration through the normal interface</li>
-<li>see the generated YAML and commit history</li>
+<li>resolve merge conflicts as we go</li>
 </ul>
-<p>The diff is the story.</p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section data-paginate="true" data-theme="gaia" lang="en-US" data-marpit-pagination="16" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="28" data-marpit-advanced-background="background"><div data-marpit-advanced-background-container="true" data-marpit-advanced-background-direction="horizontal"><figure style="background-image:url(&quot;./images/config-change.png&quot;);background-size:contain;"></figure></div></section></foreignObject><foreignObject width="1280" height="720"><section id="16" data-paginate="true" data-theme="gaia" lang="en-US" data-marpit-pagination="16" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="28" data-marpit-advanced-background="content"></section>
 </foreignObject><foreignObject width="1280" height="720" data-marpit-advanced-background="pseudo"><section data-paginate="true" data-theme="gaia" lang="en-US" data-marpit-pagination="16" style="" data-marpit-pagination-total="28" data-marpit-advanced-background="pseudo"></section></foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="17" data-paginate="true" data-theme="gaia" lang="en-US" data-marpit-pagination="17" style="--paginate:true;--theme:gaia;" data-marpit-pagination-total="28">
@@ -206,6 +205,7 @@ Git becomes the memory.</p>
 <h2 id="open-questions">Open questions</h2>
 <ul>
 <li>Which Cozystack resources should be captured first?</li>
+<li>Can <code>apps.cozystack.io/v1alpha1</code> secret fields be removed?</li>
 <li>Where should the default Git repository live?</li>
 <li>What should be visible per tenant?</li>
 <li>How much of the audit/mTLS setup can Cozystack ship as defaults?</li>
@@ -215,8 +215,8 @@ Git becomes the memory.</p>
 <h2 id="takeaways">Takeaways</h2>
 <ol>
 <li>Keep Cozystack API-first</li>
-<li>Use Git as trustworthy memory</li>
-<li>Make provenance visible from the GUI</li>
+<li>Git as trustworthy memory</li>
+<li>Make provenance visible from the GUI by adding a link</li>
 <li>Treat mTLS as the price of trustworthy attribution</li>
 </ol>
 </section>
