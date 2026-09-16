@@ -1,0 +1,21 @@
+flowchart TB
+  API["kube-apiserver"]
+
+  API --> WATCH["watch stream — WHAT changed<br/>object body, ordered per type; sanitized:<br/>uid, resourceVersion, managedFields, status stripped"]
+  API --> AUDIT["audit webhook — WHO changed it<br/>post-persist fact, per-type stream,<br/>bounded TTL'd in-process index"]
+
+  WATCH --> JOIN{"join on<br/>uid + resourceVersion<br/>grace window: 3s"}
+  AUDIT -.->|"keys only"| JOIN
+
+  JOIN --> OK["fact arrived in time<br/>author = alice #lt;alice@example.com#gt;"]
+  JOIN --> NOPE["nothing usable in time<br/>author = unknown (attribution unresolved)"]
+
+  OK --> GIT[("commit window, per (author, gitTarget) → Git")]
+  NOPE --> GIT
+
+  classDef amber fill:#fdf7e4,stroke:#e3b63b,stroke-width:2px,color:#6b5210;
+  classDef green fill:#eef8f1,stroke:#5cb87a,stroke-width:2px,color:#2c6b45;
+  classDef navy fill:#16324f,stroke:#16324f,stroke-width:2px,color:#ffffff;
+  class API,GIT navy
+  class AUDIT,NOPE amber
+  class OK green

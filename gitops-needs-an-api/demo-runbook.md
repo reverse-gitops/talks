@@ -49,10 +49,13 @@ so you can put any of it back if a rehearsal runs short:
 | The bio merged into one slide | 1:00 | two slides; nobody is here for it |
 
 The mechanism segment then took 15 seconds back: the unfinished `12-kube-api`
-picture was replaced by three real slides (cells, the watch/audit join, the
-commit window), which is where the "advanced" billing is actually earned. The
-krm-stream slide after demo 1 is now the first thing to cut, and the cells slide
-is the first of the three to go if you are still behind.
+picture was replaced by real slides — cells, the watch/audit join, the commit
+window — which is where the "advanced" billing is actually earned. It has since
+grown to five: the krm-stream slide after demo 1 was **cut** to pay for a
+dedicated `resourceVersion` slide, and two mermaid diagrams were added after the
+cells and join slides. Those two mermaid slides are now the first things to go if
+you are still behind; the CSS versions in front of them read better from the back
+row and carry the same argument.
 
 **The first eight minutes talk about Git, and that is fine.** What is being held
 back is not the word. It is the evidence that *this cluster has been writing to a
@@ -61,9 +64,9 @@ a repo that the people who own the intent cannot reach — is the setup for both
 demos and gives nothing away. "The secret" below draws the line.
 
 **What to sacrifice if you are over on stage**, in the order you should reach for
-it: the krm-stream slide after demo 1 (30s, pure bonus), demo 2 step 2 told
-rather than walked (30s), the coffee menu dropped from demo 1 step 2 (30s — it
-comes back in demo 2 anyway). Do not cut demo 2 step 4; it is the beat the talk
+it: the two mermaid detail slides (35s + 40s — the CSS slides before them already
+made the point), demo 2 step 2 told rather than walked (30s), the coffee menu
+dropped from demo 1 step 2 (30s — it comes back in demo 2 anyway). Do not cut demo 2 step 4; it is the beat the talk
 is named for. Do not cut the closing round; it is where the last commit comes
 from.
 

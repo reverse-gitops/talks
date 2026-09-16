@@ -794,32 +794,6 @@ If you are running long, cut the coffee menu out of beat 2. It reappears in demo
 
 ---
 
-# Watching it happen
-
-The results page is a browser talking to **kube-apiserver**, not to a backend of mine.
-
-Which means it wants **watches** — and you cannot use a Kubernetes watch from a
-browser without help.
-
-<div class="lead">
-github.com/ConfigButler/krm-stream
-</div>
-
-<div class="note">
-Also open source. If there is one thing a frontend wants, it is for things to change immediately.
-</div>
-
-<!--
-CLOCK 18:00 — 30 seconds, and now the FIRST thing to cut. The three mechanism
-slides that replaced the unfinished picture need the room. Show this only if
-demo 1 finished early.
-
-- Open Lens / FreeLens here if there is time: the answers floating in live.
-- Point at the submitter label: that is how we know who entered.
--->
-
----
-
 # So where are we?
 
 <div class="ws">
@@ -860,7 +834,7 @@ There is more than one way, and the choice has consequences.
 </div>
 
 <!--
-CLOCK 18:45 — 25 seconds. Bridge into the three mechanism slides.
+CLOCK 18:45 — 25 seconds. Bridge into the five mechanism slides.
 
 - The output is a file that could have been hand-written. That is deliberate:
   the diff has to be readable by a human reviewer.
@@ -892,9 +866,9 @@ You pay for what you <strong>claim</strong>, not for how many types the cluster 
 </div>
 
 <!--
-CLOCK 19:10 — 60 seconds. If you are behind, THIS is the one of the three to
-drop: the 14-gitops-reverser slide covers WatchRule again, and the other two
-carry things nothing else says.
+CLOCK 19:10 — 60 seconds. If you are behind, drop the mermaid slide that
+follows this one rather than this one: the 14-gitops-reverser slide covers
+WatchRule again, but this is the version that reads from the back row.
 
 - A namespaced type opens one watch per namespace it is claimed in. A
   cluster-scoped type opens one. Three rules, four cells. That is the whole
@@ -921,6 +895,81 @@ carry things nothing else says.
 
 ---
 
+![bg contain](./16-watch-cells.svg)
+
+<!--
+CLOCK 20:10 — 35 seconds. The previous slide's second half, drawn. If you are
+behind, THIS is the first of the five mechanism slides to drop: the CSS slide
+before it already carried the 3-rules/4-cells arithmetic.
+
+- Trace it once, left to right, then stop on the two boxes on the right. A cell
+  ITERATES what is already there, and THEN stays on the live watch stream.
+- Both arrows end in Git. That is the whole point: adoption and steady state are
+  the same code path — which is also why re-iteration is the repair path if the
+  live stream ever drops an event.
+- Source: 16-watch-cells.mmd. Regenerate with
+  npx @mermaid-js/mermaid-cli -i 16-watch-cells.mmd -o 16-watch-cells.svg -b transparent -c mermaid-config.json
+-->
+
+---
+
+# `resourceVersion` — the primary key of *when*
+
+<div class="cols">
+<div>
+
+### What Kubernetes guarantees
+
+- Every write gets a **new** one — one RV never describes two states
+- The watch stream is **ordered**, and never goes backwards
+- A watch is **resumable** — a cursor is just "everything since *X*"
+- It is **opaque** — do not parse it, do not do arithmetic on it
+
+</div>
+<div>
+
+### What we actually depend on
+
+- We never **compare** them — only test **equality**
+- `uid + resourceVersion` is the **join key**
+- Monotonicity is what lets us **resume**
+- Equality is what lets us **attribute**
+
+</div>
+</div>
+
+<div class="verdict">
+With etcd3 storage the resourceVersion <strong>is</strong> the etcd revision — one cluster-wide
+counter that ticks on every write to anything.
+</div>
+
+<!--
+CLOCK 20:45 — 60 seconds, and worth every one of them. Everything downstream —
+ordering, resume, the audit join, deduplication — is this one field.
+
+- THE ONE-LINER, if you only get one sentence out: "resourceVersion is the primary
+  key of WHEN. It is the reason two independent streams can describe the same
+  write without ever talking to each other."
+- Read the right-hand column slowly. The precision IS the advanced billing: we
+  never COMPARE resourceVersions, we test EQUALITY. Monotonicity is what lets us
+  resume; equality is what lets us attribute.
+- The etcd3 line at the bottom is why the join works at all rather than merely
+  being plausible: ONE CLUSTER-WIDE COUNTER that ticks on every write to anything.
+  Not per-object, not per-type. So a number from a configmaps watch and a number
+  in an audit event are literally the same number in the same space.
+- IF ASKED which release made monotonicity a hard guarantee: "in every version you
+  are running." TRUE AND UNFALSIFIABLE. DO NOT guess a release number out loud —
+  this room will contain someone who knows which one.
+- THE IRONY, worth ten seconds if the room is with you: the resourceVersion is
+  STRIPPED from the file that gets committed. It is cluster state, not intent, and
+  it has no business in a Git diff. It does all the work and then does not appear
+  in the output.
+
+The next slide is the join this key makes possible.
+-->
+
+---
+
 # Two lanes. One key.
 
 <div class="join">
@@ -941,29 +990,47 @@ never the bot's name substituted in.
 </div>
 
 <!--
-CLOCK 20:10 — 80 seconds. THIS is the slide that earns the "advanced" billing.
-It is the one to protect if the segment runs long.
+CLOCK 21:45 — 70 seconds. THIS is the slide that earns the "advanced" billing.
+It is the one to protect if the segment runs long. The resourceVersion slide you
+have just done is the setup — do not re-explain the key here.
 
-- resourceVersion is the primary key of WHEN. Every write produces a new one; a
-  watch stream is ordered and never goes backwards; a watch is resumable because
-  a cursor is just "everything since RV X".
-- BE PRECISE ABOUT WHAT WE DEPEND ON: "we never COMPARE resourceVersions. We use
-  them for EQUALITY — it is a join key. Monotonicity is what lets us resume;
-  equality is what lets us attribute."
-- Why the join works at all rather than merely being plausible: with etcd3 the
-  resourceVersion IS the etcd revision — one cluster-wide counter that ticks on
-  every write to anything. So a number from a watch and a number in an audit
-  event are literally the same number in the same space.
-- If asked which release made monotonicity a hard guarantee: "in every version
-  you are running." TRUE AND UNFALSIFIABLE. Do not guess a number out loud.
-- THE IRONY, worth ten seconds if the room is with you: the resourceVersion is
-  STRIPPED from the file that gets committed — it is cluster state, not intent,
-  and it has no business in a Git diff. It does all the work and then does not
-  appear in the output.
-- The audit lane is OPTIONAL. Turn it off and everything still works; you just
-  lose the name. That is why it is drawn dashed.
+- Two streams out of the same API server. The watch says WHAT changed. The audit
+  webhook says WHO changed it. They never call each other — they meet on a key.
+- BUILD IT IN TWO BEATS if the room is with you: watch lane only — the commit
+  lands, authored by the configured identity, product works. Then add the audit
+  lane — same commit, real actor. The build IS the claim "audit is optional and
+  never blocks state capture"; you do not have to say it.
+- That is why the audit lane is drawn dashed. Turn it off and everything still
+  works; you just lose the name.
+- No usable fact in time → the author is literally `unknown (attribution
+  unresolved)`, never the bot's name substituted in. A commit authored by a person
+  is a positive claim that we know; the sentinel is a positive claim that we tried
+  and could not tell.
 
-The next slide is why these two lanes and not the other three.
+The next slide draws the same thing in full. The one after that is why these two
+lanes and not the other three.
+-->
+
+---
+
+![bg contain](./17-join.svg)
+
+<!--
+CLOCK 22:55 — 40 seconds. The slide before this one is the claim; this is the
+mechanism, drawn in full, for the people who were going to ask anyway. Safe to
+cut if you are behind.
+
+- The left lane is sanitised on the way through — uid, resourceVersion,
+  managedFields and status are gone before anything is written.
+- The right lane is amber and dotted because it is OPTIONAL. Turn the audit
+  webhook off and every box on the left still reaches Git.
+- STOP ON THE DOTTED ARROW. "keys only" — the two lanes meeting through nothing
+  but a key is the architecturally interesting part of the whole design, and the
+  picture says it better than a sentence does.
+- Stop on the two outcomes. `unknown (attribution unresolved)` is a POSITIVE claim
+  that we tried and could not tell — never the committer identity substituted in.
+- Source: 17-join.mmd. Regenerate with
+  npx @mermaid-js/mermaid-cli -i 17-join.mmd -o 17-join.svg -b transparent -c mermaid-config.json
 -->
 
 ---
@@ -985,8 +1052,10 @@ they meet on <code>uid + resourceVersion</code>.
 </div>
 
 <!--
-CLOCK 21:30 — 45 seconds now, not 90: the join slide before this one did the
-heavy lifting. Read the two bold rows and the EKS column, then move on.
+CLOCK 23:35 — 40 seconds. Read the two bold rows and the EKS column, then move
+on. The three slides before this one did the heavy lifting; resist re-explaining
+resourceVersion, and do not repeat the stripped-from-the-diff irony — it has
+already landed.
 
 - Everyone reaches for the admission webhook first: the request already carries
   userInfo. We did too. It does not work, for two unfixable reasons:
@@ -998,12 +1067,9 @@ heavy lifting. Read the two bold rows and the EKS column, then move on.
 - Why I rewrote it to the watch: the watch focuses on the actual RESOURCE. If
   someone sends a scale command, an audit-only design has to map that back to an
   object yourself. Spare them the nitty-gritty.
-- The honesty beat, said BEFORE anyone asks it as a gotcha: audit webhook
-  delivery is generally not exposed on EKS/GKE/AKS. That is the "No" column.
-- The irony worth ten seconds: resourceVersion is STRIPPED from the committed
-  file — it is cluster state, not intent. It does all the work and never appears.
-- If someone asks when RV monotonicity became a hard guarantee: "in every version
-  you are running." Do not guess a release number out loud.
+- THE HONESTY BEAT, said before anyone asks it as a gotcha: audit webhook delivery
+  is generally not exposed on EKS/GKE/AKS. That is the "No" column, and this is
+  the slide that owns it.
 -->
 
 ---
@@ -1028,7 +1094,7 @@ Attribution is not decoration on the commit. It is what <strong>shapes</strong> 
 </div>
 
 <!--
-CLOCK 22:15 — 65 seconds. The strongest slide in this set, because it carries
+CLOCK 24:15 — 65 seconds. The strongest slide in this set, because it carries
 the feature AND its limit in one shape.
 
 - The window coalesces into one commit per (author, gitTarget), 5s. An event
@@ -1042,7 +1108,7 @@ the feature AND its limit in one shape.
      never coalesces. Your commit rate IS your write rate. That is why this
      pattern is wrong for high-frequency writes — and I can show you the exact
      line of code that makes it true."
-  Call back to this at the "Where this shines" slide at 37:00.
+  Call back to this at the "Where this shines" slide at 39:00.
 
 - SAY THIS BEFORE THE DEMO, or the best part of it looks broken (30s of
   prevention): commits are per-author, but PUSHES are batched and polite — one
@@ -1055,7 +1121,7 @@ the feature AND its limit in one shape.
 ![bg contain](./14-gitops-reverser.excalidraw.svg)
 
 <!--
-CLOCK 23:20 — 30 seconds. The config surface: three CRDs, and that is the whole
+CLOCK 25:20 — 30 seconds. The config surface: three CRDs, and that is the whole
 thing. You have just explained all of it, so this slide is the payoff, not a
 lecture — point at each box and name it.
 
@@ -1089,7 +1155,7 @@ they were built for exactly the case where the committer is <em>not</em> the aut
 </div>
 
 <!--
-CLOCK 23:50 — 15 seconds.
+CLOCK 25:50 — 15 seconds.
 
 - `git show --format=fuller`. The --format=fuller is REQUIRED; plain git log
   hides the committer and the whole story is invisible without it.
@@ -1117,7 +1183,7 @@ The cluster made this commit <strong>on a named human's behalf</strong>.
 </div>
 
 <!--
-CLOCK 24:05 — 10 seconds, then straight into demo 2 at 24:15.
+CLOCK 26:05 — 10 seconds, then straight into demo 2 at 26:15.
 
 - Author is the person. Committer is the bot, signed.
 - Pre-empt the ugly bit yourself: the MESSAGE names the API identity (that
@@ -1139,7 +1205,7 @@ You are still signed in. You do not have to join again.
 </div>
 
 <!--
-CLOCK 24:15 — ELEVEN AND THREE QUARTER MINUTES. Runbook demo 2, with the old step 3 (open the
+CLOCK 26:15 — ELEVEN AND THREE QUARTER MINUTES (ends 38:00). Runbook demo 2, with the old step 3 (open the
 evaluation round) MOVED TO THE CLOSE and the old step 6 (the orders feed)
 folded into the close. Runbook steps are renumbered to match: 1 reveal,
 2 filed-two-ways, 3 grant, 4 collision, 5 boundary.
@@ -1201,7 +1267,7 @@ person in this room has a GitHub account on that repository.
 </div>
 
 <!--
-CLOCK 36:00 — 45 seconds. THE GREEN SLIDE. This is the payoff of the yellow one.
+CLOCK 38:00 — 45 seconds. THE GREEN SLIDE. This is the payoff of the yellow one.
 
 - Walk the four, left to right, and say what changed since the amber slide.
 - The big one is Why: it went from "implied" to "someone typed a sentence, and
@@ -1214,7 +1280,7 @@ CLOCK 36:00 — 45 seconds. THE GREEN SLIDE. This is the payoff of the yellow on
 ![bg contain](./1-12-git-commit-who.excalidraw.svg)
 
 <!--
-CLOCK 36:45 — the complete picture. The same diagram they saw at minute 8,
+CLOCK 38:45 — the complete picture. The same diagram they saw at minute 8,
 with both arrows drawn in.
 
 - git commit (gitops-reverser) going out, apply from git (Flux/Argo) coming back.
@@ -1255,7 +1321,7 @@ history no human will ever read. Knowing which is which is the skill.
 </div>
 
 <!--
-CLOCK 37:00 — 60 seconds. Switch to the Orders tab while you say this, if the
+CLOCK 39:00 — 60 seconds. Switch to the Orders tab while you say this, if the
 laptop is still on the app. Both halves of the argument on one screen.
 
 - Same mechanism, both directions: the commit window is keyed by author, so many
@@ -1285,7 +1351,7 @@ With the right authorization and the right abstraction, straight to main is ofte
 </div>
 
 <!--
-CLOCK 38:00 — 45 seconds.
+CLOCK 40:00 — 45 seconds.
 
 - You do not need Go experts. Every major language has a good Kubernetes client.
 - You do not have to write the operators either: Crossplane, KRO, Argo, Helm —
@@ -1312,7 +1378,7 @@ reversegitops.dev &nbsp;·&nbsp; github.com/ConfigButler/gitops-reverser &nbsp;�
 </div>
 
 <!--
-CLOCK 38:45 — this is runbook demo 2 step 3, moved here on purpose.
+CLOCK 40:45 — this is runbook demo 2 step 3, moved here on purpose.
 
 Four questions, in demo-questions.yaml. Leave the results screen projected while
 you take questions — the 0-10 "how likely are you to try this" renders as a live
