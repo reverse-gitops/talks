@@ -1,0 +1,214 @@
+machine:
+  type: controlplane
+  certSANs:
+    - 127.0.0.1
+    - 192.168.x.x
+  kubelet:
+    extraConfig:
+      cpuManagerPolicy: static
+      maxPods: 512
+    nodeIP:
+      validSubnets:
+        - 192.168.x.0/24
+  install:
+    # -- Discovered disks:
+    disk: /dev/sda
+    image: ghcr.io/cozystack/cozystack/talos:v1.13.0
+  files:
+    - content: |
+        apiVersion: audit.k8s.io/v1
+        kind: Policy
+        omitStages:
+          - "RequestReceived"
+        rules:
+          - level: None
+            resources:
+            - group: ""
+              resources: ["events", "endpoints", "nodes", "pods", "secrets", "bindings", "componentstatuses", "*/status"]
+            - group: "authentication.k8s.io"
+              resources: ["tokenreviews"]
+            - group: "authorization.k8s.io"
+              resources: ["subjectaccessreviews", "selfsubjectaccessreviews", "localsubjectaccessreviews", "selfsubjectrulesreviews"]
+            - group: "coordination.k8s.io"
+              resources: ["leases"]
+            - group: "apps"
+              resources: ["*/status"]
+            - group: "networking.k8s.io"
+              resources: ["*/status"]
+          - level: None
+            users: ["system:serviceaccount:kube-system:horizontal-pod-autoscaler"]
+            verbs: ["update", "patch"]
+            resources:
+            - group: "apps"
+              resources: ["*/scale"]
+          - level: RequestResponse
+            omitManagedFields: true
+            verbs:
+            - create
+            - update
+            - patch
+            - delete
+            - deletecollection
+      permissions: 0o444
+      path: /var/audit-policy.yaml
+      op: create
+    - content: |
+        apiVersion: v1
+        kind: Config
+        preferences: {}
+        clusters:
+        - name: audit-webhook
+          cluster:
+            server: https://192.168.x.31:9444/audit-webhook
+            certificate-authority-data: LS0tLS1CR...redacted
+            tls-server-name: gitops-reverser-audit.gitops-reverser.svc
+        contexts:
+        - name: webhook
+          context:
+            cluster: audit-webhook
+            user: kube-apiserver
+        current-context: webhook
+        users:
+        - name: kube-apiserver
+          user:
+            client-certificate-data: LS0tL...redacted
+            client-key-data: LS0tLS1CRU...redacted
+      permissions: 0o444
+      path: /var/audit-webhook.yaml
+      op: create
+    - content: |
+        apiVersion: apiserver.config.k8s.io/v1
+        kind: AuthenticationConfiguration
+        jwt:
+          - issuer:
+              url: "https://keycloak.cozy.z65.nl/realms/cozy"
+              audiences:
+                - kubernetes
+            claimMappings:
+              username:
+                claim: preferred_username
+                prefix: "oidc:"
+              groups:
+                claim: groups
+                prefix: ""
+              extra:
+                - key: "configbutler.ai/claims/display-name"
+                  valueExpression: "claims.?name.orValue('')"
+                - key: "configbutler.ai/claims/email"
+                  valueExpression: "claims.?email.orValue('')"
+                - key: "configbutler.ai/claims/email-verified"
+                  valueExpression: "claims.?email_verified.orValue(false) ? 'true' : ''"
+      permissions: 0o444
+      path: /var/authentication-config.yaml
+      op: create
+    - content: |
+        [plugins]
+          [plugins."io.containerd.grpc.v1.cri"]
+            device_ownership_from_security_context = true
+          [plugins."io.containerd.cri.v1.runtime"]
+            device_ownership_from_security_context = true
+      permissions: 0o0
+      path: /etc/cri/conf.d/20-customization.part
+      op: create
+    - content: |
+        nameserver 10.96.0.10
+        options ndots:5
+      permissions: 0o444
+      path: /var/kube-apiserver-resolv.conf
+      op: create
+    - content: |
+        backup {
+          backup = 0
+          archive = 0
+        }
+        devices {
+           global_filter = [ "r|^/dev/drbd.*|", "r|^/dev/dm-.*|", "r|^/dev/zd.*|" ]
+        }
+      permissions: 0o644
+      path: /etc/lvm/lvm.conf
+      op: overwrite
+  time:
+    servers:
+      - nl.pool.ntp.org
+  sysctls:
+    net.ipv4.neigh.default.gc_thresh1: "4096"
+    net.ipv4.neigh.default.gc_thresh2: "8192"
+    net.ipv4.neigh.default.gc_thresh3: "16384"
+  kernel:
+    modules:
+      - name: openvswitch
+      - name: drbd
+        parameters:
+          - usermode_helper=disabled
+      - name: zfs
+      - name: spl
+      - name: vfio_pci
+      - name: vfio_iommu_type1
+  nodeLabels:
+    node.kubernetes.io/exclude-from-external-load-balancers:
+      $patch: delete
+cluster:
+  controlPlane:
+    endpoint: https://192.168.x.x:6443
+  clusterName: reverser-cozy
+  network:
+    cni:
+      name: none
+    dnsDomain: cozy.local
+    serviceSubnets:
+      - 10.96.0.0/16
+  apiServer:
+    extraArgs:
+      audit-policy-file: /var/audit-policy.yaml
+      audit-webhook-batch-max-size: "100"
+      audit-webhook-batch-max-wait: 1s
+      audit-webhook-config-file: /var/audit-webhook.yaml
+      authentication-config: /var/authentication-config.yaml
+    extraVolumes:
+      - hostPath: /var/audit-policy.yaml
+        mountPath: /var/audit-policy.yaml
+        readonly: true
+      - hostPath: /var/audit-webhook.yaml
+        mountPath: /var/audit-webhook.yaml
+        readonly: true
+      - hostPath: /var/authentication-config.yaml
+        mountPath: /var/authentication-config.yaml
+        readonly: true
+      - hostPath: /var/kube-apiserver-resolv.conf
+        mountPath: /etc/resolv.conf
+        readonly: true
+    certSANs:
+      - 127.0.0.1
+      - 192.168.x.x
+  controllerManager:
+    extraArgs:
+      allocate-node-cidrs: "true"
+      bind-address: 0.0.0.0
+      cluster-cidr: 10.244.0.0/16
+  proxy:
+    disabled: true
+  scheduler:
+    extraArgs:
+      bind-address: 0.0.0.0
+  discovery:
+    enabled: false
+  etcd:
+    advertisedSubnets:
+      - 192.168.x.0/24
+  allowSchedulingOnControlPlanes: true
+---
+apiVersion: v1alpha1
+kind: RegistryMirrorConfig
+name: docker.io
+endpoints:
+  - url: https://mirror.gcr.io
+# -- Discovered interfaces:
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: "talos-c1194"
+---
+apiVersion: v1alpha1
+kind: ResolverConfig
+nameservers:
+  []

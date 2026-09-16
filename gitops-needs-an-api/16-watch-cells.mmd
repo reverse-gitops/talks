@@ -1,0 +1,29 @@
+flowchart LR
+  subgraph claims["What a WatchRule / ClusterWatchRule claims"]
+    direction TB
+    R1["quizsubmissions<br/>namespace: voter"]
+    R2["configmaps<br/>namespaces: team-a, team-b"]
+    R3["clusterroles<br/>cluster-scoped"]
+  end
+
+  R1 --> W1["cell 1<br/>GVR + ns=voter"]
+  R2 --> W2["cell 2<br/>GVR + ns=team-a"]
+  R2 --> W3["cell 3<br/>GVR + ns=team-b"]
+  R3 --> W4["cell 4<br/>GVR + cluster-wide"]
+
+  W1 --> SRC["4 cells claimed<br/>cost scales with claims,<br/>not with cluster type count"]
+  W2 --> SRC
+  W3 --> SRC
+  W4 --> SRC
+
+  SRC --> ITER["each cell iterates<br/>what is already there"]
+  SRC --> STREAM["then stays on the<br/>live watch stream"]
+  ITER --> GIT[("Git")]
+  STREAM --> GIT
+
+  classDef amber fill:#fdf7e4,stroke:#e3b63b,stroke-width:2px,color:#6b5210;
+  classDef green fill:#eef8f1,stroke:#5cb87a,stroke-width:2px,color:#2c6b45;
+  classDef git fill:#16324f,stroke:#16324f,stroke-width:2px,color:#ffffff;
+  class W1,W2,W3,W4 amber
+  class ITER green
+  class GIT git

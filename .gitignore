@@ -3,3 +3,4 @@ package-lock.json
 the-gitops-paradox/demo-repo
 *do-not-checkin*
 testnet/*
+gitops-needs-an-api/*.html
