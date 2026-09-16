@@ -1033,23 +1033,6 @@ cut if you are behind.
   npx @mermaid-js/mermaid-cli -i 17-join.mmd -o 17-join.svg -b transparent -c mermaid-config.json
 -->
 
----
-
-# How do you observe a cluster?
-
-| Mechanism | Tells you *who* | Fires | Guaranteed | EKS / GKE / AKS |
-|---|---|---|---|---|
-| **Watch stream** | No | after commit | No | **Yes** |
-| Mutating webhook | Yes | *before* commit | No | Yes |
-| Validating webhook | Yes | *before* commit | No | Yes |
-| Audit file | Yes | after commit | Yes | No |
-| **Audit webhook** | Yes | after commit | No | No |
-
-<div class="note">
-gitops-reverser uses the two in bold. The watch says <strong>what</strong> changed.
-The audit webhook says <strong>who</strong> changed it. They never call each other —
-they meet on <code>uid + resourceVersion</code>.
-</div>
 
 <!--
 CLOCK 23:35 — 40 seconds. Read the two bold rows and the EKS column, then move

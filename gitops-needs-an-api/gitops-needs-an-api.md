@@ -1,3 +1,11 @@
+---
+marp: true
+html: true
+theme: default
+paginate: true
+size: 16:9
+---
+
 # GitOps is great
 
 * Desired state
@@ -65,24 +73,16 @@ Small typo in your file contents results in a failed deployment (can take a whil
 # Dream mode (2)
 
 * Keynote: KRO, Kratix or Crossplane are your friends!
-* You can create and delete helm instals (ArgoCD application or HelmDeployment): but you don't edit the actual helm charts (that would be a bad dream)
+* You can create and delete helm instals (ArgoCD application or HelmDeployment): but you don't edit the actual helm charts (that's a bad dream)
 * Little bit of Kustomize is ok-ish, but be carefull
 
 ---
 
-# The revalation
+# The revelation
 
-* So now we have the simple files, but how do we edit them?
-* The Kubernetes Resource Model has a beatiful property
-* The spec inside a file translates 1:1 to an API resource
-* That's why you can put multiple resources in a single file
-* Everything is in there
-* The file location itself carries no direct value
-* So why don't we put our simple into a Kubernetes cluster?
+> The Kubernetes API was designed so that every API resource has a standard, serializable representation that can be stored in a file and submitted back to the API.
 
 ---
-
-
 
 # So they are the same?
 
@@ -93,7 +93,6 @@ Why dont we sync Cluster into Git?
 And why can't we just sync in two directions?
 
 ---
-
 
 # N cluster, and you want to "guard" changesets
 
@@ -121,7 +120,7 @@ But it should only be released on merge to main
 # So why again?
 
 * Leave your production clusters alone
-* The data-only cluster can sit in a different network (also on the public internet)
+* The data-only cluster can sit in a different network (also more acceptable on the public internet)
 * Off course you can only enter with your own identity (OIDC)
 
 ---
@@ -132,8 +131,46 @@ But it should only be released on merge to main
 * No looping
 * gitops-reverser controls when the sync is done 
 
+---
+
+# Good fit
+
+* Full GitOps love: Who, When, What and Why
+* Identify clear CRD based high level resources that reflect intent
+
+---
+
+# Don't
+
+* Try to reverse advanced GitOps stuff (you will fail)
+* Use it for your really transactional data
+
+---
+
+# In short
+
+* gitops-reverser reconciles API resources to Git
+* Combine it with ArgoCD or FluxCD to sync from Git to API
+* Branching requires a fresh data-only environment (or namespace*)
+
 > It's just rsync on steroids
 
 ---
 
+# Other options
 
+* You could have something that quickly creates OCI artifacts from a commmit on main
+* Automatic "push" of someone click-ops-ing in ArgoCD's GUI
+* What if every configuration API in the world would use KRM?
+
+---
+
+# Next
+
+* reversegitops.dev
+* Let me know what you think
+* I'm fully comitted: so I can make time to do training and consulting when needed
+
+---
+
+# Questions?
