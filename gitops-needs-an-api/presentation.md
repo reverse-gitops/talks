@@ -116,7 +116,7 @@ Presenter notes:
 
 - Bachelor in Electrical Engineering
 - Worked in startups, consultancy, and SaaS
-- Left my job last summer to pursue building my own company
+- Left my job 14 months ago to build my own company
 
 <!--
 Presenter notes:
@@ -129,7 +129,7 @@ Presenter notes:
 # What do I do?
 
 - [koudijs.dev](https://koudijs.dev/)
-  - consultancy, training
+  - consultancy, training, speaeking
 - [ConfigButler](https://configbutler.ai/)
   - startup, open source first
   - helps you build high quality configuration
