@@ -15,12 +15,12 @@ size: 16:9
 
 ---
 
-# Every change answers
+# Every commit answers
 
-Who
-When
-What
-Why (intent!)
+Who ✅
+When ✅
+What ✅
+Why ✅ (intent, message)
 
 ---
 
@@ -52,21 +52,18 @@ Complex constructs are possible, and if you give people the option...
 
 # GitOps has an hard API
 
-No everybody knows Git
-
-Do you expect customers to open up a PR?
-
-Conflicts are annoying
-
-Small typo in your file contents results in a failed deployment (can take a while!)
+* No everybody knows Git
+* Do you expect customers to open up a PR?
+* Conflicts are annoying
+* Small typo in your file contents results in a failed deployment (can take a while!)
 
 ---
 
 # Dream mode
 
 * For now: forgot about complex structures
-* Just have a flat folder
-* Just put "intent" in plain manifests
+* Just keep a flat folder
+* "intent" in plain manifests
 
 ---
 
@@ -84,7 +81,7 @@ Small typo in your file contents results in a failed deployment (can take a whil
 
 ---
 
-# So they are the same?
+# They can be converted back and forth?
 
 Why do we only sync from Git to Cluster?
 
@@ -117,6 +114,23 @@ But it should only be released on merge to main
 
 ---
 
+# How do you observe kube-apiserver?
+
+| Mechanism | Tells you *who* | Fires | Guaranteed | EKS / GKE / AKS |
+|---|---|---|---|---|
+| **Watch stream** | No | after commit | No | **Yes** |
+| **Audit webhook** | Yes | after commit | No | No |
+| Mutating webhook | Yes | *before* commit | No | Yes |
+| Validating webhook | Yes | *before* commit | No | Yes |
+| Audit file | Yes | after commit | Yes | No |
+
+<div class="note">
+The watch says <strong>what</strong> changed.
+The audit webhook says <strong>who</strong> changed it. They "merge" on <code>uid + resourceVersion</code>.
+</div>
+
+---
+
 # So why again?
 
 * Leave your production clusters alone
@@ -130,6 +144,15 @@ But it should only be released on merge to main
 * gitops-reverser, ArgoCD and FluxCD stop when the spec is as desired
 * No looping
 * gitops-reverser controls when the sync is done 
+
+---
+
+# So you have commits
+
+Who ✅
+When ✅
+What ✅
+Why ❌ -> gitops-reverser CommitRequest
 
 ---
 
@@ -163,13 +186,24 @@ But it should only be released on merge to main
 * Automatic "push" of someone click-ops-ing in ArgoCD's GUI
 * What if every configuration API in the world would use KRM?
 
+
+---
+
+https://koudijs.dev
+![](images/web-koudijs-dev.png.png)
+
+---
+
+reversegitops.dev
+![](images/web-reverse-gitops-dev.png)
+
 ---
 
 # Next
 
 * reversegitops.dev
-* Let me know what you think
-* I'm fully comitted: so I can make time to do training and consulting when needed
+* Usefull in any way? Drop me a note!
+* I'm on this fulltime for 14 months: I would love to make that waaaay longer
 
 ---
 
