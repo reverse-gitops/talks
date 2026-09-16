@@ -4,6 +4,7 @@
 
 * [CozySummit](cozystack/slides.pdf)
 * [The GitOps Paradox](dist/the-gitops-paradox.pdf)
+* [GitOps Needs an API](dist/gitops-needs-an-api.pdf)
 
 # I would love your feedback!
 
