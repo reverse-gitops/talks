@@ -1,0 +1,134 @@
+# Definitive question sets — Swiss Cloud Native Day, 17 Sep 2026
+#
+# Hand this to whoever deploys it. Three things that are NOT cosmetic:
+#
+#   1. Both QuizSessions carry `kustomize.toolkit.fluxcd.io/ssa: IfNotPresent`,
+#      so Flux CREATES them and never applies them again. Editing this file and
+#      pushing does nothing once the object exists. To deploy a change:
+#         kubectl -n voter delete quizsession demo1 evaluation
+#         flux reconcile kustomization voter-demo
+#      The names are stable now, so this is the ONLY way to re-seed them.
+#
+#   2. Round two must ship `state: closed`. Not `draft` — a draft is filtered out
+#      of the room page entirely and there is no button to press. And because of
+#      (1), a rehearsal that opens it does NOT get reset by a push. Delete and
+#      re-seed, or patch it back by hand.
+#
+#   3. Submissions are not owned by their round, and the names no longer carry a
+#      date, so nothing expires on its own. Between every run, including between
+#      a rehearsal and the real thing:
+#         kubectl -n voter delete quizsubmissions -l voter.configbutler.ai/round=demo1
+#         kubectl -n voter delete quizsubmissions -l voter.configbutler.ai/round=evaluation
+#      Ballots are selected by round NAME. Skip this and the room sees the last
+#      room's answers and cannot vote again.
+#
+# Question ids are referenced by demo-runbook.md ("Casting your own answers").
+
+---
+apiVersion: examples.configbutler.ai/v1alpha1
+kind: QuizSession
+metadata:
+  name: demo1
+spec:
+  title: How do you change Kubernetes configuration today?
+  state: live
+  questions:
+    # Warm-up. Tribal, instant, zero thought — this is the question that gets
+    # the phone out of the pocket. "Neither yet" is there so nobody has to lie.
+    - id: stack
+      type: singleChoice
+      title: Argo CD or Flux?
+      required: true
+      choices:
+        - Argo CD
+        - Flux
+        - Both
+        - Neither yet
+
+    # Also warm-up, but it pays off at the honest-limits slide: a room that
+    # answers 70% Helm has just explained why "you cannot reverse a chart in a
+    # reasonable way" matters. "Plain YAML" is the option that sets up KRM.
+    - id: packaging
+      type: singleChoice
+      title: Helm or Kustomize?
+      required: true
+      choices:
+        - Helm
+        - Kustomize
+        - Both
+        - Plain YAML
+
+    # The problem statement, in their own data. multiChoice on purpose: everyone
+    # does more than one of these, and the bars lighting up GitOps AND kubectl at
+    # the same time IS the argument from the "But Git is not easy" slide.
+    - id: approach
+      type: multiChoice
+      title: How do you change configuration today? Pick all that apply.
+      required: true
+      choices:
+        - A pull request to a GitOps repo
+        - kubectl apply
+        - A web UI or portal
+        - I ask someone in Slack or a ticket
+        - Someone else does it entirely
+
+    # Load-bearing, not optional. This is the line that will be sitting in
+    # results/<name>.yaml when you scroll it at the demo-2 reveal. Bars are
+    # boring in YAML; a sentence with someone's name on it is not.
+    - id: wish
+      type: freeText
+      title: "In one line: what do you wish people could self-service?"
+      placeholder: Optional — your answer will be visible to the room
+
+---
+apiVersion: examples.configbutler.ai/v1alpha1
+kind: QuizSession
+metadata:
+  name: evaluation
+spec:
+  title: Now that you have seen it — would you run this?
+  # MUST be closed. You press Open from /room during the closing slide, and that
+  # button press is the last artifact of the talk: quiz-configs.yaml flips
+  # closed -> live in place, authored by you.
+  state: closed
+  questions:
+    # The security question the talk provokes. Worth asking because the choices
+    # themselves teach the containment argument one more time.
+    - id: trust
+      type: singleChoice
+      title: Would you let a cluster write to your Git repository?
+      required: true
+      choices:
+        - Yes, with signed commits and a repo nothing reconciles from
+        - Only as an audit trail nothing reads back
+        - Only in a lab
+        - "No"
+
+    # Market research wearing a slide. Maps directly to the "Start small" slide:
+    # pick one folder, not the repo.
+    - id: first
+      type: multiChoice
+      title: What would you point it at first?
+      choices:
+        - A new customer or tenant
+        - Databases and infrastructure
+        - Application configuration
+        - Access and permissions
+        - Feature flags and rollouts
+        - Nothing yet — still thinking
+
+    # The one number worth projecting live while you take questions. Renders as
+    # an average to one decimal. A low average is still useful to you.
+    - id: adopt
+      type: scale0to10
+      title: How likely are you to try this in the next six months?
+      min: 0
+      max: 10
+
+    # Your roadmap, written by the people who would use it, in a file with their
+    # names on it. Read a few out loud during Q&A — it is a better Q&A mechanism
+    # than raised hands for anyone too shy to speak.
+    - id: missing
+      type: freeText
+      title: What would you need before running this for real?
+      placeholder: Optional — your answer will be visible to the room
