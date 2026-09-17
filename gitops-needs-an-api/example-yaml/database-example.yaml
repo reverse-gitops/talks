@@ -1,0 +1,77 @@
+# The sentence from the slide, with the blanks filled in:
+#
+#   "The PAYMENTS team needs a POSTGRESQL database for their new
+#    SETTLEMENT-LEDGER service. Requirements: BUSINESS-CRITICAL tier, owned by
+#    team PAYMENTS-CORE, cost centre CC-FINANCE-07. A MEDIUM-sized instance is
+#    fine. Provision it now."
+#
+# Same sentence. One is a Jira ticket someone has to read, interpret and retype.
+# The other is an API resource: it validates on submission, it diffs, it has an
+# owner and a timestamp in Git, and the answer to "who asked for this and why"
+# is in the object rather than in someone's memory.
+#
+#   kubectl apply -f database-crd.yaml
+#   kubectl apply -f database-example.yaml
+#   kubectl get db -A
+#
+apiVersion: platform.configbutler.ai/v1alpha1
+kind: Database
+metadata:
+  name: settlement-ledger
+  namespace: payments
+  labels:
+    app.kubernetes.io/part-of: settlement-ledger
+    platform.configbutler.ai/team: payments-core
+spec:
+  engine: postgresql
+  engineVersion: "16"
+  tier: business-critical
+  size: medium
+  region: eu-central-2
+
+  owner:
+    team: payments-core
+    costCentre: CC-finance-07
+    contact: payments-core@example.ch
+    onCallRotation: PD-SCHED-PAY-01
+
+  service: settlement-ledger
+  purpose: >-
+    Ledger of intraday settlement positions for the new instant payments rail.
+    Source of truth for end-of-day reconciliation, so it is not a cache and it
+    cannot be rebuilt from anywhere else. Retention is set by the regulator,
+    not by us.
+  dataClassification: confidential
+
+  backup:
+    retentionDays: 35
+    pointInTimeRecovery: true
+
+  network:
+    exposure: vpc
+    allowedCIDRs:
+      - 10.42.0.0/16
+
+  maintenanceWindow: Sun:02:00-04:00
+  deletionPolicy: retain
+---
+# The same API, used by someone who wants a scratch database for an afternoon.
+# Three quarters of the fields default away. The two that never default are the
+# two the platform team gets asked about at the end of the month.
+apiVersion: platform.configbutler.ai/v1alpha1
+kind: Database
+metadata:
+  name: recsys-scratch
+  namespace: data-science
+spec:
+  engine: mysql
+  tier: sandbox
+  size: small
+  owner:
+    team: data-platform
+    costCentre: CC-finance-12
+    contact: data-platform@example.ch
+  service: recsys-experiments
+  purpose: Throwaway database for the recommendation model feature-store spike.
+  dataClassification: internal
+  deletionPolicy: delete

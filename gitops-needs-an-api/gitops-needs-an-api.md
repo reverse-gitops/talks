@@ -143,6 +143,7 @@ STILL BEHIND?     Drop "Other options" at the close. It is the cheapest minute i
 
 `[Software|Product|Cloud|AI] engineer`
 
+- From NL
 - Left my job 14 months ago to build my own company
 - [koudijs.dev](https://koudijs.dev): consultancy, training, speaking
 - [reversegitops.dev](https://reversegitops.dev): the pattern, and a manifest
@@ -191,6 +192,13 @@ Why ✅ (intent, message)
 - Network ranges for my cluster
 - Self-servicing clusters
 - Etc.
+
+---
+![bg contain ](./images/flowers.MP.jpg)
+
+---
+
+![bg contain](./images/abby1.png)
 
 ---
 
@@ -443,9 +451,10 @@ Callback to "Every commit answers". The ❌ is the punchline.
 
 ---
 
-# What a commit looks like
+# Commit author and comitter
 
 ```
+> git show --format=fuller <sha>
 Author:     Simon7 <simon7@koudijs.dev.test>
 AuthorDate: Wed Sep 16 03:51:25 2026 +0000
 Commit:     ConfigButler Bot <bot@configbutler.ai>
@@ -469,7 +478,7 @@ story is invisible without it.
 
 # Demo 2
 
-## The same actions, in Git — and the one place the room works together
+## The same actions, in Git
 
 You are still signed in. You do not have to join again.
 
@@ -482,6 +491,10 @@ Runbook: demo-runbook.md in the voter repo, demo 2.
 Containment line, say it before you are asked: nothing reconciles from that repo.
 An attendee's commit cannot reach a cluster.
 -->
+
+---
+
+![bg contain](./images/abby2.png)
 
 ---
 
@@ -537,7 +550,9 @@ CLOCK 12:09 — 1 minute for this and "Next". Do not read them out.
 # Next
 
 - [reversegitops.dev](https://reversegitops.dev)
-- Useful in any way? Fill a few questions on how I did.
+  - Slides at: https://github.com/reverse-gitops/talks
+- Useful in any way? Fill a few questions on how I did!
+- Find me on LinkedIn: Simon Koudijs
 
 ---
 

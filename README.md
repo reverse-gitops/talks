@@ -2,9 +2,9 @@
 
 # Rendered Slides
 
-* [CozySummit](cozystack/slides.pdf)
-* [The GitOps Paradox](dist/the-gitops-paradox.pdf)
-* [GitOps Needs an API](dist/gitops-needs-an-api.pdf)
+* Swiss Cloud Native Day 2026[GitOps Needs an API](dist/gitops-needs-an-api.pdf)
+* CozySummit 2026 [What If Every Cozystack Change Became a Commit?](cozystack/slides.pdf)
+* KubeCon Platform Engineering Day 2026 [The GitOps Paradox](dist/the-gitops-paradox.pdf)
 
 # I would love your feedback!
 
