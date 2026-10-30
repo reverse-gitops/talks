@@ -1,0 +1,37 @@
+.y{height:20px;white-space:pre}
+.k{color:#5AB8FF}.v{color:#E7ECF2}.cm{color:#6B7789}.st{color:#C9A6FF}
+.intro{animation-name:intro}.cardA{animation-name:cardA}.k0{animation-name:k0}.k1{animation-name:k1}.redG{animation-name:redG}
+.cardB{animation-name:cardB}.specB{animation-name:specB}.statB{animation-name:statB}.statL{animation-name:statL}.arAB{animation-name:arAB}
+.cardC{animation-name:cardC}.arBC{animation-name:arBC}.encG{animation-name:encG}.tgS{animation-name:tgS}.tgT{animation-name:tgT}.tgC{animation-name:tgC}
+.b1{animation-name:b1}.b2{animation-name:b2}.b3{animation-name:b3}.b4{animation-name:b4}
+.wl{animation-name:wl}.dk{animation-name:dk}.mem{animation-name:mem}
+.c1{animation-name:c1}.c2{animation-name:c2}.c3{animation-name:c3}.c4{animation-name:c4}
+.prog{animation-name:prog}
+@keyframes intro{0%{transform:scale(2.2);opacity:0}5%,100%{transform:scale(1);opacity:1}}
+@keyframes cardA{0%,2%{opacity:0;transform:translate(64px,220px) scale(.96)}6%,100%{opacity:1;transform:translate(64px,220px) scale(1)}}
+@keyframes redG{0%,8%{background-color:rgba(255,138,128,0)}11%,24%{background-color:rgba(255,138,128,.18)}29%,100%{background-color:rgba(126,224,161,.12)}}
+@keyframes k0{0%,25%{opacity:1}28%,100%{opacity:0}}
+@keyframes k1{0%,25%{opacity:0}28%,100%{opacity:1}}
+@keyframes b4{0%,12%{opacity:0;transform:translate(64px,558px)}16%,100%{opacity:1;transform:translate(64px,558px)}}
+@keyframes cardB{0%,27%{opacity:0;transform:translate(560px,200px) scale(.97)}31%,100%{opacity:1;transform:translate(560px,200px) scale(1)}}
+@keyframes arAB{0%,28%{opacity:0}31%,100%{opacity:1}}
+@keyframes specB{0%,31%{opacity:0}35%,100%{opacity:1}}
+@keyframes b1{0%,32%{opacity:0;transform:translate(64px,420px)}36%,100%{opacity:1;transform:translate(64px,420px)}}
+@keyframes cardC{0%,37%{opacity:0;transform:translate(1120px,200px) scale(.96)}41%,100%{opacity:1;transform:translate(1120px,200px) scale(1)}}
+@keyframes arBC{0%,36%{opacity:0}39%,100%{opacity:1}}
+@keyframes tgS{0%,40%{opacity:0}43%,100%{opacity:1}}
+@keyframes tgC{0%,42%{opacity:0}45%,100%{opacity:1}}
+@keyframes encG{0%,41%{background-color:rgba(242,169,59,0)}44%{background-color:rgba(242,169,59,.3)}49%,100%{background-color:rgba(242,169,59,.1)}}
+@keyframes statL{0%,50%{opacity:.18}55%,100%{opacity:1}}
+@keyframes statB{0%,50%{opacity:0}55%,100%{opacity:1}}
+@keyframes tgT{0%,54%{opacity:0}57%,100%{opacity:1}}
+@keyframes b2{0%,53%{opacity:0;transform:translate(64px,466px)}57%,100%{opacity:1;transform:translate(64px,466px)}}
+@keyframes b3{0%,60%{opacity:0;transform:translate(64px,512px)}64%,100%{opacity:1;transform:translate(64px,512px)}}
+@keyframes wl{0%,75%{opacity:0}79%,100%{opacity:1}}
+@keyframes dk{0%,82.99%{opacity:0;transform:translate(1245px,536px)}83%{opacity:1;transform:translate(1245px,536px)}86%{transform:translate(1245px,594px)}87.5%{transform:translate(1405px,594px)}90.5%{opacity:1;transform:translate(1405px,536px)}91%,100%{opacity:0;transform:translate(1405px,536px)}}
+@keyframes mem{0%,90%{opacity:0;transform:translate(1120px,684px) scale(.94)}93%,100%{opacity:1;transform:translate(1120px,684px) scale(1)}}
+@keyframes c1{0%{opacity:0}5%{opacity:1}26%{opacity:1}27%,100%{opacity:0}}
+@keyframes c2{0%,26%{opacity:0}27%{opacity:1}49%{opacity:1}50%,100%{opacity:0}}
+@keyframes c3{0%,49%{opacity:0}50%{opacity:1}74%{opacity:1}75%,100%{opacity:0}}
+@keyframes c4{0%,74%{opacity:0}75%,100%{opacity:1}}
+@keyframes prog{0%{transform:translate(64px,842px) scaleX(0)}100%{transform:translate(64px,842px) scaleX(1)}}

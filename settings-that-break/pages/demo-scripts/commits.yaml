@@ -1,0 +1,10 @@
+# Every seat in the room on one line each (emoji, place, name), instead of the row file:
+#   yq -N '.spec.emoji + "  " + .metadata.name + "  " + .spec.claimedBy.displayName' seats/row-*.yaml
+# Comments go up here: the loader misreads a comment between steps.
+steps:
+  - run: cd /workspaces/talks/external/k8s-trail
+  - run: git pull --ff-only
+  - run: git --no-pager log --format='%C(yellow)%h%C(reset) %C(cyan)%<(14,trunc)%an%C(reset) %s' -15
+  - run: git --no-pager log -1 --stat --format=fuller
+  - run: tree -L 2 -I README.md
+  - run: yq seats/row-02.yaml

@@ -1,0 +1,36 @@
+.zoom{animation-name:zoom}.dim{animation-name:dim}
+.r2{animation-name:r2}.r3{animation-name:r3}.row3{animation-name:row3}.art{animation-name:art}
+.scan{animation-name:scan}.fluxG{animation-name:fluxG}.bump{animation-name:bump}.apply{animation-name:apply}
+.t42{animation-name:t42}.t43{animation-name:t43}.refG{animation-name:refG}.volG{animation-name:volG}.panelG{animation-name:panelG}.roll{animation-name:roll}
+.c1{animation-name:c1}.c2{animation-name:c2}.c3{animation-name:c3}.c4{animation-name:c4}
+.prog{animation-name:prog}
+.y{height:20px;white-space:pre}
+.k{color:#5AB8FF}.v{color:#E7ECF2}.cm{color:#6B7789}
+.subOut{animation-name:subOut}
+@keyframes prog{0%{transform:translate(64px,842px) scaleX(0)}100%{transform:translate(64px,842px) scaleX(1)}}
+@keyframes zoom{0%,44.286%{transform:scale(1)}51.429%{transform:scale(1.2)}58.571%{transform:scale(1.2)}62.143%,100%{transform:scale(1)}}
+@keyframes dim{0%,44.286%{opacity:1}51.429%{opacity:.25}58.571%{opacity:.25}62.143%,100%{opacity:.07}}
+@keyframes subOut{0%,43.571%{opacity:1}47.143%{opacity:0}58.571%{opacity:0}62.143%,100%{opacity:1}}
+@keyframes r2{0%,0.714%{opacity:0;transform:translate(80px,412px) scale(.94)}2.857%,100%{opacity:1;transform:translate(80px,412px) scale(1)}}
+@keyframes art{0%,4.25%{opacity:0;transform:translate(150px,420px)}4.286%{opacity:1;transform:translate(150px,420px)}14.286%{opacity:1;transform:translate(476px,467px)}15.714%,100%{opacity:0;transform:translate(476px,467px)}}
+@keyframes row3{0%,14.286%{opacity:0;transform:translate(456px,460px) scale(.94)}16.429%,100%{opacity:1;transform:translate(456px,460px) scale(1)}}
+@keyframes scan{0%,18.536%{opacity:0;transform:translate(585px,602px)}18.571%{opacity:1;transform:translate(585px,602px)}21.429%{opacity:1;transform:translate(585px,632px)}22.143%,100%{opacity:0;transform:translate(585px,632px)}}
+@keyframes fluxG{0%,21.429%{box-shadow:0 0 0 0 rgba(126,224,161,0)}22.857%{box-shadow:0 0 0 6px rgba(126,224,161,.3)}25%,100%{box-shadow:0 0 0 0 rgba(126,224,161,0)}}
+@keyframes bump{0%,25.679%{opacity:0;transform:translate(435px,681px)}25.714%{opacity:1;transform:translate(435px,681px)}28.571%{transform:translate(209px,681px)}30.714%{opacity:1;transform:translate(209px,606px)}31.429%,100%{opacity:0;transform:translate(209px,606px)}}
+@keyframes r3{0%,30.714%{opacity:0;transform:translate(80px,468px) scale(.94)}32.5%,100%{opacity:1;transform:translate(80px,468px) scale(1)}}
+@keyframes t42{0%,31.429%{opacity:1}32.5%,100%{opacity:0}}
+@keyframes t43{0%,31.429%{opacity:0}32.5%,100%{opacity:1}}
+@keyframes refG{0%,31.429%{background-color:rgba(126,224,161,0)}32.5%{background-color:rgba(126,224,161,.22)}37.143%,100%{background-color:rgba(126,224,161,.08)}}
+@keyframes apply{0%,34.25%{opacity:0;transform:translate(735px,681px)}34.286%{opacity:1;transform:translate(735px,681px)}35.357%{transform:translate(775px,681px)}37.857%{transform:translate(775px,415px)}38.929%{opacity:1;transform:translate(814px,415px)}39.643%,100%{opacity:0;transform:translate(814px,415px)}}
+@keyframes panelG{0%,38.571%{box-shadow:0 0 0 0 rgba(90,184,255,0)}40%{box-shadow:0 0 0 6px rgba(90,184,255,.25)}42.857%,100%{box-shadow:0 0 0 0 rgba(90,184,255,0)}}
+@keyframes roll{0%,40%{opacity:0}42.143%,100%{opacity:1}}
+@keyframes volG{0%,42.857%{opacity:0}45.714%,100%{opacity:1}}
+@keyframes files{0%,62.143%{opacity:0;transform:translate(64px,220px) scale(.97)}65%,100%{opacity:1;transform:translate(64px,220px) scale(1)}}
+@keyframes code{0%,70.714%{opacity:0;transform:translate(64px,484px) scale(.97)}73.571%,100%{opacity:1;transform:translate(64px,484px) scale(1)}}
+@keyframes decG{0%,78.571%{background-color:rgba(242,169,59,0)}80.357%{background-color:rgba(242,169,59,.25)}85.714%,100%{background-color:rgba(242,169,59,.08)}}
+@keyframes c1{0%{opacity:0}0.714%{opacity:1}13.571%{opacity:1}14.286%,100%{opacity:0}}
+@keyframes c2{0%,13.571%{opacity:0}14.286%{opacity:1}24.286%{opacity:1}25%,100%{opacity:0}}
+@keyframes c3{0%,24.286%{opacity:0}25%{opacity:1}42.143%{opacity:1}42.857%,100%{opacity:0}}
+@keyframes c4{0%,42.143%{opacity:0}42.857%{opacity:1}57.857%{opacity:1}58.571%,100%{opacity:0}}
+@keyframes c5{0%,57.857%{opacity:0}58.571%,100%{opacity:1}}
+.files{animation-name:files}.code{animation-name:code}.decG{animation-name:decG}.c5{animation-name:c5}

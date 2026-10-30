@@ -2,6 +2,7 @@
 
 # Rendered Slides
 
+* Dutch Cloud Native Day 2026 [We GitOps'd Everything Except the Settings That Break Production](dist/settings-that-break-production.pdf)
 * Swiss Cloud Native Day 2026[GitOps Needs an API](dist/gitops-needs-an-api.pdf)
 * CozySummit 2026 [What If Every Cozystack Change Became a Commit?](cozystack/slides.pdf)
 * KubeCon Platform Engineering Day 2026 [The GitOps Paradox](dist/the-gitops-paradox.pdf)

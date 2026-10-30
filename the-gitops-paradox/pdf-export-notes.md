@@ -113,16 +113,16 @@ podinfos-intent   paal       True   36s
 ### Makefile targets
 
 ```makefile
-make run          # live demo — existing target, unchanged
-make run-frozen   # start dev server with slides-pdf.md (no btwebterminal needed)
-make export-pdf   # export to dist/the-gitops-paradox.pdf
+task run          # live demo — existing target, unchanged
+task run-frozen   # start dev server with slides-pdf.md (no btwebterminal needed)
+task export-pdf   # export to dist/the-gitops-paradox.pdf
 ```
 
 ### The HMR overlay problem
 
 During export, Vite's hot-reload error overlay was appearing on top of every slide.
 The cause: `pages/1-vote.md` references a file inside `demo-repo/` which is
-normally populated at runtime by `make run-repo-sync` but is empty in a cold environment.
+normally populated at runtime by `task run-repo-sync` but is empty in a cold environment.
 
 **Workaround applied (temporary):** `server: { hmr: { overlay: false } }` was added to
 `vite.config.ts` to suppress the overlay for the export session.
@@ -138,7 +138,7 @@ If you ever export the live slide root directly, run the `gitops-reverser` conta
 first. That container populates `demo-repo/` at runtime, which makes the file
 reference in `1-vote.md` resolve correctly and eliminates the error entirely.
 
-To start it: `make run-repo-sync` (or `make run` which includes it). Check that
+To start it: `task run-repo-sync` (or `task run` which includes it). Check that
 `demo-repo/` is non-empty before exporting the live slide root directly.
 
 ---
@@ -222,7 +222,7 @@ the Dockerfile apt package list.
 
 `playwright-chromium` is already in `package.json`. The devcontainer
 `postCreateCommand` now runs `npx playwright install chromium` after
-`make install-node-deps`, so the browser binary cache is populated too.
+`task install-node-deps`, so the browser binary cache is populated too.
 
 ---
 
@@ -232,7 +232,7 @@ the Dockerfile apt package list.
 
 The PDF export no longer needs the live voting snippet include, but the live deck still
 uses `pages/1-vote.md`. For live development or stage rehearsal, run
-`make run-repo-sync` or `make run` so `demo-repo/` is populated.
+`task run-repo-sync` or `task run` so `demo-repo/` is populated.
 
 ---
 
@@ -271,7 +271,7 @@ rather than PDFium and produces correct colors at ~8.7 MB — identical to what 
 presentation looks like on screen.
 
 ```bash
-make run-frozen
+task run-frozen
 # then open http://localhost:<port>/export in Chrome and print to PDF
 ```
 
@@ -280,7 +280,7 @@ browser with the OS print dialog.
 
 ### Automated fallback: PNG-to-PDF pipeline
 
-`make export-pdf` exports slides as PNGs first (screen rendering mode, correct
+`task export-pdf` exports slides as PNGs first (screen rendering mode, correct
 colors), then combines them into a PDF with `img2pdf`:
 
 ```makefile

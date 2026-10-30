@@ -1,0 +1,27 @@
+flowchart LR
+  YOU["You, in the browser<br/>OIDC user"]
+  PLAT["Platform team<br/>admin"]
+
+  subgraph API["kube-apiserver"]
+    direction TB
+    AUTHN["who are you?"] --> AUTHZ["may you do this? (RBAC)"]
+    AUTHZ --> VAL["is it valid? (CRD schema)"]
+    VAL --> STORE[("stored + watched")]
+  end
+
+  OP["Operator<br/>ServiceAccount"]
+  REV["gitops-reverser<br/>ServiceAccount"]
+  GIT[("Git")]
+
+  YOU -- "writes spec" --> API
+  PLAT -- "defines CRDs + roles" --> API
+  OP -- "watches spec,<br/>writes status" --> API
+  REV -- "watches everything" --> API
+  REV --> GIT
+
+  classDef amber fill:#fdf7e4,stroke:#e3b63b,stroke-width:2px,color:#6b5210;
+  classDef green fill:#eef8f1,stroke:#5cb87a,stroke-width:2px,color:#2c6b45;
+  classDef git fill:#16324f,stroke:#16324f,stroke-width:2px,color:#ffffff;
+  class YOU,PLAT amber
+  class OP,REV green
+  class GIT git

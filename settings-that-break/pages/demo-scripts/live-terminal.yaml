@@ -1,0 +1,4 @@
+steps:
+  - run: whoami && hostname && pwd
+  - run: kubectl get nodes
+  - run: git --no-pager log --oneline -3

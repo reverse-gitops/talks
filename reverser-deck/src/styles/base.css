@@ -1,0 +1,74 @@
+/* ── Deck shell ─────────────────────────────────────────────────────── */
+:root {
+  --bg: #0B0F14;
+  --panel: #121821;
+  --line: #263040;
+  --line-strong: #3A4658;
+  --text: #E7ECF2;
+  --muted: #6B7789;
+  --accent: #5AB8FF;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+  --sans: 'Space Grotesk', system-ui, sans-serif;
+  --fit: 1;
+}
+html, body { margin: 0; height: 100%; background: var(--bg); overflow: hidden; }
+body { color: var(--text); font-family: var(--sans); }
+a { color: var(--accent); }
+a:hover { color: #9AD3FF; }
+
+/* The stage is always 1600×900 and is scaled to fit the window. */
+#stage {
+  position: absolute; left: 50%; top: 50%;
+  width: 1600px; height: 900px;
+  transform: translate(-50%, -50%) scale(var(--fit));
+  transform-origin: 50% 50%;
+  overflow: hidden;
+}
+#stage > [data-anim-root] { position: absolute; left: 0; top: 0; }
+
+/* ── Slide animation primitives ─────────────────────────────────────── */
+/* Every timeline element: absolutely placed, driven by the slide's --T. */
+.an {
+  position: absolute; left: 0; top: 0;
+  animation-duration: var(--T);
+  animation-iteration-count: 1;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
+}
+.lin { animation-timing-function: linear; }
+
+/* ── Controls part (top right) ──────────────────────────────────────── */
+.playbtn {
+  position: absolute; top: 48px; height: 44px; box-sizing: border-box;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 22px;
+  color: var(--text); text-decoration: none; font-family: var(--mono); font-size: 13px; cursor: pointer;
+}
+.playbtn:hover { background: #1A2230; border-color: var(--line-strong); color: var(--text); }
+.playbtn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.playbtn.next { left: 1188px; width: 216px; }
+.playbtn.play { left: 1416px; width: 120px; }
+
+/* ── Timeline part (bottom) ─────────────────────────────────────────── */
+.timeline { position: absolute; left: 64px; width: 1472px; height: 64px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
+.timeline .mark { position: absolute; top: 0; white-space: nowrap; }
+.timeline .tick { position: absolute; top: 22px; width: 2px; height: 12px; background: var(--line-strong); }
+.timeline .track,
+.timeline .bar { position: absolute; left: 0; top: 26px; width: 1472px; height: 4px; border-radius: 2px; }
+.timeline .track { background: #1E2733; }
+.timeline .bar {
+  background: var(--text); opacity: .7; transform-origin: 0 50%; pointer-events: none;
+  transition: transform var(--bar-ms, 0s) cubic-bezier(.2, .8, .2, 1);
+}
+.timeline .hint { position: absolute; right: 0; top: 44px; width: 640px; text-align: right; }
+.timeline .scrub {
+  position: absolute; left: 0; top: -8px; width: 1472px; height: 52px; margin: 0;
+  -webkit-appearance: none; appearance: none; background: transparent; opacity: 0; cursor: ew-resize;
+}
+.timeline .scrub:focus-visible { opacity: 1; outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 6px; }
+
+/* ── Slide counter (bottom left corner, outside the 1600×900 art) ───── */
+#pager {
+  position: fixed; left: 12px; bottom: 10px; font-family: var(--mono); font-size: 11px; color: #3A4658;
+  pointer-events: none; user-select: none;
+}

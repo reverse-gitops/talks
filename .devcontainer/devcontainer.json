@@ -1,7 +1,10 @@
 {
   "name": "Talks DevContainer",
   "build": {
-    "dockerfile": "Dockerfile"
+    "dockerfile": "Dockerfile",
+    // Build on the host network so RUN steps get the host's MTU. Behind the WireGuard VPN
+    // (MTU 1420) the default 1500-MTU build network stalls TLS to some hosts (get.helm.sh).
+    "options": ["--network=host"]
   },
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/${localWorkspaceFolderBasename},type=bind",
   "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
@@ -9,46 +12,67 @@
     "ghcr.io/devcontainers/features/git:1": {},
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
   },
-  "forwardPorts": [3030],
+  // 3030 (Slidev) is published by Docker in runArgs instead: VS Code's forwarding added
+  // ~200 ms per request, and a Slidev dev page loads ~370 modules.
+  "forwardPorts": [5173, 4173],
   "portsAttributes": {
     "3030": {
-      "label": "Slidev",
+      "label": "Slidev (published by Docker)",
+      "onAutoForward": "ignore"
+    },
+    "5173": {
+      "label": "Animated deck (vite dev)",
+      "onAutoForward": "silent"
+    },
+    "4173": {
+      "label": "Animated deck (vite preview)",
       "onAutoForward": "silent"
     }
   },
   "customizations": {
     "vscode": {
       "settings": {
-        "terminal.integrated.shell.linux": "/bin/bash"
+        "terminal.integrated.defaultProfile.linux": "bash"
       },
       "extensions": [
         "antfu.slidev",
         "vue.volar",
-        "openai.chatgpt",
+        // Pinned: 26.1021.22027's webview never renders in a devcontainer
+        // (renderer_ready_timeout, found in gitops-reverser). Unpin once a newer release works.
+        "openai.chatgpt@26.1007.21434",
         "anthropic.claude-code"
       ]
     }
   },
-    "runArgs": [
-    "--add-host=host.docker.internal:host-gateway"
+  "runArgs": [
+    "--add-host=host.docker.internal:host-gateway",
+    // Fedora's Docker enforces SELinux labels, which blocks the workspace bind mount
+    // (Permission denied on /workspaces/...). No effect on hosts without SELinux.
+    "--security-opt=label=disable",
+    // Slidev on the laptop's loopback only. Needs Slidev listening on all interfaces inside the
+    // container, which `--remote` in the decks' dev scripts does.
+    "--publish=127.0.0.1:3030:3030"
   ],
   "postCreateCommand": "bash .devcontainer/post-create.sh '${containerWorkspaceFolder}'",
-  "postStartCommand": "bash .devcontainer/fix-mounted-permissions.sh '${containerWorkspaceFolder}'",
+  "postStartCommand": "bash .devcontainer/post-start.sh '${containerWorkspaceFolder}'",
   "containerUser": "node",
   "remoteUser": "node",
   "updateRemoteUserUID": true,
   "mounts": [
     "source=talks-npmcache,target=/home/node/.npm,type=volume",
+    "source=talks-playwright-browsers,target=/home/node/.cache/ms-playwright,type=volume",
     "source=talks-codexconfig,target=/home/node/.codex,type=volume",
     "source=talks-claudeconfig,target=/home/node/.claude,type=volume",
     "source=dotkube,target=/home/node/.kube,type=volume",
     "source=talks-persisted-home,target=/home/node/shared,type=volume",
-    "source=talks-demo-repo,target=/workspaces/talks/the-gitops-paradox/demo-repo,type=volume"
+    "source=talks-demo-repo,target=/workspaces/${localWorkspaceFolderBasename}/the-gitops-paradox/demo-repo,type=volume"
   ],
   "containerEnv": {
     "HOST_PROJECT_PATH": "${localWorkspaceFolder}",
     "PROJECT_PATH": "/workspaces/${localWorkspaceFolderBasename}",
     "GIT_USER_NAME": "${localEnv:GIT_USER_NAME}",
-    "GIT_USER_EMAIL": "${localEnv:GIT_USER_EMAIL}"
+    "GIT_USER_EMAIL": "${localEnv:GIT_USER_EMAIL}",
+    "CHROME_PATH": "/home/node/.local/bin/chrome",
+    "PUPPETEER_EXECUTABLE_PATH": "/home/node/.local/bin/chrome"
   }
 }

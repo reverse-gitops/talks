@@ -5,9 +5,7 @@ This addon provides a `WebTerminal` component for [Slidev](https://sli.dev/) pre
 ## Features
 
 - **Xterm.js Integration**: Uses a full-featured terminal emulator.
-- **Backend Connection**: Connects to a backend WebSocket/API service.
-  - See: [berttejeda/bert.webterminal](https://github.com/berttejeda/bert.webterminal)
-- **Zero-Config Dynamic Proxy**: Specify any `backendUrl` (including different domains and ports) in your markdown, and the addon handles CORS and proxying automatically.
+- **Backend Connection**: Connects directly to a backend WebSocket/API service, such as [docker-exec-bridge](../docker-exec-bridge).
 - **Managed Shared Sessions**: `backendUrl` mode shares one PTY across presenter/main windows and serializes same-tab creation and recovery.
 - **Click to Execute**: Commands are automatically sent to the terminal when clicking an element with the `.clickable-code` class (e.g. a wrapper around a code block).
 - **DemoTerminal Controller**: A dedicated `DemoTerminal` component drives forward-only terminal demos from external YAML scripts, with `.` as the default advance key.
@@ -22,86 +20,32 @@ npm install slidev-addon-web-terminal
 
 ## Backend Setup
 
-This addon requires a backend service to handle the terminal sessions.
-
-To get started quickly, run the [Webterminal Agent](https://github.com/berttejeda/bert.webterminal) using Docker:
+This addon needs a backend that runs the shells. In this repo that is
+[docker-exec-bridge](../docker-exec-bridge): each terminal becomes a `docker exec` shell in one
+container fixed at bridge startup.
 
 ```bash
-docker run -d --name webterminal --rm -p {{ HOSTPORT }}:10001 berttejeda/bill-webterminal
+TARGET_CONTAINER=talks-demo ALLOWED_ORIGINS=http://localhost:3030 node ../docker-exec-bridge/src/server.js
 ```
 
-Example (port 10001):
-```bash
-docker run -d --name webterminal --rm -p 10001:10001 berttejeda/bill-webterminal
-```
+The browser connects to the backend directly, so the backend must allow the deck's origin (CORS
+for `POST /api/terminals`, and the `Origin` of the WebSocket upgrade). A deck hosted elsewhere, such
+as `https://demo.koudijs.dev`, works the same way when that origin is allowed: the terminals then
+only work in a browser that can reach the backend on its own `127.0.0.1`.
 
 ### Backend session contract
 
 Managed `backendUrl` mode assumes the backend supports short-lived PTY persistence:
 
-- `POST /api/terminals` creates a session identifier
-- reconnecting to `/terminals/:id` reattaches to the same PTY while it is alive
+- `POST /api/terminals?cols=&rows=` creates a session and returns its identifier as text
+- reconnecting to `/terminals/:id` reattaches to the same PTY while it is alive, and replays recent output
+- `POST /api/terminals/:id/size?cols=&rows=` resizes the PTY
 - PTYs should survive brief WebSocket disconnects
-- recommended disconnect grace period: 5 minutes
 - expired sessions should fail with `4404` or `terminal-not-found`
 
 If the backend kills the PTY immediately when the last socket closes, the addon
 still works, but navigation/remount flows will recreate the PTY instead of
 preserving shell state.
-
-## Configuration
-
-To enable the **Dynamic Port Proxy** (which solves CORS issues when using different hosts or ports), you must add the proxy plugin to your `vite.config.ts`.
-
-### 1. Install `http-proxy`
-```bash
-npm install -s http-proxy
-```
-
-### 2. Update `vite.config.ts`
-Add the following plugin to your Vite configuration:
-
-```typescript
-import { defineConfig } from 'vite'
-
-export default defineConfig({
-  plugins: [
-    {
-      name: 'dynamic-terminal-proxy',
-      configureServer(server) {
-        const httpProxy = require('http-proxy')
-        const proxy = httpProxy.createProxyServer({ changeOrigin: true, ws: true })
-
-        const proxyPattern = /^\/proxy\/([^\/]+)\/([^\/]+)\/([^\/]+)(.*)/
-
-        server.middlewares.use((req, res, next) => {
-          const match = req.url?.match(proxyPattern)
-          if (match) {
-            const [_, protocol, host, port, rest] = match
-            const target = `${protocol}://${host}:${port}`
-            req.url = rest || '/'
-            proxy.web(req, res, { target, secure: protocol === 'https' }, (e) => {
-              res.statusCode = 502
-              res.end(`Proxy error: ${e.message}`)
-            })
-            return
-          }
-          next()
-        })
-
-        server.httpServer?.on('upgrade', (req, socket, head) => {
-          const match = req.url?.match(proxyPattern)
-          if (match) {
-            const [_, protocol, host, port, rest] = match
-            req.url = rest || '/'
-            proxy.ws(req, socket, head, { target: `${protocol}://${host}:${port}`, secure: protocol === 'https' })
-          }
-        })
-      }
-    }
-  ]
-})
-```
 
 ## Usage
 
@@ -120,7 +64,7 @@ Then use the component in your slides. You can point to any backend URL directly
 <!-- Localhost with default port -->
 <WebTerminal backendUrl="http://localhost:10001" />
 
-<!-- Arbitrary remote host (handles CORS automatically) -->
+<!-- Another host; it must allow the deck's origin -->
 <WebTerminal backendUrl="https://my-websocket-host.example.com:4443" />
 
 <!-- Direct unmanaged mode -->
@@ -145,7 +89,7 @@ import demoScriptUrl from './demo-scripts.yaml?url'
 
 | Prop | Type | Default | Description |
 |---|---|---|---|
-| `backendUrl` | `string` | - | Managed session mode. Creates PTYs through the backend API and participates in shared-session caching, discovery, and recovery. Cross-origin backends are rewritten through the dynamic proxy. |
+| `backendUrl` | `string` | - | Managed session mode. Creates PTYs through the backend API and participates in shared-session caching, discovery, and recovery. The browser connects to it directly. |
 | `wsUrl` | `string` | - | Direct unmanaged mode. Connects to the provided WebSocket and bypasses PTY creation, shared-session caching, and recovery orchestration. |
 | `sessionId` | `string` | `backendUrl` | Stable identifier used to share one managed PTY between the presentation and presenter windows. Set this explicitly when multiple terminals should intentionally share or intentionally not share the same backend session. |
 | `fontSize` | `number` | `15` | Terminal font size in pixels. |

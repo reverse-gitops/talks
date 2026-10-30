@@ -1,0 +1,60 @@
+.grp{animation-name:grp}.kcp{animation-name:kcp}.srow{animation-name:srow}.tbl{animation-name:tbl}.crd{animation-name:crd}.objs{animation-name:objs}
+.route{animation-name:route}.apiOld{animation-name:apiOld}.apiNew{animation-name:apiNew}
+.o1{animation-name:o1}.s1{animation-name:s1}.o2{animation-name:o2}.s2{animation-name:s2}.s3{animation-name:s3}.o3{animation-name:o3}.cdA{animation-name:cdA}.cdB{animation-name:cdB}
+.rev{animation-name:rev}.revBox{animation-name:revBox}.gitBox{animation-name:gitBox}.cm1{animation-name:cm1}.cm2{animation-name:cm2}
+.c1{animation-name:c1}.c2{animation-name:c2}.c3{animation-name:c3}.c4{animation-name:c4}
+.prog{animation-name:prog}.clock{animation-name:clk}@keyframes clk{0%{transform:translate(0,0)}100%{transform:translate(1px,0)}}.isl{animation-name:isl}
+@keyframes isl{0%,21.7778%{opacity:0;transform:scale(.85)}23.5556%,100%{opacity:1;transform:scale(1)}}.crowd{animation-name:crowd}.aliceOut{animation-name:aliceOut}
+.tr{position:absolute;left:0;top:0;animation:traffic 2.4s linear infinite both}
+@keyframes traffic{0%{opacity:0;transform:translate(219px,425px)}4%{opacity:.85}26%{transform:translate(390px,455px)}60%{transform:translate(645px,455px)}94%{opacity:.85}100%{opacity:0;transform:translate(945px,433px)}}
+@keyframes prog{0%{transform:translate(64px,842px) scaleX(0)}100%{transform:translate(64px,842px) scaleX(1)}}
+.back{animation-name:back}.ret{animation-name:ret}.ring{animation-name:ring}.back2{animation-name:back2}.ret2{animation-name:ret2}.sreg{animation-name:sreg}.s42{animation-name:s42}.c5{animation-name:c5}
+.bobIn{animation-name:bobIn}.bd{animation-name:bd}.fx{animation-name:fx}
+@keyframes grp{0%,40%{transform:scale(1)}43.3333%,100%{transform:scale(.72)}}
+@keyframes crowd{0%,40%{transform:translate(64px,374px) scale(1)}43.3333%,100%{transform:translate(64px,374px) scale(.8)}}
+@keyframes kcp{0%,13.3333%{opacity:0;transform:translate(1140px,250px) scale(.9)}14.6667%,100%{opacity:1;transform:translate(1140px,250px) scale(1)}}
+@keyframes plat{0%,13.3333%{opacity:0}15.1111%,100%{opacity:1}}
+@keyframes srow{0%,14.4444%{transform:translate(856px,470px);width:188px;height:36px;border-radius:8px;border-color:#263040;background-color:#0F1A26}18.8889%{transform:translate(1156px,318px);width:188px;height:36px;border-radius:8px;border-color:#2E6B4E;background-color:#0F1A26}20%{transform:translate(1156px,318px);width:188px;height:36px;border-radius:8px}21.3333%,100%{transform:translate(1156px,318px);width:94px;height:24px;border-radius:12px;border-color:#7EE0A1;background-color:#101C17}}
+@keyframes tbl{0%,18.8889%{opacity:1}20%,100%{opacity:0}}
+@keyframes crd{0%,20.4444%{opacity:0}21.3333%,100%{opacity:1}}
+@keyframes apiOld{0%,18.8889%{opacity:1}20%,100%{opacity:0}}
+@keyframes apiNew{0%,18.8889%{opacity:0}20%,100%{opacity:1}}
+@keyframes route{0%,20%{opacity:0}21.1111%,100%{opacity:1}}
+@keyframes objs{0%,20%{opacity:0;box-shadow:0 0 0 0 rgba(126,224,161,0)}21.3333%{opacity:1;box-shadow:0 0 0 0 rgba(126,224,161,0)}58.2222%{box-shadow:0 0 0 0 rgba(126,224,161,0)}59.1111%{box-shadow:0 0 0 6px rgba(126,224,161,.35)}60.8889%{box-shadow:0 0 0 0 rgba(126,224,161,0)}88%{box-shadow:0 0 0 0 rgba(126,224,161,0)}88.8889%{box-shadow:0 0 0 6px rgba(126,224,161,.35)}91.1111%,100%{opacity:1;box-shadow:0 0 0 0 rgba(126,224,161,0)}}
+@keyframes o1{0%,2.2%{opacity:0;transform:translate(219px,425px)}2.2222%{opacity:1;transform:translate(219px,425px)}3.5556%{transform:translate(390px,455px)}4.8889%{transform:translate(645px,455px)}6.6667%{opacity:1;transform:translate(945px,433px)}7.2222%,100%{opacity:0;transform:translate(945px,433px)}}
+@keyframes o2{0%,21.3111%{opacity:0;transform:translate(219px,425px)}21.3333%{opacity:1;transform:translate(219px,425px)}22.6667%{transform:translate(390px,455px)}24%{transform:translate(645px,455px)}25.7778%{opacity:1;transform:translate(945px,433px)}26.3333%,100%{opacity:0;transform:translate(945px,433px)}}
+@keyframes o3{0%,46.6444%{opacity:0;transform:translate(182px,413px)}46.6667%{opacity:1;transform:translate(182px,413px)}48%{transform:translate(390px,455px)}49.3333%{transform:translate(645px,455px)}51.1111%{opacity:1;transform:translate(945px,433px)}51.6667%,100%{opacity:0;transform:translate(945px,433px)}}
+@keyframes s3{0%,54.4222%{opacity:0;transform:translate(182px,616px)}54.4444%{opacity:1;transform:translate(182px,616px)}55.1111%{transform:translate(248px,616px)}55.7778%{transform:translate(248px,497px)}56.4444%{transform:translate(390px,455px)}57.1111%{transform:translate(390px,295px)}58.2222%{transform:translate(1135px,295px)}58.8889%{opacity:1;transform:translate(1376px,325px)}59.4444%,100%{opacity:0;transform:translate(1376px,325px)}}
+@keyframes cdA{0%,59.7556%{opacity:0;transform:translate(1376px,325px)}59.7778%{opacity:1;transform:translate(1376px,325px)}61.5556%{opacity:1;transform:translate(1376px,515px)}62.1111%,100%{opacity:0;transform:translate(1376px,515px)}}
+@keyframes cdB{0%,61.9778%{opacity:0;transform:translate(1122px,498px)}62%{opacity:1;transform:translate(1122px,498px)}63.3333%{transform:translate(1383px,498px)}64.6667%{opacity:1;transform:translate(1383px,646px)}65.2222%,100%{opacity:0;transform:translate(1383px,646px)}}
+@keyframes rev{0%,43.3333%{opacity:0}45.1111%,100%{opacity:1}}
+@keyframes revBox{0%,43.3333%{opacity:0;transform:translate(1140px,480px) scale(.9);box-shadow:0 0 0 0 rgba(90,184,255,0)}45.1111%{opacity:1;transform:translate(1140px,480px) scale(1);box-shadow:0 0 0 0 rgba(90,184,255,0)}61.3333%{box-shadow:0 0 0 0 rgba(90,184,255,0)}62%{box-shadow:0 0 0 6px rgba(90,184,255,.3)}63.7778%,100%{opacity:1;transform:translate(1140px,480px) scale(1);box-shadow:0 0 0 0 rgba(90,184,255,0)}}
+@keyframes gitBox{0%,43.3333%{opacity:0;box-shadow:0 0 0 0 rgba(126,224,161,0)}45.1111%{opacity:1;box-shadow:0 0 0 0 rgba(126,224,161,0)}64.4444%{box-shadow:0 0 0 0 rgba(126,224,161,0)}65.3333%{box-shadow:0 0 0 6px rgba(126,224,161,.3)}67.1111%{box-shadow:0 0 0 0 rgba(126,224,161,0)}83.1111%{box-shadow:0 0 0 0 rgba(126,224,161,0)}84%{box-shadow:0 0 0 6px rgba(126,224,161,.3)}85.7778%,100%{opacity:1;box-shadow:0 0 0 0 rgba(126,224,161,0)}}
+@keyframes cm1{0%,64.4444%{opacity:0;transform:translate(1256px,628px) scale(.94)}65.7778%,100%{opacity:1;transform:translate(1256px,628px) scale(1)}}
+@keyframes back{0%,43.3333%{opacity:0}45.1111%,100%{opacity:1}}
+@keyframes back2{0%,43.3333%{opacity:0}45.1111%,100%{opacity:1}}
+@keyframes ret{0%,66.6444%{opacity:0;transform:translate(1228px,659px)}66.6667%{opacity:1;transform:translate(1228px,659px)}69.7778%{opacity:1;transform:translate(814px,659px)}70.3333%,100%{opacity:0;transform:translate(814px,659px)}}
+@keyframes s42{0%,69.5556%{opacity:0}70.6667%,100%{opacity:1}}
+@keyframes ret2{0%,70.8667%{opacity:0;transform:translate(711px,682px)}70.8889%{opacity:1;transform:translate(711px,682px)}73.3333%{opacity:1;transform:translate(711px,505px)}73.8889%,100%{opacity:0;transform:translate(711px,505px)}}
+@keyframes ring{0%,73.1111%{opacity:0;border-color:#FF8A80;box-shadow:0 0 0 0 rgba(255,138,128,0)}74%{opacity:1;border-color:#FF8A80;box-shadow:0 0 0 8px rgba(255,138,128,.35)}76.6667%{border-color:#FF8A80;box-shadow:0 0 0 0 rgba(255,138,128,0)}90.8889%{border-color:#FF8A80;box-shadow:0 0 0 0 rgba(255,138,128,0)}91.7778%{border-color:#7EE0A1;box-shadow:0 0 0 8px rgba(126,224,161,.35)}94.4444%,100%{opacity:1;border-color:#7EE0A1;box-shadow:0 0 0 0 rgba(126,224,161,0)}}
+@keyframes cnt{0%,73.7778%{opacity:0}75.1111%,100%{opacity:1}}
+@keyframes aliceOut{0%,74.6667%{opacity:1}76.8889%,100%{opacity:0}}
+@keyframes bobIn{0%,77.7778%{opacity:0}79.1111%,100%{opacity:1}}
+@keyframes bd{0%,79.5333%{opacity:0;transform:translate(219px,715px)}79.5556%{opacity:1;transform:translate(219px,715px)}82.8889%{opacity:1;transform:translate(1234px,715px)}83.4444%,100%{opacity:0;transform:translate(1234px,715px)}}
+@keyframes cm2{0%,82.8889%{opacity:0;transform:translate(1256px,682px) scale(.94)}84.2222%,100%{opacity:1;transform:translate(1256px,682px) scale(1)}}
+@keyframes fx{0%,84.4222%{opacity:0;transform:translate(1475px,585px)}84.4444%{opacity:1;transform:translate(1475px,585px)}86.2222%{transform:translate(1475px,325px)}88.6667%{opacity:1;transform:translate(1132px,325px)}89.2222%,100%{opacity:0;transform:translate(1132px,325px)}}
+@keyframes retB{0%,84.4222%{opacity:0;transform:translate(1228px,659px)}84.4444%{opacity:1;transform:translate(1228px,659px)}87.5556%{opacity:1;transform:translate(814px,659px)}88.1111%,100%{opacity:0;transform:translate(814px,659px)}}
+@keyframes sreg{0%,87.3333%{opacity:0;transform:translate(864px,722px) scale(.8)}88.4444%,100%{opacity:1;transform:translate(864px,722px) scale(1)}}
+@keyframes ret2B{0%,88.6444%{opacity:0;transform:translate(711px,682px)}88.6667%{opacity:1;transform:translate(711px,682px)}91.1111%{opacity:1;transform:translate(711px,505px)}91.6667%,100%{opacity:0;transform:translate(711px,505px)}}
+@keyframes fixd{0%,91.5556%{opacity:0}92.8889%,100%{opacity:1}}
+.cG{animation-name:cG}@keyframes cG{0%,28%{opacity:0}28.8889%{opacity:1}39.1111%{opacity:1}40%,100%{opacity:0}}
+.g1{animation-name:g1}@keyframes g1{0%,29.5333%{opacity:0;transform:translate(166px,611px)}29.5556%{opacity:1;transform:translate(166px,611px)}30.1889%{transform:translate(232px,611px)}30.8222%{transform:translate(232px,492px)}31.4556%{transform:translate(374px,450px)}32.0889%{transform:translate(374px,290px)}33.1444%{transform:translate(1119px,290px)}33.7778%{opacity:1;transform:translate(1140px,313px)}34.3333%,100%{opacity:0;transform:translate(1140px,313px)}}
+.g2{animation-name:g2}@keyframes g2{0%,31.3111%{opacity:0;transform:translate(166px,611px)}31.3333%{opacity:1;transform:translate(166px,611px)}31.9667%{transform:translate(232px,611px)}32.6%{transform:translate(232px,492px)}33.2333%{transform:translate(374px,450px)}33.8667%{transform:translate(374px,290px)}34.9222%{transform:translate(1119px,290px)}35.5556%{opacity:1;transform:translate(1140px,313px)}36.1111%,100%{opacity:0;transform:translate(1140px,313px)}}
+.g3{animation-name:g3}@keyframes g3{0%,33.0889%{opacity:0;transform:translate(166px,611px)}33.1111%{opacity:1;transform:translate(166px,611px)}33.7444%{transform:translate(232px,611px)}34.3778%{transform:translate(232px,492px)}35.0111%{transform:translate(374px,450px)}35.6444%{transform:translate(374px,290px)}36.7%{transform:translate(1119px,290px)}37.3333%{opacity:1;transform:translate(1140px,313px)}37.8889%,100%{opacity:0;transform:translate(1140px,313px)}}
+.scrn{animation-name:scrn}@keyframes scrn{0%,28%{opacity:0;transform:translate(64px,624px) scale(.9)}29.1111%,100%{opacity:1;transform:translate(64px,624px) scale(1)}}
+@keyframes c1{0%{opacity:0}0.8889%{opacity:1}12.4444%{opacity:1}13.3333%,100%{opacity:0}}
+@keyframes c2{0%,13.3333%{opacity:0}14.2222%{opacity:1}28%{opacity:1}28.8889%,100%{opacity:0}}
+@keyframes c3{0%,39.1111%{opacity:0}40%{opacity:1}52.4444%{opacity:1}53.3333%,100%{opacity:0}}
+@keyframes c4{0%,52.4444%{opacity:0}53.3333%{opacity:1}76.8889%{opacity:1}77.7778%,100%{opacity:0}}
+@keyframes c5{0%,79.3333%{opacity:0}80.2222%,100%{opacity:1}}@keyframes c5a{0%,76.8889%{opacity:0}77.7778%{opacity:1}79.3333%{opacity:1}80.2222%,100%{opacity:0}}.c5a{animation-name:c5a}
+.retB{animation-name:retB}.ret2B{animation-name:ret2B}.cnt{animation-name:cnt}.fixd{animation-name:fixd}

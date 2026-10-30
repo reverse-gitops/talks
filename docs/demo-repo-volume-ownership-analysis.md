@@ -194,8 +194,8 @@ What we can say:
 - Docker does not retain enough metadata to prove which earlier container first created it.
 - From code, the possible creators are:
   - the devcontainer
-  - `make run-repo-sync`
-  - `make run-btwebterminal` because it depends on `run-repo-sync`
+  - `task run-repo-sync`
+  - `task run-btwebterminal` because it depends on `run-repo-sync`
 
 ### Current ownership state
 

@@ -1,0 +1,20 @@
+{
+  "name": "docker-exec-bridge",
+  "version": "0.1.0",
+  "description": "Serves slidev-addon-web-terminal sessions as docker exec shells in one fixed container",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "docker-exec-bridge": "src/server.js"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}

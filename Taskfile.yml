@@ -1,0 +1,241 @@
+version: '3'
+
+# Every var can be overridden on the command line or from the environment,
+# e.g. `task run-terminal-bridge TERMINAL_BRIDGE_PORT=10002`.
+vars:
+  DEMO_REPO_VOLUME: '{{.DEMO_REPO_VOLUME | default "talks-demo-repo"}}'
+  KUBE_VOLUME: '{{.KUBE_VOLUME | default "dotkube"}}'
+  SHARED_HOME_VOLUME: '{{.SHARED_HOME_VOLUME | default "talks-persisted-home"}}'
+  NPM: '{{.NPM | default "npm"}}'
+
+  GITEA_SYNC_IMAGE: '{{.GITEA_SYNC_IMAGE | default "talks-gitea-sync:latest"}}'
+  GITEA_SYNC_CONTAINER: '{{.GITEA_SYNC_CONTAINER | default "talks-demo-repo-sync"}}'
+  GITEA_SYNC_INTERVAL_SECONDS: '{{.GITEA_SYNC_INTERVAL_SECONDS | default "5"}}'
+  SECRET_NAMESPACE: '{{.SECRET_NAMESPACE | default "vote"}}'
+  SYNC_OWNER_UID:
+    sh: echo "${SYNC_OWNER_UID:-$(id -u)}"
+  SYNC_OWNER_GID:
+    sh: echo "${SYNC_OWNER_GID:-$(id -g)}"
+  REPO_NAME: '{{.REPO_NAME | default "demo"}}'
+
+  BTWEBTERMINAL_IMAGE: '{{.BTWEBTERMINAL_IMAGE | default "talks-btwebterminal:latest"}}'
+  BTWEBTERMINAL_CONTAINER: '{{.BTWEBTERMINAL_CONTAINER | default "talks-btwebterminal"}}'
+  BTWEBTERMINAL_PORT: '{{.BTWEBTERMINAL_PORT | default "10001"}}'
+
+  TERMINAL_BRIDGE_IMAGE: '{{.TERMINAL_BRIDGE_IMAGE | default "docker-exec-bridge:latest"}}'
+  TERMINAL_BRIDGE_CONTAINER: '{{.TERMINAL_BRIDGE_CONTAINER | default "docker-exec-bridge"}}'
+  TERMINAL_BRIDGE_PORT: '{{.TERMINAL_BRIDGE_PORT | default "10001"}}'
+  # The container every terminal shell runs in. Defaults to this devcontainer when run from inside it.
+  TERMINAL_TARGET:
+    sh: echo "${TERMINAL_TARGET:-$(hostname)}"
+  TERMINAL_USER: '{{.TERMINAL_USER | default "node"}}'
+  TERMINAL_WORKDIR: '{{.TERMINAL_WORKDIR | default "/workspaces/talks"}}'
+  TERMINAL_ALLOWED_ORIGINS: '{{.TERMINAL_ALLOWED_ORIGINS | default "http://localhost:3030,https://demo.koudijs.dev"}}'
+
+  NODE_TOOL_DIRS: tools/slidev-addon-excalidraw-renderer tools/slidev-addon-web-terminal
+  NODE_APP_DIRS:
+    sh: for f in */package.json; do dirname "$f"; done | sort | tr '\n' ' '
+
+tasks:
+  install-node-deps:
+    desc: npm install every slidev addon, then every deck
+    cmds:
+      - for: { var: NODE_TOOL_DIRS }
+        task: npm-install-tool
+        vars: { DIR: '{{.ITEM}}' }
+      - for: { var: NODE_APP_DIRS }
+        task: npm-install-app
+        vars: { DIR: '{{.ITEM}}' }
+
+  npm-install-tool:
+    internal: true
+    label: npm-install:{{.DIR}}
+    method: timestamp
+    sources:
+      - '{{.DIR}}/package.json'
+      - '{{.DIR}}/package-lock.json'
+    generates:
+      - '{{.DIR}}/node_modules/.install-stamp'
+    cmds:
+      - '{{.NPM}} install --prefix {{.DIR}}'
+      - touch {{.DIR}}/node_modules/.install-stamp
+
+  # Decks also reinstall when an addon's sources change, since they install the addons from disk.
+  npm-install-app:
+    internal: true
+    label: npm-install:{{.DIR}}
+    method: timestamp
+    sources:
+      - '{{.DIR}}/package.json'
+      - '{{.DIR}}/package-lock.json'
+      - tools/slidev-addon-*/**/*
+      - exclude: tools/slidev-addon-*/node_modules/**
+      - exclude: tools/slidev-addon-web-terminal/example/**
+    generates:
+      - '{{.DIR}}/node_modules/.install-stamp'
+    cmds:
+      - '{{.NPM}} install --prefix {{.DIR}}'
+      - touch {{.DIR}}/node_modules/.install-stamp
+
+  run-repo-sync:
+    desc: Start the gitea-sync container that mirrors the demo repo into its volume
+    deps: [empty-demo-repo]
+    cmds:
+      - docker build -f tools/gitea-sync/Dockerfile -t {{.GITEA_SYNC_IMAGE}} .
+      - docker rm -f {{.GITEA_SYNC_CONTAINER}} >/dev/null 2>&1 || true
+      - |
+        docker run -d \
+          --name {{.GITEA_SYNC_CONTAINER}} \
+          --add-host host.docker.internal:host-gateway \
+          -e REPO_NAME={{.REPO_NAME}} \
+          -e SECRET_NAMESPACE={{.SECRET_NAMESPACE}} \
+          -e CHECKOUT_DIR=/sync \
+          -e KUBECONFIG=/kube/config \
+          -e SYNC_INTERVAL_SECONDS={{.GITEA_SYNC_INTERVAL_SECONDS}} \
+          -e SYNC_OWNER_UID={{.SYNC_OWNER_UID}} \
+          -e SYNC_OWNER_GID={{.SYNC_OWNER_GID}} \
+          -v {{.DEMO_REPO_VOLUME}}:/sync \
+          -v {{.KUBE_VOLUME}}:/kube \
+          {{.GITEA_SYNC_IMAGE}}
+      - cmd: echo "Started {{.GITEA_SYNC_CONTAINER}} with volume {{.DEMO_REPO_VOLUME}}"
+        silent: true
+
+  tail-sync:
+    cmds:
+      - docker logs -f {{.GITEA_SYNC_CONTAINER}}
+
+  run-btwebterminal:
+    desc: Start the btwebterminal container (and the repo sync it needs)
+    deps: [run-repo-sync]
+    cmds:
+      - docker build -f tools/btwebterminal/Dockerfile -t {{.BTWEBTERMINAL_IMAGE}} tools/btwebterminal
+      - docker rm -f {{.BTWEBTERMINAL_CONTAINER}} >/dev/null 2>&1 || true
+      - |
+        docker run -d \
+          --name {{.BTWEBTERMINAL_CONTAINER}} \
+          --add-host host.docker.internal:host-gateway \
+          -p {{.BTWEBTERMINAL_PORT}}:{{.BTWEBTERMINAL_PORT}} \
+          -e WEBTERMINAL_HOST=0.0.0.0 \
+          -e WEBTERMINAL_PORT={{.BTWEBTERMINAL_PORT}} \
+          -e KUBECONFIG=/home/node/.kube/config \
+          -e SECRET_NAMESPACE={{.SECRET_NAMESPACE}} \
+          -v {{.KUBE_VOLUME}}:/home/node/.kube \
+          -v {{.DEMO_REPO_VOLUME}}:/home/node/demo \
+          {{.BTWEBTERMINAL_IMAGE}}
+      - cmd: echo "Started {{.BTWEBTERMINAL_CONTAINER}} on http://host.docker.internal:{{.BTWEBTERMINAL_PORT}}"
+        silent: true
+
+  tail-btwebterminal:
+    cmds:
+      - docker logs -f {{.BTWEBTERMINAL_CONTAINER}}
+
+  # Terminals for the decks: each one is a docker exec shell in TERMINAL_TARGET.
+  # Published on the host's loopback only; label=disable is for SELinux hosts (Fedora).
+  run-terminal-bridge:
+    desc: Start the docker-exec-bridge that serves the decks' terminals
+    cmds:
+      - docker build -t {{.TERMINAL_BRIDGE_IMAGE}} tools/docker-exec-bridge
+      - docker rm -f {{.TERMINAL_BRIDGE_CONTAINER}} >/dev/null 2>&1 || true
+      - |
+        docker run -d \
+          --name {{.TERMINAL_BRIDGE_CONTAINER}} \
+          --security-opt label=disable \
+          -p 127.0.0.1:{{.TERMINAL_BRIDGE_PORT}}:10001 \
+          -v /var/run/docker.sock:/var/run/docker.sock \
+          --group-add $(stat -L -c %g /var/run/docker.sock) \
+          -e PUBLIC_PORT={{.TERMINAL_BRIDGE_PORT}} \
+          -e TARGET_CONTAINER={{.TERMINAL_TARGET}} \
+          -e EXEC_USER={{.TERMINAL_USER}} \
+          -e EXEC_WORKDIR={{.TERMINAL_WORKDIR}} \
+          -e ALLOWED_ORIGINS={{.TERMINAL_ALLOWED_ORIGINS}} \
+          {{.TERMINAL_BRIDGE_IMAGE}}
+      - cmd: echo "Started {{.TERMINAL_BRIDGE_CONTAINER}} on http://127.0.0.1:{{.TERMINAL_BRIDGE_PORT}}, shells in {{.TERMINAL_TARGET}}"
+        silent: true
+
+  # The same bridge as a plain Node process in this terminal; Ctrl+C stops it. Your browser
+  # reaches it through VS Code's port forwarding, which must keep 10001 (the bridge checks Host).
+  dev-terminal-bridge:
+    desc: Run the docker-exec-bridge as a Node process in the foreground
+    dir: tools/docker-exec-bridge
+    cmds:
+      - '{{.NPM}} install --no-audit --no-fund'
+      - '{{.NPM}} start'
+    env:
+      PORT: '{{.TERMINAL_BRIDGE_PORT}}'
+      TARGET_CONTAINER: '{{.TERMINAL_TARGET}}'
+      EXEC_USER: '{{.TERMINAL_USER}}'
+      EXEC_WORKDIR: '{{.TERMINAL_WORKDIR}}'
+      ALLOWED_ORIGINS: '{{.TERMINAL_ALLOWED_ORIGINS}}'
+
+  tail-terminal-bridge:
+    cmds:
+      - docker logs -f {{.TERMINAL_BRIDGE_CONTAINER}}
+
+  stop-terminal-bridge:
+    desc: Stop and remove the docker-exec-bridge container
+    cmds:
+      - docker rm -f {{.TERMINAL_BRIDGE_CONTAINER}}
+
+  empty-demo-repo:
+    cmds:
+      - |
+        docker run --rm \
+          -v {{.DEMO_REPO_VOLUME}}:/sync \
+          alpine:3.20 \
+          sh -lc 'find /sync -mindepth 1 -exec rm -rf -- {} +'
+      - cmd: echo "Emptied volume {{.DEMO_REPO_VOLUME}}"
+        silent: true
+
+  run:
+    desc: Live the-gitops-paradox deck with btwebterminal
+    deps: [install-node-deps, run-btwebterminal]
+    dir: the-gitops-paradox
+    cmds:
+      - npm run dev
+
+  run-frozen:
+    desc: the-gitops-paradox with slides-pdf.md (no btwebterminal needed)
+    deps: [install-node-deps]
+    dir: the-gitops-paradox
+    cmds:
+      - npx slidev --entry slides-pdf.md --remote --no-open
+
+  export-pdf:
+    desc: Export the-gitops-paradox to dist/the-gitops-paradox.pdf
+    deps: [install-node-deps]
+    cmds:
+      - rm -rf /tmp/slidev-export-png && mkdir -p /tmp/slidev-export-png
+      - cd the-gitops-paradox && npx slidev export slides-pdf.md --format png --output /tmp/slidev-export-png --scale 2 --timeout 60000
+      - ls -v /tmp/slidev-export-png/*.png | xargs /home/node/.local/bin/img2pdf -o dist/the-gitops-paradox.pdf
+
+  export-krm-bff-pdf:
+    desc: Export krm-bff (Frontmania) to dist/be-bffs-with-the-kubernetes-api.pdf
+    cmds:
+      - rm -rf /tmp/marp-export-krm-bff && mkdir -p /tmp/marp-export-krm-bff
+      - cd krm-bff && marp slides.md --pdf --allow-local-files --html -o /tmp/marp-export-krm-bff/full.pdf
+      # Marp embeds the 3 MB background again on every page (60 MB): flatten to one JPEG per page
+      - pdftoppm -jpeg -jpegopt quality=85 -r 144 /tmp/marp-export-krm-bff/full.pdf /tmp/marp-export-krm-bff/page
+      - ls -v /tmp/marp-export-krm-bff/page-*.jpg | xargs /home/node/.local/bin/img2pdf -o dist/be-bffs-with-the-kubernetes-api.pdf
+
+  export-reverser-pdf:
+    desc: Export settings-that-break to dist/settings-that-break-production.pdf
+    deps: [install-node-deps]
+    cmds:
+      - rm -rf /tmp/slidev-export-reverser && mkdir -p /tmp/slidev-export-reverser
+      - cd settings-that-break && npx slidev export --format png --output /tmp/slidev-export-reverser --scale 2 --timeout 60000
+      - ls -v /tmp/slidev-export-reverser/*.png | xargs /home/node/.local/bin/img2pdf -o dist/settings-that-break-production.pdf
+
+  run-reverser:
+    desc: Live settings-that-break deck (start run-terminal-bridge for its terminals)
+    deps: [install-node-deps]
+    dir: settings-that-break
+    cmds:
+      - npm run dev
+
+  # One PNG per step of every animated slide, in reverser-deck/shots/ (SLIDES="big-picture problem" to limit)
+  deck-shots:
+    desc: Screenshot every animation step of reverser-deck
+    deps: [install-node-deps]
+    dir: reverser-deck
+    cmds:
+      - npm run shots -- {{.SLIDES}}

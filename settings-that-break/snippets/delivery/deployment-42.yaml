@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orderer
+spec:
+  template:
+    spec:
+      containers:
+      - name: orderer
+        image: ghcr.io/stroopwafel/orderer:1.4
+        volumeMounts:
+        - name: config
+          mountPath: /etc/orderer/config
+      volumes:
+      - name: config
+        image:  # OCI artifact as a volume
+          reference: ghcr.io/stroopwafel/orderer-config:42 # {"$imagepolicy": "flux-system:config"}
+          pullPolicy: IfNotPresent

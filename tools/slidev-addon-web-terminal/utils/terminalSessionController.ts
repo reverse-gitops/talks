@@ -93,13 +93,6 @@ const createPtySession = async (
     }
 
     const pid = await response.text()
-    if (cleanBackendUrl.startsWith('/proxy/')) {
-      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
-      const url = `${protocol}//${window.location.host}${cleanBackendUrl}/terminals/${pid}`
-      logger?.('session.create.success', { backendUrl: cleanBackendUrl, pid, url })
-      return url
-    }
-
     const url = new URL(cleanBackendUrl, window.location.href)
     const protocol = url.protocol === 'https:' ? 'wss:' : 'ws:'
     const wsUrl = `${protocol}//${url.host}/terminals/${pid}`

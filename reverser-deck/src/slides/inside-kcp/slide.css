@@ -1,0 +1,24 @@
+.intro{animation-name:intro}.req{animation-name:req}.verb{animation-name:verb}.rowE{animation-name:rowE}
+.revIn{animation-name:revIn}.revBox{animation-name:revBox}.cd{animation-name:cd}.cm{animation-name:cm}
+.plain{animation-name:plain}.streams{animation-name:streams}.qa{animation-name:qa}.qb{animation-name:qb}.wd{animation-name:wd}.ad{animation-name:ad}
+.c1{animation-name:c1}.c2{animation-name:c2}.c3{animation-name:c3}.c4{animation-name:c4}
+.prog{animation-name:prog}
+@keyframes intro{0%{transform:scale(2.6);opacity:0}5%,100%{transform:scale(1);opacity:1}}
+@keyframes req{0%,5.99%{opacity:0;transform:translate(219px,455px)}6%{opacity:1;transform:translate(219px,455px)}8.5%{transform:translate(358px,455px)}11%{transform:translate(515px,455px)}14%{opacity:1;transform:translate(700px,503px)}14.5%,100%{opacity:0;transform:translate(700px,503px)}}
+@keyframes verb{0%,5.5%{opacity:0}6%{opacity:1}12%{opacity:1}13%,100%{opacity:0}}
+@keyframes rowE{0%,13%{border-color:#263040;box-shadow:0 0 0 0 rgba(126,224,161,0)}14.5%{border-color:#2E6B4E;box-shadow:0 0 0 6px rgba(126,224,161,.35)}18%,100%{border-color:#2E6B4E;box-shadow:0 0 0 0 rgba(126,224,161,0)}}
+@keyframes revIn{0%,25%{opacity:0}28%,100%{opacity:1}}
+@keyframes revBox{0%,25%{opacity:0;transform:translate(1040px,400px) scale(.9);box-shadow:0 0 0 0 rgba(90,184,255,0)}28%{opacity:1;transform:translate(1040px,400px) scale(1);box-shadow:0 0 0 0 rgba(90,184,255,0)}33%{box-shadow:0 0 0 0 rgba(90,184,255,0)}34.5%{box-shadow:0 0 0 6px rgba(90,184,255,.3)}37%,79%{box-shadow:0 0 0 0 rgba(90,184,255,0)}81%{box-shadow:0 0 0 8px rgba(90,184,255,.3)}85%,100%{opacity:1;transform:translate(1040px,400px) scale(1);box-shadow:0 0 0 0 rgba(90,184,255,0)}}
+@keyframes cd{0%,29.99%{opacity:0;transform:translate(935px,455px)}30%{opacity:1;transform:translate(935px,455px)}34%{transform:translate(1135px,455px)}40%{opacity:1;transform:translate(1423px,453px)}40.5%,100%{opacity:0;transform:translate(1423px,453px)}}
+@keyframes cm{0%,39.5%{opacity:0;transform:translate(1332px,430px) scale(.94)}42%,100%{opacity:1;transform:translate(1332px,430px) scale(1)}}
+@keyframes plain{0%,25%{opacity:0}28%{opacity:1}50%{opacity:1}52%,100%{opacity:0}}
+@keyframes streams{0%,51%{opacity:0}54%,100%{opacity:1}}
+@keyframes qa{0%,54%{opacity:0;transform:translate(1040px,300px) scale(.9)}56.5%,100%{opacity:1;transform:translate(1040px,300px) scale(1)}}
+@keyframes qb{0%,59%{opacity:0;transform:translate(1040px,342px) scale(.9)}61.5%,100%{opacity:1;transform:translate(1040px,342px) scale(1)}}
+@keyframes wd{0%,61.99%{opacity:0;transform:translate(935px,425px)}62%{opacity:1;transform:translate(935px,425px)}66%{opacity:1;transform:translate(1033px,425px)}66.5%,100%{opacity:0;transform:translate(1033px,425px)}}
+@keyframes ad{0%,66.99%{opacity:0;transform:translate(935px,485px)}67%{opacity:1;transform:translate(935px,485px)}71%{opacity:1;transform:translate(1033px,485px)}71.5%,100%{opacity:0;transform:translate(1033px,485px)}}
+@keyframes c1{0%{opacity:0}5%{opacity:1}24%{opacity:1}25%,100%{opacity:0}}
+@keyframes c2{0%,24%{opacity:0}25%{opacity:1}49%{opacity:1}50%,100%{opacity:0}}
+@keyframes c3{0%,49%{opacity:0}50%{opacity:1}74%{opacity:1}75%,100%{opacity:0}}
+@keyframes c4{0%,74%{opacity:0}75%,100%{opacity:1}}
+@keyframes prog{0%{transform:translate(64px,842px) scaleX(0)}100%{transform:translate(64px,842px) scaleX(1)}}

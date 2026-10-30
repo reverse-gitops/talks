@@ -1,0 +1,24 @@
+{
+  "name": "settings-that-break",
+  "type": "module",
+  "private": true,
+  "description": "The animated Reverser deck, rebuilt as a native Slidev presentation.",
+  "scripts": {
+    "dev": "slidev --remote --no-open",
+    "build": "slidev build",
+    "export": "slidev export --with-clicks",
+    "shots": "node tools/shots.mjs"
+  },
+  "dependencies": {
+    "@fontsource/jetbrains-mono": "5.3.0",
+    "@fontsource/space-grotesk": "5.3.0",
+    "@slidev/cli": "53.0.0",
+    "@slidev/theme-default": "0.25.0",
+    "slidev-addon-web-terminal": "file:../tools/slidev-addon-web-terminal",
+    "uqr": "0.1.3",
+    "vue": "3.5.44"
+  },
+  "devDependencies": {
+    "playwright-chromium": "1.59.1"
+  }
+}

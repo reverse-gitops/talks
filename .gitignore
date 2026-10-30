@@ -1,6 +1,15 @@
-package-lock.json
+/package-lock.json
 /shared
 the-gitops-paradox/demo-repo
 *do-not-checkin*
 testnet/*
 gitops-needs-an-api/*.html
+krm-bff/*.html
+
+# Reference clones (their own git repos), not part of this repo
+/external/slidev
+/external/voter
+/external/gitops-reverser
+
+# Task (taskfile.dev) run state
+.task/

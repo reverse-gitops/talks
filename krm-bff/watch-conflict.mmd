@@ -1,0 +1,16 @@
+sequenceDiagram
+  participant A as Browser left
+  participant K as kube-apiserver
+  participant B as Browser right
+
+  A->>K: GET list (resourceVersion 41)
+  B->>K: GET list (resourceVersion 41)
+  A->>K: watch from 41
+  B->>K: watch from 41
+
+  A->>K: PATCH price, resourceVersion 41
+  K-->>A: 200 OK, now 42
+  K-->>B: watch: MODIFIED, 42
+
+  B->>K: PATCH price, resourceVersion 41
+  K-->>B: 409 Conflict

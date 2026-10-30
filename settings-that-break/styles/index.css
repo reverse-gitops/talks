@@ -1,0 +1,105 @@
+/* Fonts are bundled so the deck also works without internet on stage. */
+@import '@fontsource/space-grotesk/400.css';
+@import '@fontsource/space-grotesk/500.css';
+@import '@fontsource/space-grotesk/700.css';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/600.css';
+
+:root {
+  --bg: #0B0F14;
+  --panel: #121821;
+  --panel-deep: #0E141C;
+  --line: #263040;
+  --line-strong: #3A4658;
+  --arrow: #4A5668;
+  --text: #E7ECF2;
+  --soft: #A3AEBE;
+  --muted: #8A96A8;
+  --dim: #6B7789;
+  --accent: #5AB8FF;
+  --bad: #FF8A80;
+  --good: #7EE0A1;
+  --amber: #F2A93B;
+  --violet: #C9A6FF;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+  --sans: 'Space Grotesk', system-ui, sans-serif;
+}
+
+/* The diagram layer of a slide: children are placed in canvas pixels. */
+.diagram .stage { position: absolute; inset: 0; }
+
+/* ── Building blocks for the diagram slides (all positioned on the 1600×900 canvas) ── */
+.diagram .at { position: absolute; }
+.diagram .mono { font-family: var(--mono); }
+.diagram .tag { font-family: var(--mono); font-size: 11px; line-height: 16px; color: var(--soft); }
+.diagram .kicker { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; color: var(--muted); }
+
+/* A card: panel background, centred content, a title and an optional .tag under it. */
+.diagram .box {
+  position: absolute; box-sizing: border-box; padding: 12px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+  font-size: 18px; line-height: 24px;
+  transition: border-color .4s, box-shadow .4s, opacity .4s, transform .4s;
+}
+.diagram .box b { font-weight: 700; }
+/* A region that groups boxes (cluster, workload, …). */
+.diagram .zone { position: absolute; box-sizing: border-box; background: var(--panel-deep); border: 1px solid #1E2733; border-radius: 16px; }
+.diagram .zone.dashed { background: none; border: 2px dashed var(--line-strong); border-radius: 14px; }
+
+/* State helpers (.off, not .hidden: that is a UnoCSS display:none utility), toggled with :class="{ … : $clicks >= n }". Doubled classes win over a
+   slide's own classes without !important (which would block the transitions). */
+.diagram .off.off { opacity: 0; pointer-events: none; }
+.diagram .fade { transition: opacity .5s ease; }
+.diagram .bad.bad { border-color: var(--bad); animation: glow-bad 1s ease-out both; }
+@keyframes glow-bad {
+  0% { box-shadow: 0 0 0 0 rgba(255, 138, 128, 0); }
+  30% { box-shadow: 0 0 0 6px rgba(255, 138, 128, .3); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 138, 128, 0); }
+}
+.diagram .good.good { border-color: var(--good); animation: glow-good 1s ease-out both; }
+@keyframes glow-good {
+  0% { box-shadow: 0 0 0 0 rgba(126, 224, 161, 0); }
+  30% { box-shadow: 0 0 0 6px rgba(126, 224, 161, .3); }
+  100% { box-shadow: 0 0 0 0 rgba(126, 224, 161, 0); }
+}
+/* Mark background loops with .loop; a .frozen ancestor pauses them (the "stop the world" moment). */
+.diagram .frozen .loop { animation-play-state: paused; }
+
+/* Stepping back lands on the finished state of a step: one-shot motions jump to their end
+   instead of replaying (Slidev sets slidev-nav-go-backward on the slideshow). Loops keep running. */
+.slidev-nav-go-backward .diagram *:not(.loop) { animation-duration: 0s !important; animation-delay: 0s !important; }
+
+/* ── Slide transition "dive": the old slide zooms into --dive-out, the new one lands from --dive-in ── */
+/* Vue reads the duration from the slide wrapper; the zoom itself runs on the layout inside it. */
+.dive-enter-active, .dive-leave-active { transition: opacity .9s steps(1, jump-end); }
+.dive-enter-from, .dive-leave-to { opacity: .999; }
+.dive-leave-active .slidev-layout { transition: transform .9s cubic-bezier(.55, 0, .85, .35), opacity .9s ease-in; transform-origin: var(--dive-out, 50% 50%); }
+.dive-leave-to .slidev-layout { transform: scale(5); opacity: 0; }
+.dive-enter-active .slidev-layout { transition: transform .9s cubic-bezier(.15, .65, .35, 1) .3s, opacity .6s ease-out .3s; transform-origin: var(--dive-in, 50% 50%); }
+.dive-enter-from .slidev-layout { transform: scale(2.6); opacity: 0; }
+
+/* ── Slidev's built-in layouts (cover, default, center, two-cols, …) in the Reverser look ── */
+/* Sized for the 1600px canvas; `###### text` above the title gives the small-caps eyebrow. */
+.slidev-layout:not(.diagram) {
+  padding: 64px; background: var(--bg); color: var(--text);
+  font-family: var(--sans); font-size: 28px; line-height: 1.5;
+}
+.slidev-layout:not(.diagram) h1 { font-size: 64px; line-height: 1.15; font-weight: 700; letter-spacing: -.02em; margin: 0 0 24px; }
+.slidev-layout:not(.diagram) h1 + p { opacity: 1; margin: -8px 0 32px; color: var(--soft); }
+.slidev-layout:not(.diagram) h2 { font-size: 40px; line-height: 1.2; }
+.slidev-layout:not(.diagram) h6 {
+  opacity: 1; margin: 0 0 12px; font-family: var(--mono); font-size: 15px; font-weight: 400;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+}
+.slidev-layout:not(.diagram) strong { color: var(--text); }
+.slidev-layout:not(.diagram) ul, .slidev-layout:not(.diagram) ol { padding-left: 1.2em; }
+.slidev-layout:not(.diagram) li { margin: 16px 0; padding-left: .2em; color: var(--soft); }
+.slidev-layout:not(.diagram) li::marker { color: var(--accent); }
+.slidev-layout:not(.diagram) code { font-family: var(--mono); font-size: .85em; color: var(--accent); background: var(--panel); padding: 2px 6px; border-radius: 4px; }
+.slidev-layout.cover { padding: 0 128px; align-content: center; }
+.slidev-layout.cover h1 { font-size: 104px; line-height: 1.05; margin-bottom: 32px; }
+.slidev-layout.cover h1 + p { max-width: 1100px; font-size: 32px; line-height: 1.4; }
+
+/* Code blocks (Shiki) use the deck's mono font. */
+.slidev-layout { --slidev-code-font-family: var(--mono); }
