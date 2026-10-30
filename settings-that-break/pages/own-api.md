@@ -29,13 +29,11 @@ transition: fade
   </div>
 </div>
 
-<!-- Click 9, after the punch: not the way. Numbered, because a plain v-click counts in DOM order. -->
-<svg v-click="9" class="cross" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-label="not the way">
+<!-- Click 8, after the list: not the way. -->
+<svg v-click="8" class="cross" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-label="not the way">
   <line class="a" x1="80" y1="60" x2="1520" y2="840" />
   <line class="b" x1="1520" y1="60" x2="80" y2="840" />
 </svg>
-
-<p v-click class="punch">Every item on that list is a feature of <strong class="green">kube-apiserver</strong>. Already built, tested, and in production all over the world.</p>
 
 <!--
 ≈1:00 · Confession: this started as "let's make Git a database and put a nice API on top".
@@ -54,9 +52,9 @@ transition: fade
 
 [click] Plus clients: a CLI, SDKs, a GUI.
 
-[click] Then it hit me: I was writing the feature list of kube-apiserver. So I stopped building an API and started using one.
-
 [click] So: not this. No Git as a database, no API of my own.
+
+I actually picked a direction that might trigger a reaction from all the GitOps lovers in this room. Let's have our users use the kube-apiserver.
 -->
 
 <style>
@@ -78,5 +76,4 @@ transition: fade
 .todo h2 { margin: 0 0 4px; font-size: 32px; }
 .todo li { font-size: 24px; margin: 10px 0; color: var(--text); }
 .todo li span { margin-left: .5em; font-family: var(--mono); font-size: 16px; color: var(--muted); }
-.punch { margin-top: 28px; font-size: 26px; line-height: 1.4; }
 </style>
