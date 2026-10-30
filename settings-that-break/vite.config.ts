@@ -4,7 +4,7 @@ import type { IncomingMessage, ServerResponse } from 'node:http'
 import { defineConfig } from 'vite'
 
 // The live slides only ever call relative /k8s/... URLs. On stage the deck runs at
-// demo.koudijs.dev/cnd-utrecht/, where krm-foyer answers /k8s with my own login.
+// demo.koudijs.dev/dcnd-2026/, where krm-foyer answers /k8s with my own login.
 // Locally, this forwards /k8s to `kubectl proxy --port 8001`, so the same components
 // work against the same cluster: /k8s/apis/... becomes /apis/... on the proxy.
 //

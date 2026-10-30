@@ -222,13 +222,13 @@ The target is set per bridge, not per slide. Two choices:
 
 ## Hosted deck, laptop-only terminals
 
-The talk can run from a static build at `https://demo.koudijs.dev/cnd-utrecht` while the terminals
+The talk can run from a static build at `https://demo.koudijs.dev/dcnd-2026/` while the terminals
 still work, but only on the presenter's laptop. The page runs in the browser, and the browser can
 reach the laptop's own `127.0.0.1`. On any other machine there is no bridge to connect to.
 
 ```mermaid
 flowchart LR
-  hosting["demo.koudijs.dev/cnd-utrecht<br/>static Slidev build<br/>+ demo-scripts/*.yaml"]
+  hosting["demo.koudijs.dev/dcnd-2026<br/>static Slidev build<br/>+ demo-scripts/*.yaml"]
 
   subgraph laptop["Presenter's laptop"]
     browser["Chrome<br/>DemoTerminal"]
