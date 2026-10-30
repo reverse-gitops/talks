@@ -26,11 +26,15 @@ const { isPrintMode } = useNav()
 <div v-if="!isPrintMode" class="qr">
   <p class="ask">Scan, pick a name,<br><strong>claim your seat.</strong></p>
   <RoomQRCode :size="360" />
+  <p class="hint">Seats 1–8 left of the aisle, 9–16 right.<br>Swipe the map sideways to find yours.</p>
 </div>
 
 <!--
 Up while the room fills: doors open → scan, log in, answer the GitOps question, claim a seat.
 The QR follows the mission2 Room's rotating join code; the squares fill in as people claim their seat.
+The room: 160 seats, 10 rows of two blocks of 8 with the aisle between them. Row 1 is at the stage.
+Seats 1–8 are left of the aisle, 9–16 right, counted as you face the stage. The phone map opens on
+the aisle and is wider than the screen: say "swipe sideways to find your seat".
 
 0:00 · "You've all just changed a setting. Remember that." Then straight into Alice.
 -->
@@ -49,4 +53,5 @@ h6, .title { position: relative; z-index: 1; }
 .title .by { font-size: 26px; color: var(--soft); margin: 0 0 32px; }
 .qr { position: absolute; z-index: 1; right: 64px; bottom: 56px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
 .qr .ask { font-size: 30px; line-height: 1.3; text-align: center; color: var(--soft); margin: 0; }
+.qr .hint { font-size: 20px; line-height: 1.4; text-align: center; color: var(--muted); margin: 0; }
 </style>

@@ -10,13 +10,15 @@ defineProps({
 })
 
 const short = (href) => href.replace(/^https?:\/\//, '').replace(/\/$/, '')
+// Logos are root paths into public/; prefix the base so they also load when the deck is hosted under a path.
+const asset = (path) => path.startsWith('/') ? import.meta.env.BASE_URL + path.slice(1) : path
 </script>
 
 <template>
   <div class="sources">
     <span class="label">{{ label }}</span>
     <a v-for="item in items" :key="item.href" class="source" :href="item.href" target="_blank" rel="noopener">
-      <img v-if="item.logo" class="logo" :src="item.logo" :alt="''">
+      <img v-if="item.logo" class="logo" :src="asset(item.logo)" :alt="''">
       <span class="text">
         <b>{{ item.name }}</b>
         <span class="url">{{ short(item.href) }}</span>

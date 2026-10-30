@@ -1,0 +1,9 @@
+# Used by BuildKit for settings-that-break/Dockerfile only (the build context is the repository root).
+**
+!settings-that-break/
+!tools/slidev-addon-web-terminal/
+**/node_modules
+**/dist
+**/.slidev
+settings-that-break/shots
+tools/slidev-addon-web-terminal/example

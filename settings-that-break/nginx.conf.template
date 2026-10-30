@@ -1,0 +1,29 @@
+# Serves the built deck under __BASE__ (replaced at image build time, see Dockerfile).
+server {
+    listen 8080;
+    server_name _;
+    root /usr/share/nginx/html;
+    absolute_redirect off;
+
+    location = /healthz {
+        access_log off;
+        return 200 "ok\n";
+    }
+
+    # Hashed bundles never change under the same name.
+    location __BASE__assets/ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        try_files $uri =404;
+    }
+
+    # Slidev uses history routing (/dcnd-2026/12, /dcnd-2026/presenter/12): unknown paths get the app.
+    location __BASE__ {
+        add_header Cache-Control "no-cache";
+        try_files $uri $uri/ __BASE__index.html;
+    }
+
+    location = / {
+        return 302 __BASE__;
+    }
+}

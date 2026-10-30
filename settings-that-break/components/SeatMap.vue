@@ -1,8 +1,8 @@
 <!--
-  The room as the audience claimed it: one cell per Seat, stage at the top.
+  The room as the audience claimed it: one cell per Seat, stage at the top, a walkway per aisle.
     <SeatMap />                    small squares, colour only
     <SeatMap size="medium" />      bigger squares, colour only: for the title slide
-    <SeatMap :rows="12" :columns="16" />   another room; the default is in the props
+    <SeatMap :rows="8" :columns="12" :aisles="[]" />   another room; the default is in the props
     <SeatMap size="large" />       big cells with emoji and display name: for the reveal
     <SeatMap :preview="120" />     invented seats while the Seat CRD does not exist yet
   Reads every Seat through relative /k8s/... (krm-foyer on demo.koudijs.dev, the kubectl proxy
@@ -17,9 +17,10 @@ import { useSlideContext } from '@slidev/client'
 
 const props = defineProps({
   size: { type: String, default: 'small' }, // small | medium | large
-  // Mission 2, until the real chair count is known. Change it here, so every slide agrees.
-  rows: { type: Number, default: 8 },
-  columns: { type: Number, default: 12 },
+  // Mission 2, as its SeatingPlan has it. Change it here, so every slide agrees.
+  rows: { type: Number, default: 10 },
+  columns: { type: Number, default: 16 },
+  aisles: { type: Array, default: () => [8] }, // a walkway after these columns; seats keep counting across it
   namespace: { type: String, default: 'voter' },
   every: { type: Number, default: 2000 }, // ms between reads
   preview: { type: Number, default: 0 }, // invented seats to show while there is no Seat CRD
@@ -120,18 +121,22 @@ const cells = computed(() => {
       const seat = byCell.value.get(`${row}-${column}`)
       const isNewest = !!seat && seat === newest.value && !previewing.value
       // The newest cell is keyed by its change too: a new element plays the pulse again, once.
-      out.push({ key: `${row}-${column}`, id: isNewest ? `${row}-${column}@${seat.at}` : `${row}-${column}`, seat, isNewest })
+      out.push({ key: `${row}-${column}`, id: isNewest ? `${row}-${column}@${seat.at}` : `${row}-${column}`, seat, isNewest, row, track: track(column) })
     }
   }
   return out
 })
 
+// Grid tracks: one per seat column, plus one per aisle. An aisle only moves the seats after it.
+const aisleTracks = computed(() => props.aisles.filter((a) => a > 0 && a < props.columns).map((a, i) => a + i + 1))
+const track = (column) => column + props.aisles.filter((a) => a > 0 && a < column).length
+
 // Cells as big as fit the box each size gets on the 1600×900 canvas, whatever the room's shape.
 const BOX = { small: { width: 640, height: 330, max: 40, gap: 5 }, medium: { width: 1000, height: 380, max: 56, gap: 6 }, large: { width: 1472, height: 690, max: 120, gap: 8 } }
 const geometry = computed(() => {
   const box = BOX[props.size] ?? BOX.small
-  const pitch = Math.min(box.width / props.columns, box.height / props.rows, box.max + box.gap)
-  return { '--cell': `${Math.floor(pitch - box.gap)}px`, '--gap': `${box.gap}px`, '--columns': props.columns }
+  const pitch = Math.min(box.width / (props.columns + aisleTracks.value.length), box.height / props.rows, box.max + box.gap)
+  return { '--cell': `${Math.floor(pitch - box.gap)}px`, '--gap': `${box.gap}px`, '--columns': props.columns + aisleTracks.value.length, '--rows': props.rows }
 })
 function hover(c) {
   if (!c.seat) return null
@@ -148,10 +153,11 @@ const outside = computed(() => seats.value.filter((s) => s.row > props.rows || s
   <div class="seat-map" :class="size" :style="geometry">
     <div class="stage">stage</div>
     <div class="grid">
+      <div v-for="a in aisleTracks" :key="`aisle-${a}`" class="aisle" :style="{ gridColumn: a }" />
       <component
         :is="c.seat?.commit ? 'a' : 'div'" v-for="c in cells" :key="c.id"
         class="cell" :class="{ taken: c.seat, newest: c.isNewest }"
-        :style="c.seat ? { '--seat': c.seat.color } : null"
+        :style="{ gridRow: c.row, gridColumn: c.track, '--seat': c.seat?.color }"
         :title="hover(c)"
         :href="c.seat?.commit ? `${repo}/commit/${c.seat.commit}` : null"
         :target="c.seat?.commit ? '_blank' : null" :rel="c.seat?.commit ? 'noopener' : null"
@@ -179,7 +185,8 @@ const outside = computed(() => seats.value.filter((s) => s.row > props.rows || s
 }
 .large .stage { height: 22px; font-size: 11px; line-height: 22px; text-align: center; font-family: var(--mono); letter-spacing: .3em; text-transform: uppercase; color: var(--muted); background: var(--panel); border: 1px solid var(--line); }
 
-.grid { display: grid; grid-template-columns: repeat(var(--columns), var(--cell)); grid-auto-rows: var(--cell); gap: var(--gap); }
+.grid { display: grid; grid-template-columns: repeat(var(--columns), var(--cell)); grid-template-rows: repeat(var(--rows), var(--cell)); gap: var(--gap); }
+.aisle { grid-row: 1 / -1; border-radius: 4px; background: var(--line); opacity: .5; }
 
 .cell {
   border-radius: 4px; border: 1px solid var(--line);
