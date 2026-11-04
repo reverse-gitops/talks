@@ -1,0 +1,9 @@
+# Part one of the reveal: only the commits and their messages, no Kubernetes yet.
+# --invert-grep drops the "chore(seats): 5 changes" batches and keeps what people typed themselves.
+# The chair files come later, in chairs.yaml.
+# Comments go up here: the loader misreads a comment between steps.
+steps:
+  - run: cd /workspaces/talks/external/k8s-trail
+  - run: git pull --ff-only
+  - run: git --no-pager log --invert-grep --grep='^chore' --format='%C(cyan)%<(16,trunc)%an%C(reset) %s' -15
+  - run: git --no-pager log -1 --invert-grep --grep='^chore' --format=fuller

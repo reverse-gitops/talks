@@ -1,0 +1,13 @@
+# The secret word, from Git to the pod. Apart from the git pull, everything here only reads.
+# It never prints a decrypted value: open the page in the browser for the word itself.
+# Comments go up here: the loader misreads a comment between steps.
+steps:
+  - run: cd /workspaces/talks/external/coffee-settings
+  - run: git pull --ff-only
+  - run: git --no-pager log --format='%C(yellow)%h%C(reset) %C(cyan)%<(16,trunc)%an%C(reset) %s' -6
+  - run: grep -E '^(kind|data)|name:|apiKey' coffee/resources/coffee-mail.sops.yaml | cut -c1-72
+  - run: crane export cr.k8s.koudijs.dev/configbutler/coffee-settings:main - | tar t
+  - run: cd /workspaces/talks/external/k8s && git fetch -q
+  - run: git log origin/main --author=flux --format='%h %s' -3 -- k8s.koudijs.dev/2-gitops/coffee-settings | cut -c1-120
+  - run: kubectl -n coffee-settings get deploy coffee-settings -o yaml | grep -m1 settings-reference
+  - run: curl -s https://coffee-settings.k8s.koudijs.dev/decrypted/STATUS.txt

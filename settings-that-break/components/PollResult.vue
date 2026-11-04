@@ -1,5 +1,5 @@
 <!--
-  The door question as the room answered it: one bar per answer of the mission2 Room.
+  The door question as the room answered it: one bar per answer of the Room.
     <PollResult />                 live counts
     <PollResult :preview="60" />   invented answers while there are no Participants to read
     <PollResult :question="false" />  bars only, when the slide or the speaker asks the question
@@ -18,7 +18,7 @@ const props = defineProps({
   question: { type: Boolean, default: true }, // show the door question above the bars
 })
 
-// The answers of the mission2 Room's door question, in the order of room.yaml.
+// The answers of the Room's door question, in the order of room.yaml.
 const ANSWERS = [
   { label: 'Never used it', group: 'demo:gitops-never' },
   { label: 'I know the idea', group: 'demo:gitops-idea' },

@@ -1,0 +1,99 @@
+apiVersion: examples.configbutler.ai/v1alpha1
+kind: Seat
+metadata:
+  name: ordev-1-stamp-13-15
+  namespace: voter
+  labels:
+    voter.configbutler.ai/seatingplan: ordev-1-stamp
+    voter.configbutler.ai/row: "13"
+    voter.configbutler.ai/column: "15"
+spec:
+  seatingPlanRef:
+    name: ordev-1-stamp
+  row: 13
+  column: 15
+  claimedBy:
+    displayName: Occupied
+    username: reserved:occupied
+  color: "#6b7280"
+  emoji: "🐧"
+---
+apiVersion: examples.configbutler.ai/v1alpha1
+kind: Seat
+metadata:
+  name: ordev-1-stamp-14-15
+  namespace: voter
+  labels:
+    voter.configbutler.ai/seatingplan: ordev-1-stamp
+    voter.configbutler.ai/row: "14"
+    voter.configbutler.ai/column: "15"
+spec:
+  seatingPlanRef:
+    name: ordev-1-stamp
+  row: 14
+  column: 15
+  claimedBy:
+    displayName: Occupied
+    username: reserved:occupied
+  color: "#6b7280"
+  emoji: "🐧"
+---
+apiVersion: examples.configbutler.ai/v1alpha1
+kind: Seat
+metadata:
+  name: ordev-1-stamp-15-15
+  namespace: voter
+  labels:
+    voter.configbutler.ai/seatingplan: ordev-1-stamp
+    voter.configbutler.ai/row: "15"
+    voter.configbutler.ai/column: "15"
+spec:
+  seatingPlanRef:
+    name: ordev-1-stamp
+  row: 15
+  column: 15
+  claimedBy:
+    displayName: Occupied
+    username: reserved:occupied
+  color: "#6b7280"
+  emoji: "🐧"
+---
+apiVersion: examples.configbutler.ai/v1alpha1
+kind: Seat
+metadata:
+  name: ordev-1-stamp-16-14
+  namespace: voter
+  labels:
+    voter.configbutler.ai/seatingplan: ordev-1-stamp
+    voter.configbutler.ai/row: "16"
+    voter.configbutler.ai/column: "14"
+spec:
+  seatingPlanRef:
+    name: ordev-1-stamp
+  row: 16
+  column: 14
+  claimedBy:
+    displayName: Occupied
+    username: reserved:occupied
+  color: "#6b7280"
+  emoji: "🐧"
+---
+apiVersion: examples.configbutler.ai/v1alpha1
+kind: Seat
+metadata:
+  name: ordev-1-stamp-16-15
+  namespace: voter
+  labels:
+    voter.configbutler.ai/seatingplan: ordev-1-stamp
+    voter.configbutler.ai/row: "16"
+    voter.configbutler.ai/column: "15"
+spec:
+  seatingPlanRef:
+    name: ordev-1-stamp
+  row: 16
+  column: 15
+  claimedBy:
+    displayName: Occupied
+    username: reserved:occupied
+  color: "#6b7280"
+  emoji: "🐧"

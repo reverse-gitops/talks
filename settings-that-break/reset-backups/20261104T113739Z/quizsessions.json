@@ -1,0 +1,251 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSession",
+            "metadata": {
+                "annotations": {
+                    "voter.configbutler.ai/ballot-groups": "none"
+                },
+                "creationTimestamp": "2026-10-06T21:45:49Z",
+                "generation": 5,
+                "labels": {
+                    "kustomize.toolkit.fluxcd.io/name": "voter-demo",
+                    "kustomize.toolkit.fluxcd.io/namespace": "flux-system"
+                },
+                "name": "round-1",
+                "namespace": "voter",
+                "resourceVersion": "24625956",
+                "uid": "898ce86c-ee0e-434f-b7d6-823712c71bcf"
+            },
+            "spec": {
+                "questions": [
+                    {
+                        "choices": [
+                            "Yes, every day",
+                            "Once, it scared me",
+                            "What's kubectl?"
+                        ],
+                        "id": "kubectl",
+                        "required": true,
+                        "title": "Have you ever typed kubectl?",
+                        "type": "singleChoice"
+                    },
+                    {
+                        "choices": [
+                            "What is KubeCon?",
+                            "1.000",
+                            "5.000",
+                            "10.000",
+                            "15.000"
+                        ],
+                        "id": "kubecon",
+                        "required": true,
+                        "title": "How many people visit KubeCon?",
+                        "type": "singleChoice"
+                    },
+                    {
+                        "choices": [
+                            "Yes, cool!",
+                            "Yes, but too big",
+                            "No"
+                        ],
+                        "id": "cncf",
+                        "required": true,
+                        "title": "Do you know CNCF?",
+                        "type": "singleChoice"
+                    }
+                ],
+                "state": "closed",
+                "title": "Warm-up"
+            },
+            "status": {
+                "closedAt": "2026-10-07T09:24:08Z",
+                "counted": 17,
+                "filed": 17,
+                "lastTallyTime": "2026-10-07T09:24:08Z",
+                "observedGeneration": 5,
+                "openedAt": "2026-10-06T21:45:50Z",
+                "questions": [
+                    {
+                        "choices": {
+                            "Once, it scared me": 6,
+                            "What's kubectl?": 6,
+                            "Yes, every day": 5
+                        },
+                        "count": 17,
+                        "id": "kubectl",
+                        "sum": 0,
+                        "text": [],
+                        "textTotal": 0
+                    },
+                    {
+                        "choices": {
+                            "1.000": 1,
+                            "10.000": 4,
+                            "15.000": 4,
+                            "5.000": 1,
+                            "What is KubeCon?": 7
+                        },
+                        "count": 17,
+                        "id": "kubecon",
+                        "sum": 0,
+                        "text": [],
+                        "textTotal": 0
+                    },
+                    {
+                        "choices": {
+                            "No": 12,
+                            "Yes, cool!": 5
+                        },
+                        "count": 17,
+                        "id": "cncf",
+                        "sum": 0,
+                        "text": [],
+                        "textTotal": 0
+                    }
+                ],
+                "questionsDigest": "sha256:bec00822a858a24eacbdc0c40d9ff9e3c64309e7c5a83942f1a95085ca35aa19"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSession",
+            "metadata": {
+                "annotations": {
+                    "voter.configbutler.ai/ballot-groups": "none"
+                },
+                "creationTimestamp": "2026-10-06T21:45:49Z",
+                "generation": 5,
+                "labels": {
+                    "kustomize.toolkit.fluxcd.io/name": "voter-demo",
+                    "kustomize.toolkit.fluxcd.io/namespace": "flux-system"
+                },
+                "name": "round-2",
+                "namespace": "voter",
+                "resourceVersion": "24625957",
+                "uid": "e2638080-2875-4b35-af58-6c661d19b6fc"
+            },
+            "spec": {
+                "questions": [
+                    {
+                        "choices": [
+                            "React",
+                            "Vue",
+                            "Angular",
+                            "Whatever comes out next week"
+                        ],
+                        "id": "framework",
+                        "required": true,
+                        "title": "Which frontend framework will still be around in 10 years?",
+                        "type": "singleChoice"
+                    },
+                    {
+                        "choices": [
+                            "Frontender",
+                            "Backender",
+                            "Full-stack",
+                            "Lost DevOps guy",
+                            "No"
+                        ],
+                        "id": "role",
+                        "required": true,
+                        "title": "What fits you best?",
+                        "type": "singleChoice"
+                    },
+                    {
+                        "choices": [
+                            "Never",
+                            "1–3 times",
+                            "I've stopped counting"
+                        ],
+                        "id": "diy",
+                        "required": true,
+                        "title": "How many times have you built login, permissions and validation yourself?",
+                        "type": "singleChoice"
+                    },
+                    {
+                        "choices": [
+                            "Last write wins",
+                            "First write wins, the second one sees a conflict",
+                            "Merge it somehow",
+                            "Panic"
+                        ],
+                        "id": "conflict",
+                        "required": true,
+                        "title": "What should happen when two people save the same setting at once?",
+                        "type": "singleChoice"
+                    }
+                ],
+                "state": "closed",
+                "title": "Building the frontend"
+            },
+            "status": {
+                "closedAt": "2026-10-30T03:41:08Z",
+                "counted": 18,
+                "filed": 18,
+                "lastTallyTime": "2026-10-30T03:41:08Z",
+                "observedGeneration": 5,
+                "openedAt": "2026-10-07T06:57:45Z",
+                "questions": [
+                    {
+                        "choices": {
+                            "Angular": 4,
+                            "React": 3,
+                            "Vue": 2,
+                            "Whatever comes out next week": 9
+                        },
+                        "count": 18,
+                        "id": "framework",
+                        "sum": 0,
+                        "text": [],
+                        "textTotal": 0
+                    },
+                    {
+                        "choices": {
+                            "Backender": 1,
+                            "Frontender": 4,
+                            "Full-stack": 13
+                        },
+                        "count": 18,
+                        "id": "role",
+                        "sum": 0,
+                        "text": [],
+                        "textTotal": 0
+                    },
+                    {
+                        "choices": {
+                            "1–3 times": 13,
+                            "I've stopped counting": 3,
+                            "Never": 2
+                        },
+                        "count": 18,
+                        "id": "diy",
+                        "sum": 0,
+                        "text": [],
+                        "textTotal": 0
+                    },
+                    {
+                        "choices": {
+                            "First write wins, the second one sees a conflict": 2,
+                            "Last write wins": 6,
+                            "Merge it somehow": 2,
+                            "Panic": 8
+                        },
+                        "count": 18,
+                        "id": "conflict",
+                        "sum": 0,
+                        "text": [],
+                        "textTotal": 0
+                    }
+                ],
+                "questionsDigest": "sha256:3c680edd8ec0bd11de56bb090c29281d3a3f8ea2c39b607d54bc3ac399dea628"
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}

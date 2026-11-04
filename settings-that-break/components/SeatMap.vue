@@ -17,10 +17,10 @@ import { useSlideContext } from '@slidev/client'
 
 const props = defineProps({
   size: { type: String, default: 'small' }, // small | medium | large
-  // Mission 2, as its SeatingPlan has it. Change it here, so every slide agrees.
-  rows: { type: Number, default: 10 },
-  columns: { type: Number, default: 16 },
-  aisles: { type: Array, default: () => [8] }, // a walkway after these columns; seats keep counting across it
+  // Ordev hall Stamp, as its SeatingPlan has it (still a placeholder size). Change it here, so every slide agrees.
+  rows: { type: Number, default: 15 },
+  columns: { type: Number, default: 20 },
+  aisles: { type: Array, default: () => [10] }, // a walkway after these columns; seats keep counting across it
   namespace: { type: String, default: 'voter' },
   every: { type: Number, default: 2000 }, // ms between reads
   preview: { type: Number, default: 0 }, // invented seats to show while there is no Seat CRD

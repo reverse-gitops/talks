@@ -1,0 +1,87 @@
+# Builds the Configuration Deserves a Software Delivery Process Too deck as an nginx image and pushes
+# it to GHCR, for hosting at https://demo.koudijs.dev/config-deserves-better/ (or another path via the
+# manual run). The ordev branch builds too, because that is where this talk is prepared.
+name: config-deserves-better image
+
+on:
+  push:
+    branches: [main, ordev]
+    paths:
+      - ordev/config-deserves-better/**
+      - tools/slidev-addon-web-terminal/**
+      - .github/workflows/config-deserves-better-image.yml
+  pull_request:
+    paths:
+      - ordev/config-deserves-better/**
+      - tools/slidev-addon-web-terminal/**
+      - .github/workflows/config-deserves-better-image.yml
+  workflow_dispatch:
+    inputs:
+      base_path:
+        description: Path the deck is served under, with leading and trailing slash
+        default: /config-deserves-better/
+        required: true
+
+concurrency:
+  group: config-deserves-better-image-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  IMAGE: ghcr.io/${{ github.repository_owner }}/config-deserves-better
+  BASE_PATH: ${{ inputs.base_path || '/config-deserves-better/' }}
+
+jobs:
+  image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        if: github.event_name != 'pull_request'
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # The path is baked into the image. Default-path builds get sha-<sha>, and main also gets latest;
+      # a manual run with another path only gets custom-<run number>, so it never replaces latest.
+      - id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE }}
+          tags: |
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' && env.BASE_PATH == '/config-deserves-better/' }}
+            type=sha,prefix=sha-,format=short,enable=${{ env.BASE_PATH == '/config-deserves-better/' }}
+            type=raw,value=custom-${{ github.run_number }},enable=${{ env.BASE_PATH != '/config-deserves-better/' }}
+
+      - id: build
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ordev/config-deserves-better/Dockerfile
+          build-args: BASE_PATH=${{ env.BASE_PATH }}
+          platforms: linux/amd64,linux/arm64
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # The digest is what deck-config-deserves-better.yaml in external/k8s pins.
+      - name: Summary
+        if: github.event_name != 'pull_request'
+        run: |
+          {
+            echo "### config-deserves-better image"
+            echo "Served under \`${BASE_PATH}\` on port 8080 (health check: \`/healthz\`)."
+            echo '```'
+            echo "${{ steps.meta.outputs.tags }}"
+            echo "${{ steps.build.outputs.digest }}"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

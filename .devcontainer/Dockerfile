@@ -20,6 +20,10 @@ ARG ORAS_VERSION=1.3.6
 ARG TRIVY_VERSION=0.76.1
 ARG DIVE_VERSION=0.13.1
 ARG STARSHIP_VERSION=v1.26.0
+# Folder-to-image tools for the image-volume settings demos.
+ARG SETTINGS_IMAGE_VERSION=v0.2.1
+ARG IMGPKG_VERSION=v0.49.0
+ARG CRANE_VERSION=v0.22.1
 
 # Run RUN steps under bash with pipefail, so a failing download in a `curl ... | bash`
 # pipeline aborts the build instead of silently installing nothing.
@@ -149,6 +153,18 @@ RUN fetch_verified() { \
     fetch_verified "https://github.com/wagoodman/dive/releases/download/v${DIVE_VERSION}" \
       "dive_${DIVE_VERSION}_linux_amd64.tar.gz" "dive_${DIVE_VERSION}_checksums.txt" && \
     tar -xzf "dive_${DIVE_VERSION}_linux_amd64.tar.gz" dive && install -m 0755 dive /usr/local/bin/dive && \
+    # settings-image (a settings folder as a reproducible, mountable image)
+    fetch_verified "https://github.com/ConfigButler/settings-image/releases/download/${SETTINGS_IMAGE_VERSION}" \
+      settings-image_linux_amd64 settings-image.sha256sums && \
+    install -m 0755 settings-image_linux_amd64 /usr/local/bin/settings-image && \
+    # imgpkg (Carvel: a set of files as an OCI image, the closest prior art to settings-image)
+    fetch_verified "https://github.com/carvel-dev/imgpkg/releases/download/${IMGPKG_VERSION}" \
+      imgpkg-linux-amd64 checksums.txt && \
+    install -m 0755 imgpkg-linux-amd64 /usr/local/bin/imgpkg && \
+    # crane (go-containerregistry: inspect digests, manifests and configs; build images from a tar)
+    fetch_verified "https://github.com/google/go-containerregistry/releases/download/${CRANE_VERSION}" \
+      go-containerregistry_Linux_x86_64.tar.gz checksums.txt && \
+    tar -xzf go-containerregistry_Linux_x86_64.tar.gz crane && install -m 0755 crane /usr/local/bin/crane && \
     # krew binary, bootstrapped into the node user's ~/.krew below
     # (its .sha256 file holds only the bare hash, so it is checked directly)
     curl -fsSL "https://github.com/kubernetes-sigs/krew/releases/download/${KREW_VERSION}/krew-linux_amd64.tar.gz" -o krew-linux_amd64.tar.gz && \

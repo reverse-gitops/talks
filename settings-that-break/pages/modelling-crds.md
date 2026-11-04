@@ -14,9 +14,9 @@ transition: fade
 apiVersion: examples.configbutler.ai/v1alpha1
 kind: Seat
 metadata:
-  name: mission2-6-6     # plan-row-column
+  name: ordev-1-stamp-6-6  # plan-row-column
 spec:
-  seatingPlanRef: { name: mission2 }
+  seatingPlanRef: { name: ordev-1-stamp }
   row: 6                 # immutable
   column: 6              # immutable
   claimedBy:             # immutable

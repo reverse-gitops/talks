@@ -1,6 +1,6 @@
 <!--
   The rotating Room Pass join code, as a QR code the room can scan.
-    <RoomQRCode />                                  the mission2 Room, 320px
+    <RoomQRCode />                                  the ordev-1-stamp Room, 320px
     <RoomQRCode room="demo" :size="240" />
   Reads the Room through relative /k8s/... with whatever login the page has: krm-foyer on
   demo.koudijs.dev, or the kubectl proxy forwarder in vite.config.ts locally. Only an operator
@@ -15,7 +15,7 @@ import { useSlideContext } from '@slidev/client'
 import { renderSVG } from 'uqr'
 
 const props = defineProps({
-  room: { type: String, default: 'mission2' },
+  room: { type: String, default: 'ordev-1-stamp' },
   namespace: { type: String, default: 'voter' },
   base: { type: String, default: 'https://demo.koudijs.dev' },
   size: { type: Number, default: 320 },

@@ -1,0 +1,1329 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:39:58Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "12",
+                    "voter.configbutler.ai/row": "01",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-1-12",
+                "namespace": "voter",
+                "resourceVersion": "24669226",
+                "uid": "4066dd0f-5810-4d9c-9610-9c1197a4972b"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Bert",
+                    "username": "demo:CgRiZXJ0Eglyb29tLXBhc3M"
+                },
+                "color": "#2ec4b6",
+                "column": 12,
+                "emoji": "🐝",
+                "row": 1,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "307b08390dc5c072d49588d341c1daa42bba5791",
+                    "commitRequest": "seat-claim-kkkwh",
+                    "committedAt": "2026-10-30T13:40:02Z",
+                    "message": "Right front"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:42:07Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "09",
+                    "voter.configbutler.ai/row": "01",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-1-9",
+                "namespace": "voter",
+                "resourceVersion": "24670348",
+                "uid": "5682cf22-620d-4d51-9b35-749332f4b591"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "r",
+                    "username": "demo:CgFyEglyb29tLXBhc3M"
+                },
+                "color": "#e9ecef",
+                "column": 9,
+                "emoji": "🍄",
+                "row": 1,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "aae969ace4282a40fd425870d14edd87a6205c43",
+                    "commitRequest": "seat-claim-mm8wh",
+                    "committedAt": "2026-10-30T13:42:14Z",
+                    "message": "🤔🤷🤙"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:39:30Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "08",
+                    "voter.configbutler.ai/row": "10",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-10-8",
+                "namespace": "voter",
+                "resourceVersion": "24669037",
+                "uid": "85250eed-266e-4488-bb61-d2cc6c24b044"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Alwin",
+                    "username": "demo:CgVhbHdpbhIJcm9vbS1wYXNz"
+                },
+                "color": "#9b5de5",
+                "column": 8,
+                "emoji": "🦖",
+                "row": 10,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "67ae20b0ae6b38312413ca6ca493a8488d39e329",
+                    "commitRequest": "seat-claim-wdfph",
+                    "committedAt": "2026-10-30T13:39:34Z",
+                    "message": "Dinosaurs are cool, obviously."
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:41:58Z",
+                "generation": 2,
+                "labels": {
+                    "voter.configbutler.ai/column": "09",
+                    "voter.configbutler.ai/row": "10",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-10-9",
+                "namespace": "voter",
+                "resourceVersion": "24676268",
+                "uid": "94bea8da-8159-45b8-aa6a-89299495a248"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Boston",
+                    "username": "demo:CgZib3N0b24SCXJvb20tcGFzcw"
+                },
+                "color": "#e4572e",
+                "column": 9,
+                "emoji": "🐙",
+                "row": 10,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "b19fa0ebf5ca8aa08a9fe8f4c75b44b8b105f4fe",
+                    "commitRequest": "seat-change-7c552",
+                    "committedAt": "2026-10-30T13:57:59Z",
+                    "message": "Do want coffee!"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:42:36Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "12",
+                    "voter.configbutler.ai/row": "02",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-2-12",
+                "namespace": "voter",
+                "resourceVersion": "24670625",
+                "uid": "7b9e17e3-8c80-4a72-bac9-f519105b1624"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "David",
+                    "username": "demo:CgVkYXZpZBIJcm9vbS1wYXNz"
+                },
+                "color": "#e9ecef",
+                "column": 12,
+                "emoji": "🐢",
+                "row": 2,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "973915737be05969d6b8a9d9f94fccb7123f9cec",
+                    "commitRequest": "seat-claim-zf9n8",
+                    "committedAt": "2026-10-30T13:42:41Z",
+                    "message": "Near the front. Turtle power."
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:42:16Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "13",
+                    "voter.configbutler.ai/row": "02",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-2-13",
+                "namespace": "voter",
+                "resourceVersion": "24670405",
+                "uid": "ad6f7e30-6e4d-4c72-894c-e040ad6ea39f"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Nerd",
+                    "username": "demo:CgRuZXJkEglyb29tLXBhc3M"
+                },
+                "color": "#ff8fab",
+                "column": 13,
+                "emoji": "☕",
+                "row": 2,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "f62970b8a8e8d1b14bea51a44d50e99f5519ea2d",
+                    "commitRequest": "seat-claim-4kmx2",
+                    "committedAt": "2026-10-30T13:42:20Z",
+                    "message": "Like me some coffee"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:43:12Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "03",
+                    "voter.configbutler.ai/row": "02",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-2-3",
+                "namespace": "voter",
+                "resourceVersion": "24670893",
+                "uid": "ee8d4155-ae18-43ce-88d9-dfec1fa10ee5"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "n",
+                    "username": "demo:CgFuEglyb29tLXBhc3M"
+                },
+                "color": "#f15bb5",
+                "column": 3,
+                "emoji": "🎸",
+                "row": 2,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "5eed5a00778ebc445aebfea82451935385cb08db",
+                    "commitRequest": "seat-claim-q8ln8",
+                    "committedAt": "2026-10-30T13:43:16Z",
+                    "message": "Random"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:41:47Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "08",
+                    "voter.configbutler.ai/row": "02",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-2-8",
+                "namespace": "voter",
+                "resourceVersion": "24670115",
+                "uid": "583e9a99-6ac2-435c-8615-0b4ca87811e0"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Demo",
+                    "username": "demo:CgRkZW1vEglyb29tLXBhc3M"
+                },
+                "color": "#f3a712",
+                "column": 8,
+                "emoji": "🔥",
+                "row": 2,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "b5cf44d9abf638cce6b849f1d8971a3980584620",
+                    "commitRequest": "seat-claim-q7qdd",
+                    "committedAt": "2026-10-30T13:41:53Z",
+                    "message": "K8s is fire"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:42:34Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "01",
+                    "voter.configbutler.ai/row": "03",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-3-1",
+                "namespace": "voter",
+                "resourceVersion": "24670622",
+                "uid": "89005ad4-9560-4859-a8f6-a78982cce41e"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Nic",
+                    "username": "demo:CgNuaWMSCXJvb20tcGFzcw"
+                },
+                "color": "#3bb273",
+                "column": 1,
+                "emoji": "🚀",
+                "row": 3,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "9f60dd130544bf3b88af953d10195a9b80eec469",
+                    "commitRequest": "seat-claim-qvb2l",
+                    "committedAt": "2026-10-30T13:42:41Z",
+                    "message": "because"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:41:43Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "11",
+                    "voter.configbutler.ai/row": "03",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-3-11",
+                "namespace": "voter",
+                "resourceVersion": "24670104",
+                "uid": "5285472b-7c8b-4026-9a34-2b8e3264bc34"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Ibis",
+                    "username": "demo:CgRpYmlzEglyb29tLXBhc3M"
+                },
+                "color": "#f3a712",
+                "column": 11,
+                "emoji": "🦀",
+                "row": 3,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "18c7530f6635c45638d7f3ab1946d7a82931186e",
+                    "commitRequest": "seat-claim-7xbvs",
+                    "committedAt": "2026-10-30T13:41:52Z",
+                    "message": "42."
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:42:23Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "12",
+                    "voter.configbutler.ai/row": "03",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-3-12",
+                "namespace": "voter",
+                "resourceVersion": "24670547",
+                "uid": "f26bbee9-159e-4329-88b6-964f2a249680"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Igorito",
+                    "username": "demo:CgdpZ29yaXRvEglyb29tLXBhc3M"
+                },
+                "color": "#4ea8de",
+                "column": 12,
+                "emoji": "🐢",
+                "row": 3,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "e8139c985f4d76b3df1578fca090cd3996361a4b",
+                    "commitRequest": "seat-claim-dknn5",
+                    "committedAt": "2026-10-30T13:42:35Z",
+                    "message": "I’m quite slow, so the turtle"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:41:04Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "06",
+                    "voter.configbutler.ai/row": "03",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-3-6",
+                "namespace": "voter",
+                "resourceVersion": "24669710",
+                "uid": "c705dd87-7fa4-45ac-ac75-33cf84a6da4f"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "banana",
+                    "username": "demo:CgZiYW5hbmESCXJvb20tcGFzcw"
+                },
+                "color": "#3bb273",
+                "column": 6,
+                "emoji": "🚀",
+                "row": 3,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "6c15df94da23383a14e4300ee823eeef4f216874",
+                    "commitRequest": "seat-claim-fn9gg",
+                    "committedAt": "2026-10-30T13:41:07Z",
+                    "message": "feels comfy maybe"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:41:08Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "09",
+                    "voter.configbutler.ai/row": "03",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-3-9",
+                "namespace": "voter",
+                "resourceVersion": "24669783",
+                "uid": "a577338a-c50a-4509-9b2e-93aa28e58831"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Bart",
+                    "username": "demo:CgRiYXJ0Eglyb29tLXBhc3M"
+                },
+                "color": "#3bb273",
+                "column": 9,
+                "emoji": "☕",
+                "row": 3,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "84b98106bbd29d241738951a028495ea4dbecafd",
+                    "commitRequest": "seat-claim-n8jqh",
+                    "committedAt": "2026-10-30T13:41:16Z",
+                    "message": "Love coffee"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:43:42Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "10",
+                    "voter.configbutler.ai/row": "04",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-4-10",
+                "namespace": "voter",
+                "resourceVersion": "24671115",
+                "uid": "20791e54-dcdd-40d3-bf27-815e7f222e43"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "n20amaral",
+                    "username": "demo:CgluMjBhbWFyYWwSCXJvb20tcGFzcw"
+                },
+                "color": "#e9ecef",
+                "column": 10,
+                "emoji": "🚀",
+                "row": 4,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "442452456d153c9ea8ff4c5f9eedd2c19f9c1f89",
+                    "commitRequest": "seat-claim-qb2vz",
+                    "committedAt": "2026-10-30T13:43:45Z",
+                    "message": "Missing a black background"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:42:59Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "03",
+                    "voter.configbutler.ai/row": "04",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-4-3",
+                "namespace": "voter",
+                "resourceVersion": "24670806",
+                "uid": "19f3a747-31b3-4dca-90fc-6d0b499e60c0"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Piet",
+                    "username": "demo:CgRwaWV0Eglyb29tLXBhc3M"
+                },
+                "color": "#ffd23f",
+                "column": 3,
+                "emoji": "🐸",
+                "row": 4,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "81aba7554007dba5477e9ccec290aad3b48bd488",
+                    "commitRequest": "seat-claim-nptp2",
+                    "committedAt": "2026-10-30T13:43:03Z",
+                    "message": "Fun"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:42:46Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "05",
+                    "voter.configbutler.ai/row": "04",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-4-5",
+                "namespace": "voter",
+                "resourceVersion": "24670747",
+                "uid": "25290bc7-f7a2-43ea-bd3f-c4198fb6c11a"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Dibus",
+                    "username": "demo:CgVkaWJ1cxIJcm9vbS1wYXNz"
+                },
+                "color": "#e4572e",
+                "column": 5,
+                "emoji": "🎸",
+                "row": 4,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "8d0b965be738a98ab471fa74f3e706e7b1c3e105",
+                    "commitRequest": "seat-claim-72slf",
+                    "committedAt": "2026-10-30T13:42:55Z",
+                    "message": "Middle"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:42:30Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "07",
+                    "voter.configbutler.ai/row": "04",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-4-7",
+                "namespace": "voter",
+                "resourceVersion": "24670521",
+                "uid": "1f2d1eb9-0efb-4f85-8304-5de2514d9cfc"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Gamer",
+                    "username": "demo:CgVnYW1lchIJcm9vbS1wYXNz"
+                },
+                "color": "#5465ff",
+                "column": 7,
+                "emoji": "🐳",
+                "row": 4,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "b59ce9b43ab824f85236e8ef1741e940a33f9b3d",
+                    "commitRequest": "seat-claim-9rjzb",
+                    "committedAt": "2026-10-30T13:42:33Z",
+                    "message": "Simply"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:42:31Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "12",
+                    "voter.configbutler.ai/row": "05",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-5-12",
+                "namespace": "voter",
+                "resourceVersion": "24670615",
+                "uid": "4d9b571f-3624-44e5-9ed0-2bf1b0b91ba0"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Davy",
+                    "username": "demo:CgRkYXZ5Eglyb29tLXBhc3M"
+                },
+                "color": "#4ea8de",
+                "column": 12,
+                "emoji": "🦄",
+                "row": 5,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "994c0e19ff0492a4d99bfecc00c6201ad009fe1b",
+                    "commitRequest": "seat-claim-4k9pj",
+                    "committedAt": "2026-10-30T13:42:41Z",
+                    "message": "Near the front empty row"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:40:48Z",
+                "generation": 3,
+                "labels": {
+                    "voter.configbutler.ai/column": "05",
+                    "voter.configbutler.ai/row": "05",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-5-5",
+                "namespace": "voter",
+                "resourceVersion": "24670686",
+                "uid": "d83f3365-1d46-4c29-919b-7db9887f98c3"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Sd",
+                    "username": "demo:CgJzZBIJcm9vbS1wYXNz"
+                },
+                "color": "#f15bb5",
+                "column": 5,
+                "emoji": "🦉",
+                "row": 5,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "c94b5376d6da01d0c78bca284eafeda7767ad6fb",
+                    "commitRequest": "seat-change-45xk8",
+                    "committedAt": "2026-10-30T13:42:48Z",
+                    "message": "Dun"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:41:51Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "10",
+                    "voter.configbutler.ai/row": "06",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-6-10",
+                "namespace": "voter",
+                "resourceVersion": "24670179",
+                "uid": "bd8bcc8d-0c85-470d-a2fd-1469d3505755"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Mik",
+                    "username": "demo:CgNtaWsSCXJvb20tcGFzcw"
+                },
+                "color": "#2ec4b6",
+                "column": 10,
+                "emoji": "🦊",
+                "row": 6,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "e222d4aa777a862bb51d28f2a70c9463908aae04",
+                    "commitRequest": "seat-claim-j5grf",
+                    "committedAt": "2026-10-30T13:41:59Z",
+                    "message": "Just random"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:44:01Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "12",
+                    "voter.configbutler.ai/row": "06",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-6-12",
+                "namespace": "voter",
+                "resourceVersion": "24671240",
+                "uid": "cd63d726-fd05-4efa-b2eb-063d9d2fa63f"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Demap",
+                    "username": "demo:CgVkZW1hcBIJcm9vbS1wYXNz"
+                },
+                "color": "#5465ff",
+                "column": 12,
+                "emoji": "👾",
+                "row": 6,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "88b2541292a3bde0a1a5aa11c55df51ed80f91ba",
+                    "commitRequest": "seat-claim-xtpbf",
+                    "committedAt": "2026-10-30T13:44:04Z",
+                    "message": "It was free"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:43:34Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "07",
+                    "voter.configbutler.ai/row": "06",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-6-7",
+                "namespace": "voter",
+                "resourceVersion": "24671058",
+                "uid": "1b2c1593-37ec-4b6c-8ddb-2c7b567febf0"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "ej",
+                    "username": "demo:CgJlahIJcm9vbS1wYXNz"
+                },
+                "color": "#a8e05f",
+                "column": 7,
+                "emoji": "🔥",
+                "row": 6,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "60a2f7f4d9460c3054a39338f907d2a4408ace68",
+                    "commitRequest": "seat-claim-952d5",
+                    "committedAt": "2026-10-30T13:43:39Z",
+                    "message": "Default"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:42:05Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "09",
+                    "voter.configbutler.ai/row": "06",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-6-9",
+                "namespace": "voter",
+                "resourceVersion": "24670351",
+                "uid": "7ad48c98-1494-45e9-a0e0-8ee6f12c4918"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Beaver",
+                    "username": "demo:CgZiZWF2ZXISCXJvb20tcGFzcw"
+                },
+                "color": "#e4572e",
+                "column": 9,
+                "emoji": "🐙",
+                "row": 6,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "ca8ef95aa16374a28fbe6b4b4440bdea1c9eb0fe",
+                    "commitRequest": "seat-claim-kz7nr",
+                    "committedAt": "2026-10-30T13:42:14Z",
+                    "message": "Randomness is the key"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:42:12Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "11",
+                    "voter.configbutler.ai/row": "07",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-7-11",
+                "namespace": "voter",
+                "resourceVersion": "24670402",
+                "uid": "fa1b0548-1c9f-4ff5-a4dd-6d6564a2ecf5"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Reza",
+                    "username": "demo:CgRyZXphEglyb29tLXBhc3M"
+                },
+                "color": "#5465ff",
+                "column": 11,
+                "emoji": "⚡",
+                "row": 7,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "5185b766ff29ba9ba71c9ac3e2381d09dfea1923",
+                    "commitRequest": "seat-claim-pkqmm",
+                    "committedAt": "2026-10-30T13:42:20Z",
+                    "message": "Honestly donnow"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:42:46Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "14",
+                    "voter.configbutler.ai/row": "07",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-7-14",
+                "namespace": "voter",
+                "resourceVersion": "24670753",
+                "uid": "4d3717b5-8a28-4cdb-8d27-8257df12f15e"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Ph",
+                    "username": "demo:CgJwaBIJcm9vbS1wYXNz"
+                },
+                "color": "#5465ff",
+                "column": 14,
+                "emoji": "🐧",
+                "row": 7,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "46e8a9afe35b12567750c13bcd580b086b5b978d",
+                    "commitRequest": "seat-claim-8hnmq",
+                    "committedAt": "2026-10-30T13:42:56Z",
+                    "message": "It's nice"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:41:42Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "06",
+                    "voter.configbutler.ai/row": "07",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-7-6",
+                "namespace": "voter",
+                "resourceVersion": "24670034",
+                "uid": "8506cc46-8f33-4a89-b34d-fa01fd1ea4ec"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Breakstuff",
+                    "username": "demo:CgpicmVha3N0dWZmEglyb29tLXBhc3M"
+                },
+                "color": "#5465ff",
+                "column": 6,
+                "emoji": "👾",
+                "row": 7,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "0d7acc2708af91493caa2f98e95725c72e835fee",
+                    "commitRequest": "seat-claim-7rdg5",
+                    "committedAt": "2026-10-30T13:41:46Z",
+                    "message": "Just trying to break stuff"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:44:42Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "01",
+                    "voter.configbutler.ai/row": "08",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-8-1",
+                "namespace": "voter",
+                "resourceVersion": "24671505",
+                "uid": "9e6d985d-51f4-49af-ad5b-9ec684d57947"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "jordana",
+                    "username": "demo:Cgdqb3JkYW5hEglyb29tLXBhc3M"
+                },
+                "color": "#2ec4b6",
+                "column": 1,
+                "emoji": "☕",
+                "row": 8,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "07293918482a4b6624cfe65668558ff3019ba4d1",
+                    "commitRequest": "seat-claim-4wwwp",
+                    "committedAt": "2026-10-30T13:44:45Z",
+                    "message": "Easy to run ifneed to take a call. Closest to my current fav. craving coffee"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:42:36Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "15",
+                    "voter.configbutler.ai/row": "08",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-8-15",
+                "namespace": "voter",
+                "resourceVersion": "24670626",
+                "uid": "fe0ce588-b209-4ef6-9d47-5543d0ee9485"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Shaun",
+                    "username": "demo:CgVzaGF1bhIJcm9vbS1wYXNz"
+                },
+                "color": "#2ec4b6",
+                "column": 15,
+                "emoji": "👾",
+                "row": 8,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "7b4979e519246469342756adae0dcc068442c8bc",
+                    "commitRequest": "seat-claim-qxqcg",
+                    "committedAt": "2026-10-30T13:42:41Z",
+                    "message": "Good"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:42:00Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "08",
+                    "voter.configbutler.ai/row": "08",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-8-8",
+                "namespace": "voter",
+                "resourceVersion": "24670254",
+                "uid": "02729626-6106-4ba7-aa43-2d46597ab2a6"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Ron",
+                    "username": "demo:CgNyb24SCXJvb20tcGFzcw"
+                },
+                "color": "#e4572e",
+                "column": 8,
+                "emoji": "🐼",
+                "row": 8,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "876b70543d5d1d54f8f83a4087362ae224d9642c",
+                    "commitRequest": "seat-claim-tw79d",
+                    "committedAt": "2026-10-30T13:42:05Z",
+                    "message": "Near the isle, clear sight of the speaker"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:40:34Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "09",
+                    "voter.configbutler.ai/row": "08",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-8-9",
+                "namespace": "voter",
+                "resourceVersion": "24669481",
+                "uid": "97b1c582-bc5f-435b-9740-b30788f40e5a"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Warmwater",
+                    "username": "demo:Cgl3YXJtd2F0ZXISCXJvb20tcGFzcw"
+                },
+                "color": "#2ec4b6",
+                "column": 9,
+                "emoji": "🐧",
+                "row": 8,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "85fe8f0c4137b76773183c922323b8045adfc4cc",
+                    "commitRequest": "seat-claim-v5kss",
+                    "committedAt": "2026-10-30T13:40:38Z",
+                    "message": "The goat has been milked"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:42:20Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "11",
+                    "voter.configbutler.ai/row": "09",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-9-11",
+                "namespace": "voter",
+                "resourceVersion": "24670473",
+                "uid": "0ef51504-0d00-4d68-82a7-585354d3303f"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Me",
+                    "username": "demo:CgJtZRIJcm9vbS1wYXNz"
+                },
+                "color": "#f3a712",
+                "column": 11,
+                "emoji": "☕",
+                "row": 9,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "19b6d868a3a823f641a3b36881905815b29e2bc5",
+                    "commitRequest": "seat-claim-58865",
+                    "committedAt": "2026-10-30T13:42:28Z",
+                    "message": "I need coffee !"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:44:02Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "05",
+                    "voter.configbutler.ai/row": "09",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-9-5",
+                "namespace": "voter",
+                "resourceVersion": "24671292",
+                "uid": "6b522c95-737e-4baa-8960-4d7ba56d7cf3"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Jeroen",
+                    "username": "demo:CgZqZXJvZW4SCXJvb20tcGFzcw"
+                },
+                "color": "#a8e05f",
+                "column": 5,
+                "emoji": "🦖",
+                "row": 9,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "08fa157e5ffe372c48b9fb45189adc6152bf5eb9",
+                    "commitRequest": "seat-claim-4tz4b",
+                    "committedAt": "2026-10-30T13:44:12Z",
+                    "message": "Too late, some time around, nice colour"
+                }
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "Seat",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:43:28Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/column": "06",
+                    "voter.configbutler.ai/row": "09",
+                    "voter.configbutler.ai/seatingplan": "mission2"
+                },
+                "name": "mission2-9-6",
+                "namespace": "voter",
+                "resourceVersion": "24671002",
+                "uid": "bde22257-c1b2-484b-b89d-880b2eccd6ef"
+            },
+            "spec": {
+                "claimedBy": {
+                    "displayName": "Feuerschnitzel",
+                    "username": "demo:Cg5mZXVlcnNjaG5pdHplbBIJcm9vbS1wYXNz"
+                },
+                "color": "#e4572e",
+                "column": 6,
+                "emoji": "🔥",
+                "row": 9,
+                "seatingPlanRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "SeatingPlan",
+                    "name": "mission2"
+                }
+            },
+            "status": {
+                "lastCommit": {
+                    "commit": "d8742d34a348e13cb5b80f0aeb6ea402a9d32263",
+                    "commitRequest": "seat-claim-6h9zm",
+                    "committedAt": "2026-10-30T13:43:32Z",
+                    "message": "Fire"
+                }
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}

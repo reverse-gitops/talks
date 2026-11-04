@@ -1,0 +1,10 @@
+# The real chairs, as files: part two of the reveal. Everything here reads; nothing changes.
+# The first row file changes as people sit down, so it is looked up rather than named.
+# Comments go up here: the loader misreads a comment between steps.
+steps:
+  - run: cd /workspaces/talks/external/k8s-trail
+  - run: ls seats
+  - run: yq 'select(documentIndex == 0)' $(ls seats/row-*.yaml | head -1)
+  - run: yq -o=json 'select(documentIndex == 0)' $(ls seats/row-*.yaml | head -1)
+  - run: yq -N '.spec.emoji + "  " + .metadata.name + "  " + .spec.claimedBy.displayName' seats/row-*.yaml
+  - run: yq -N '.spec.emoji' seats/row-*.yaml | sort | uniq -c | sort -rn | head -5

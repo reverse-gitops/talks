@@ -10,6 +10,8 @@ krm-bff/*.html
 /external/slidev
 /external/voter
 /external/gitops-reverser
+/external/imgpkg
 
 # Task (taskfile.dev) run state
 .task/
+ordev/prep/*

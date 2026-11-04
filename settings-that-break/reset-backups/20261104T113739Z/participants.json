@@ -1,0 +1,1249 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:38:57Z",
+                "generation": 1,
+                "name": "p-alwin",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24668796",
+                "uid": "92aa2a70-301d-422d-8fc0-5fa5a83e2323"
+            },
+            "spec": {
+                "displayName": "Alwin",
+                "groups": [
+                    "demo:gitops-use"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:42:02Z",
+                "generation": 1,
+                "name": "p-at",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24670205",
+                "uid": "5c9a0b7b-bf6c-4e57-8f07-5a9e2bb438e3"
+            },
+            "spec": {
+                "displayName": "AT",
+                "groups": [
+                    "demo:gitops-use"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:40:10Z",
+                "generation": 1,
+                "name": "p-banana",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24669290",
+                "uid": "b2b51bab-b01e-4c52-97fb-7f2ac3e55cb0"
+            },
+            "spec": {
+                "displayName": "banana",
+                "groups": [
+                    "demo:gitops-use"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:40:33Z",
+                "generation": 1,
+                "name": "p-bart",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24669436",
+                "uid": "3ecffb1f-5ae7-4e7b-932c-ea5fb18b557b"
+            },
+            "spec": {
+                "displayName": "Bart",
+                "groups": [
+                    "demo:gitops-use"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:41:00Z",
+                "generation": 1,
+                "name": "p-beaver",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24669650",
+                "uid": "c9adf377-db6a-402e-b253-c9effc17d1d9"
+            },
+            "spec": {
+                "displayName": "Beaver",
+                "groups": [
+                    "demo:gitops-idea"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:39:31Z",
+                "generation": 1,
+                "name": "p-bert",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24669006",
+                "uid": "fbd7f4ab-4f78-4bd4-a5e3-eec5d7ce11cb"
+            },
+            "spec": {
+                "displayName": "Bert",
+                "groups": [
+                    "demo:gitops-use"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:41:35Z",
+                "generation": 1,
+                "name": "p-boston",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24669940",
+                "uid": "3d8847f9-ba61-45c5-bfe0-cc38df5e94cd"
+            },
+            "spec": {
+                "displayName": "Boston",
+                "groups": [
+                    "demo:gitops-run"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:40:31Z",
+                "generation": 1,
+                "name": "p-breakstuff",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24669422",
+                "uid": "09a69da9-7e19-45a9-95ce-e94d21657afe"
+            },
+            "spec": {
+                "displayName": "Breakstuff",
+                "groups": [
+                    "demo:gitops-run"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:41:22Z",
+                "generation": 1,
+                "name": "p-david",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24669831",
+                "uid": "e3bf9786-7cd8-46f2-86ce-d030c355d7bf"
+            },
+            "spec": {
+                "displayName": "David",
+                "groups": [
+                    "demo:gitops-use"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:41:33Z",
+                "generation": 1,
+                "name": "p-davy",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24669909",
+                "uid": "49071390-72c5-4104-8ee3-9e4e5aa18d68"
+            },
+            "spec": {
+                "displayName": "Davy",
+                "groups": [
+                    "demo:gitops-run"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:41:58Z",
+                "generation": 1,
+                "name": "p-demap",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24670147",
+                "uid": "dd80defd-71f1-4aa0-9324-ed1e390ba29b"
+            },
+            "spec": {
+                "displayName": "Demap",
+                "groups": [
+                    "demo:gitops-idea"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:39:48Z",
+                "generation": 1,
+                "name": "p-demo",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24669122",
+                "uid": "1fce43e0-30b0-415c-a4f2-a7c49cfdf634"
+            },
+            "spec": {
+                "displayName": "Demo",
+                "groups": [
+                    "demo:gitops-run"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:41:45Z",
+                "generation": 1,
+                "name": "p-dibus",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24670020",
+                "uid": "f50e7a5a-4140-4a4a-ad0b-ac1b41eba5ba"
+            },
+            "spec": {
+                "displayName": "Dibus",
+                "groups": [
+                    "demo:gitops-use"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:42:06Z",
+                "generation": 1,
+                "name": "p-ej",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24670270",
+                "uid": "108ffaf0-0e43-41d8-b37e-9ff0176f10f4"
+            },
+            "spec": {
+                "displayName": "ej",
+                "groups": [
+                    "demo:gitops-idea"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:42:42Z",
+                "generation": 1,
+                "name": "p-feuerschnitzel",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24670628",
+                "uid": "d3d852df-3f39-4a5c-b202-e54cb879b023"
+            },
+            "spec": {
+                "displayName": "Feuerschnitzel",
+                "groups": [
+                    "demo:gitops-run"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:41:49Z",
+                "generation": 1,
+                "name": "p-gamer",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24670065",
+                "uid": "175b70c6-1ed7-4aac-9e27-d66beab77b96"
+            },
+            "spec": {
+                "displayName": "Gamer",
+                "groups": [
+                    "demo:gitops-use"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:42:10Z",
+                "generation": 1,
+                "name": "p-henk",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24670301",
+                "uid": "d2ba81fc-9d82-4ca5-bb55-a12232b23a98"
+            },
+            "spec": {
+                "displayName": "Henk",
+                "groups": [
+                    "demo:gitops-use"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:39:26Z",
+                "generation": 1,
+                "name": "p-ibis",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24668974",
+                "uid": "45bd656a-053d-49b7-a10d-dd81db960264"
+            },
+            "spec": {
+                "displayName": "Ibis",
+                "groups": [
+                    "demo:gitops-run"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:41:46Z",
+                "generation": 1,
+                "name": "p-igorito",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24670027",
+                "uid": "af774a0c-aeec-4fcd-b54a-834fc54f47ca"
+            },
+            "spec": {
+                "displayName": "Igorito",
+                "groups": [
+                    "demo:gitops-run"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:42:02Z",
+                "generation": 1,
+                "name": "p-jeroen",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24670217",
+                "uid": "538c6ee7-4820-40d9-bc58-f5eb3585813e"
+            },
+            "spec": {
+                "displayName": "Jeroen",
+                "groups": [
+                    "demo:gitops-use"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:40:26Z",
+                "generation": 1,
+                "name": "p-jordana",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24669395",
+                "uid": "07cfb839-eed2-4959-a71a-55752d3e6369"
+            },
+            "spec": {
+                "displayName": "jordana",
+                "groups": [
+                    "demo:gitops-idea"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:41:40Z",
+                "generation": 1,
+                "name": "p-me",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24669977",
+                "uid": "9974e5c8-69fc-4a29-96f5-42eed084f9ab"
+            },
+            "spec": {
+                "displayName": "Me",
+                "groups": [
+                    "demo:gitops-run"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:40:55Z",
+                "generation": 1,
+                "name": "p-mik",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24669615",
+                "uid": "507903a8-2981-4a26-8e18-208707fa1b81"
+            },
+            "spec": {
+                "displayName": "Mik",
+                "groups": [
+                    "demo:gitops-run"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:42:23Z",
+                "generation": 1,
+                "name": "p-n",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24670426",
+                "uid": "2ff45cda-b69c-4f10-babe-e31e04dc6029"
+            },
+            "spec": {
+                "displayName": "n",
+                "groups": [
+                    "demo:gitops-idea"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:39:57Z",
+                "generation": 1,
+                "name": "p-n20amaral",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24669188",
+                "uid": "29e44f06-6dab-4f22-bb37-5954af5c2d72"
+            },
+            "spec": {
+                "displayName": "n20amaral",
+                "groups": [
+                    "demo:gitops-use"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:39:25Z",
+                "generation": 1,
+                "name": "p-nerd",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24668958",
+                "uid": "11e56e79-d73a-455d-86dc-543d5fb1a176"
+            },
+            "spec": {
+                "displayName": "Nerd",
+                "groups": [
+                    "demo:gitops-use"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:41:22Z",
+                "generation": 1,
+                "name": "p-nic",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24669830",
+                "uid": "3f85c20f-64f5-427d-85f9-031df983f1f4"
+            },
+            "spec": {
+                "displayName": "Nic",
+                "groups": [
+                    "demo:gitops-run"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:41:52Z",
+                "generation": 1,
+                "name": "p-ph",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24670105",
+                "uid": "9ddf7c21-7adb-412b-a2fd-f760f0a000df"
+            },
+            "spec": {
+                "displayName": "Ph",
+                "groups": [
+                    "demo:gitops-use"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:42:01Z",
+                "generation": 1,
+                "name": "p-piet",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24670196",
+                "uid": "08abcce7-7a33-4173-8ebd-aef048cdf4dc"
+            },
+            "spec": {
+                "displayName": "Piet",
+                "groups": [
+                    "demo:gitops-idea"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:40:50Z",
+                "generation": 1,
+                "name": "p-r",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24669565",
+                "uid": "3fff88ec-092c-4964-b2a9-7c759fdae96a"
+            },
+            "spec": {
+                "displayName": "r",
+                "groups": [
+                    "demo:gitops-use"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:41:34Z",
+                "generation": 1,
+                "name": "p-reza",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24669926",
+                "uid": "2ed13026-6f67-4591-b781-8b421d8e6e66"
+            },
+            "spec": {
+                "displayName": "Reza",
+                "groups": [
+                    "demo:gitops-run"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:41:05Z",
+                "generation": 1,
+                "name": "p-ron",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24669692",
+                "uid": "06244535-097e-49f8-9fcd-71cc6733f277"
+            },
+            "spec": {
+                "displayName": "Ron",
+                "groups": [
+                    "demo:gitops-never"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:40:18Z",
+                "generation": 1,
+                "name": "p-sd",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24669331",
+                "uid": "bf27f7e4-cedf-4a84-8b0d-90780c8715cd"
+            },
+            "spec": {
+                "displayName": "Sd",
+                "groups": [
+                    "demo:gitops-use"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:41:50Z",
+                "generation": 1,
+                "name": "p-shaun",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24670079",
+                "uid": "2b614d50-5983-4d75-9041-ce193ffbbf29"
+            },
+            "spec": {
+                "displayName": "Shaun",
+                "groups": [
+                    "demo:gitops-idea"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-11-03T21:06:17Z",
+                "generation": 1,
+                "name": "p-simon",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "ordev-1-stamp",
+                        "uid": "18e69446-eaa0-4d1b-ad7b-11a63d1446ef"
+                    }
+                ],
+                "resourceVersion": "26923254",
+                "uid": "2d25352a-04e7-4cac-acb7-ad4d3cc758c9"
+            },
+            "spec": {
+                "displayName": "Simon",
+                "groups": [
+                    "demo:gitops-never"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "ordev-1-stamp",
+                    "uid": "18e69446-eaa0-4d1b-ad7b-11a63d1446ef"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:27:02Z",
+                "generation": 1,
+                "name": "p-simon-last-test",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24664620",
+                "uid": "f8cfdfd3-71a7-4731-826c-ed5c2a9a8317"
+            },
+            "spec": {
+                "displayName": "Simon-last-test",
+                "groups": [
+                    "demo:gitops-run"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-11-03T11:15:58Z",
+                "generation": 1,
+                "name": "p-simon12345",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "ordev-1-stamp",
+                        "uid": "18e69446-eaa0-4d1b-ad7b-11a63d1446ef"
+                    }
+                ],
+                "resourceVersion": "26688184",
+                "uid": "81c630a3-8857-4b29-a659-c3fae6030c66"
+            },
+            "spec": {
+                "displayName": "Simon12345",
+                "groups": [
+                    "demo:gitops-use"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "ordev-1-stamp",
+                    "uid": "18e69446-eaa0-4d1b-ad7b-11a63d1446ef"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-11-04T07:07:35Z",
+                "generation": 1,
+                "name": "p-simon2",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "ordev-1-stamp",
+                        "uid": "18e69446-eaa0-4d1b-ad7b-11a63d1446ef"
+                    }
+                ],
+                "resourceVersion": "27162785",
+                "uid": "8e837ecd-a532-4752-b502-588c4e94979f"
+            },
+            "spec": {
+                "displayName": "Simon2",
+                "groups": [
+                    "demo:gitops-use"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "ordev-1-stamp",
+                    "uid": "18e69446-eaa0-4d1b-ad7b-11a63d1446ef"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-11-03T10:01:50Z",
+                "generation": 1,
+                "name": "p-simonbla",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "ordev-1-stamp",
+                        "uid": "18e69446-eaa0-4d1b-ad7b-11a63d1446ef"
+                    }
+                ],
+                "resourceVersion": "26657329",
+                "uid": "370e154c-a5bd-4458-b201-8f834fd22809"
+            },
+            "spec": {
+                "displayName": "Simonbla",
+                "groups": [
+                    "demo:gitops-idea"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "ordev-1-stamp",
+                    "uid": "18e69446-eaa0-4d1b-ad7b-11a63d1446ef"
+                }
+            }
+        },
+        {
+            "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+            "kind": "Participant",
+            "metadata": {
+                "creationTimestamp": "2026-10-30T13:39:56Z",
+                "generation": 1,
+                "name": "p-warmwater",
+                "namespace": "voter",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "room-pass.koudijs.dev/v1alpha1",
+                        "kind": "Room",
+                        "name": "mission2",
+                        "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                    }
+                ],
+                "resourceVersion": "24669181",
+                "uid": "fdf62d2f-acd5-42a4-a97f-be8e8d6f0db6"
+            },
+            "spec": {
+                "displayName": "Warmwater",
+                "groups": [
+                    "demo:gitops-run"
+                ],
+                "revoked": false,
+                "roomRef": {
+                    "name": "mission2",
+                    "uid": "8603c4c6-851d-4657-a3d9-811b76f81bda"
+                }
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}

@@ -34,7 +34,7 @@ vars:
 
   NODE_TOOL_DIRS: tools/slidev-addon-excalidraw-renderer tools/slidev-addon-web-terminal
   NODE_APP_DIRS:
-    sh: for f in */package.json; do dirname "$f"; done | sort | tr '\n' ' '
+    sh: for f in */package.json ordev/*/package.json; do dirname "$f"; done | sort | tr '\n' ' '
 
 tasks:
   install-node-deps:
@@ -225,10 +225,25 @@ tasks:
       - cd settings-that-break && npx slidev export --format png --output /tmp/slidev-export-reverser --scale 2 --timeout 60000
       - ls -v /tmp/slidev-export-reverser/*.png | xargs /home/node/.local/bin/img2pdf -o dist/settings-that-break-production.pdf
 
+  export-config-deserves-better-pdf:
+    desc: Export ordev/config-deserves-better to dist/config-deserves-better.pdf
+    deps: [install-node-deps]
+    cmds:
+      - rm -rf /tmp/slidev-export-config-deserves-better && mkdir -p /tmp/slidev-export-config-deserves-better
+      - cd ordev/config-deserves-better && npx slidev export --format png --output /tmp/slidev-export-config-deserves-better --scale 2 --timeout 60000
+      - ls -v /tmp/slidev-export-config-deserves-better/*.png | xargs /home/node/.local/bin/img2pdf -o dist/config-deserves-better.pdf
+
   run-reverser:
     desc: Live settings-that-break deck (start run-terminal-bridge for its terminals)
     deps: [install-node-deps]
     dir: settings-that-break
+    cmds:
+      - npm run dev
+
+  run-config-deserves-better:
+    desc: Live Oredev talk 1 deck (start run-terminal-bridge for its terminals)
+    deps: [install-node-deps]
+    dir: ordev/config-deserves-better
     cmds:
       - npm run dev
 

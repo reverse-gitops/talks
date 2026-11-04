@@ -9,7 +9,7 @@ transition: fade
 
 <!-- Git in the middle: people edit in the config-cluster; infra clusters pull from Git as always. -->
 <div class="ways">
-  <div class="node">config-cluster<span>temporary · data only</span><span>Seat/mission2-6-6</span></div>
+  <div class="node">config-cluster<span>temporary · data only</span><span>Seat/ordev-1-stamp-6-6</span></div>
   <div class="arrows">
     <div class="way forward"><i>←</i><span>sync</span></div>
     <div v-click class="way back"><span>reverse · commit</span><i>→</i></div>

@@ -14,7 +14,7 @@ transition: fade
 <!--
 7:00 · THE REVEAL. The same seats as on the title slide, now with emoji and names.
 "Every square is somebody in this room. And every square is a Kubernetes object."
-The map is the room: stage on top, 10 rows, seats 1–8 left of the aisle and 9–16 right. 160 seats.
+The map is the room: stage on top, 15 rows, seats 1–10 left of the aisle and 11–20 right. 300 seats (still a placeholder size).
 Hover a seat: name and the last why. Click one: its commit opens on GitHub.
 Ask someone to change their colour now: watch it pulse.
 -->

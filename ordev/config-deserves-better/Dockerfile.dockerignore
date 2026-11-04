@@ -1,0 +1,10 @@
+# Used by BuildKit for ordev/config-deserves-better/Dockerfile only (the build context is the repository root).
+**
+!ordev/config-deserves-better/
+!tools/slidev-addon-web-terminal/
+**/node_modules
+**/dist
+**/.slidev
+ordev/config-deserves-better/shots
+ordev/config-deserves-better/cr-prep
+tools/slidev-addon-web-terminal/example

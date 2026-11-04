@@ -24,16 +24,16 @@ const { isPrintMode } = useNav()
 <!-- Bottom right, so the light at the top of the photo stays in view.
      Not in the PDF: the join code rotates, so a printed one is always stale. -->
 <div v-if="!isPrintMode" class="qr">
-  <p class="ask">Scan, pick a name,<br><strong>claim your seat.</strong></p>
+  <p class="ask"><strong>Config your seat!</strong><br>Get creative together.</p>
   <RoomQRCode :size="360" />
-  <p class="hint">Seats 1–8 left of the aisle, 9–16 right.<br>Swipe the map sideways to find yours.</p>
+  <p class="hint">Seats 1–10 left of the aisle, 11–20 right.<br>Swipe the map sideways to find yours.</p>
 </div>
 
 <!--
 Up while the room fills: doors open → scan, log in, answer the GitOps question, claim a seat.
-The QR follows the mission2 Room's rotating join code; the squares fill in as people claim their seat.
-The room: 160 seats, 10 rows of two blocks of 8 with the aisle between them. Row 1 is at the stage.
-Seats 1–8 are left of the aisle, 9–16 right, counted as you face the stage. The phone map opens on
+The QR follows the ordev-1-stamp Room's rotating join code; the squares fill in as people claim their seat.
+The room: the SeatingPlan still has the placeholder of 300 seats, 15 rows of two blocks of 10. Row 1 is at the stage.
+Seats 1–10 are left of the aisle, 11–20 right, counted as you face the stage. The phone map opens on
 the aisle and is wider than the screen: say "swipe sideways to find your seat".
 
 0:00 · "You've all just changed a setting. Remember that." Then straight into Alice.

@@ -1,0 +1,1481 @@
+{
+    "apiVersion": "v1",
+    "items": [
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:07:59Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-1",
+                    "voter.configbutler.ai/submitter": "Azz"
+                },
+                "name": "round-1-azz",
+                "namespace": "voter",
+                "resourceVersion": "13156139",
+                "uid": "9b5bfba9-7d00-407c-8773-2151d39ebf96"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "kubectl",
+                        "singleChoice": "Once, it scared me"
+                    },
+                    {
+                        "questionId": "kubecon",
+                        "singleChoice": "1.000"
+                    },
+                    {
+                        "questionId": "cncf",
+                        "singleChoice": "No"
+                    }
+                ],
+                "questionsDigest": "sha256:bec00822a858a24eacbdc0c40d9ff9e3c64309e7c5a83942f1a95085ca35aa19",
+                "roundUID": "898ce86c-ee0e-434f-b7d6-823712c71bcf",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-1"
+                },
+                "submittedAt": "2026-10-07T09:07:59Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:07:34Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-1",
+                    "voter.configbutler.ai/submitter": "Bobby-Tables"
+                },
+                "name": "round-1-bobby-tables",
+                "namespace": "voter",
+                "resourceVersion": "13155945",
+                "uid": "a43c4805-1e02-4b2e-a167-1595ac874098"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "kubectl",
+                        "singleChoice": "Yes, every day"
+                    },
+                    {
+                        "questionId": "kubecon",
+                        "singleChoice": "5.000"
+                    },
+                    {
+                        "questionId": "cncf",
+                        "singleChoice": "Yes, cool!"
+                    }
+                ],
+                "questionsDigest": "sha256:bec00822a858a24eacbdc0c40d9ff9e3c64309e7c5a83942f1a95085ca35aa19",
+                "roundUID": "898ce86c-ee0e-434f-b7d6-823712c71bcf",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-1"
+                },
+                "submittedAt": "2026-10-07T09:07:37Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:07:11Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-1",
+                    "voter.configbutler.ai/submitter": "Display-name"
+                },
+                "name": "round-1-display-name",
+                "namespace": "voter",
+                "resourceVersion": "13155763",
+                "uid": "ba741dca-9865-4e0e-a565-b7bef220248f"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "kubectl",
+                        "singleChoice": "Once, it scared me"
+                    },
+                    {
+                        "questionId": "kubecon",
+                        "singleChoice": "What is KubeCon?"
+                    },
+                    {
+                        "questionId": "cncf",
+                        "singleChoice": "No"
+                    }
+                ],
+                "questionsDigest": "sha256:bec00822a858a24eacbdc0c40d9ff9e3c64309e7c5a83942f1a95085ca35aa19",
+                "roundUID": "898ce86c-ee0e-434f-b7d6-823712c71bcf",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-1"
+                },
+                "submittedAt": "2026-10-07T09:07:11Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:07:49Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-1",
+                    "voter.configbutler.ai/submitter": "Div"
+                },
+                "name": "round-1-div",
+                "namespace": "voter",
+                "resourceVersion": "13156064",
+                "uid": "4d13a552-4cd7-48ac-9b55-2be32f8591af"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "kubectl",
+                        "singleChoice": "What's kubectl?"
+                    },
+                    {
+                        "questionId": "kubecon",
+                        "singleChoice": "15.000"
+                    },
+                    {
+                        "questionId": "cncf",
+                        "singleChoice": "No"
+                    }
+                ],
+                "questionsDigest": "sha256:bec00822a858a24eacbdc0c40d9ff9e3c64309e7c5a83942f1a95085ca35aa19",
+                "roundUID": "898ce86c-ee0e-434f-b7d6-823712c71bcf",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-1"
+                },
+                "submittedAt": "2026-10-07T09:07:49Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:07:55Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-1",
+                    "voter.configbutler.ai/submitter": "Fronteer"
+                },
+                "name": "round-1-fronteer",
+                "namespace": "voter",
+                "resourceVersion": "13156115",
+                "uid": "e62259fd-1a3a-4ccf-9072-402c426fb1b8"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "kubectl",
+                        "singleChoice": "What's kubectl?"
+                    },
+                    {
+                        "questionId": "kubecon",
+                        "singleChoice": "10.000"
+                    },
+                    {
+                        "questionId": "cncf",
+                        "singleChoice": "No"
+                    }
+                ],
+                "questionsDigest": "sha256:bec00822a858a24eacbdc0c40d9ff9e3c64309e7c5a83942f1a95085ca35aa19",
+                "roundUID": "898ce86c-ee0e-434f-b7d6-823712c71bcf",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-1"
+                },
+                "submittedAt": "2026-10-07T09:07:55Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:07:57Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-1",
+                    "voter.configbutler.ai/submitter": "Je-weet-wel"
+                },
+                "name": "round-1-je-weet-wel",
+                "namespace": "voter",
+                "resourceVersion": "13156123",
+                "uid": "99da41bf-79cb-440b-8fb6-ed421b307124"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "kubectl",
+                        "singleChoice": "Once, it scared me"
+                    },
+                    {
+                        "questionId": "kubecon",
+                        "singleChoice": "What is KubeCon?"
+                    },
+                    {
+                        "questionId": "cncf",
+                        "singleChoice": "No"
+                    }
+                ],
+                "questionsDigest": "sha256:bec00822a858a24eacbdc0c40d9ff9e3c64309e7c5a83942f1a95085ca35aa19",
+                "roundUID": "898ce86c-ee0e-434f-b7d6-823712c71bcf",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-1"
+                },
+                "submittedAt": "2026-10-07T09:07:57Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:07:40Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-1",
+                    "voter.configbutler.ai/submitter": "Justin"
+                },
+                "name": "round-1-justin",
+                "namespace": "voter",
+                "resourceVersion": "13155990",
+                "uid": "87e8eab9-9435-4ab6-80b1-29490e467ff1"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "kubectl",
+                        "singleChoice": "What's kubectl?"
+                    },
+                    {
+                        "questionId": "kubecon",
+                        "singleChoice": "10.000"
+                    },
+                    {
+                        "questionId": "cncf",
+                        "singleChoice": "No"
+                    }
+                ],
+                "questionsDigest": "sha256:bec00822a858a24eacbdc0c40d9ff9e3c64309e7c5a83942f1a95085ca35aa19",
+                "roundUID": "898ce86c-ee0e-434f-b7d6-823712c71bcf",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-1"
+                },
+                "submittedAt": "2026-10-07T09:07:40Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:07:41Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-1",
+                    "voter.configbutler.ai/submitter": "Kijk"
+                },
+                "name": "round-1-kijk",
+                "namespace": "voter",
+                "resourceVersion": "13156005",
+                "uid": "2c9b4daa-146a-4a57-8377-cacbf9850d35"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "kubectl",
+                        "singleChoice": "Yes, every day"
+                    },
+                    {
+                        "questionId": "kubecon",
+                        "singleChoice": "15.000"
+                    },
+                    {
+                        "questionId": "cncf",
+                        "singleChoice": "Yes, cool!"
+                    }
+                ],
+                "questionsDigest": "sha256:bec00822a858a24eacbdc0c40d9ff9e3c64309e7c5a83942f1a95085ca35aa19",
+                "roundUID": "898ce86c-ee0e-434f-b7d6-823712c71bcf",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-1"
+                },
+                "submittedAt": "2026-10-07T09:07:41Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:07:40Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-1",
+                    "voter.configbutler.ai/submitter": "Laura"
+                },
+                "name": "round-1-laura",
+                "namespace": "voter",
+                "resourceVersion": "13155986",
+                "uid": "16b618ef-81f7-4458-8ea9-5a16da6cfa7b"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "kubectl",
+                        "singleChoice": "What's kubectl?"
+                    },
+                    {
+                        "questionId": "kubecon",
+                        "singleChoice": "What is KubeCon?"
+                    },
+                    {
+                        "questionId": "cncf",
+                        "singleChoice": "No"
+                    }
+                ],
+                "questionsDigest": "sha256:bec00822a858a24eacbdc0c40d9ff9e3c64309e7c5a83942f1a95085ca35aa19",
+                "roundUID": "898ce86c-ee0e-434f-b7d6-823712c71bcf",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-1"
+                },
+                "submittedAt": "2026-10-07T09:07:41Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:07:28Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-1",
+                    "voter.configbutler.ai/submitter": "Maartje"
+                },
+                "name": "round-1-maartje",
+                "namespace": "voter",
+                "resourceVersion": "13155894",
+                "uid": "ee4ffd20-6e51-4856-8cf8-96e89f31c733"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "kubectl",
+                        "singleChoice": "Yes, every day"
+                    },
+                    {
+                        "questionId": "kubecon",
+                        "singleChoice": "What is KubeCon?"
+                    },
+                    {
+                        "questionId": "cncf",
+                        "singleChoice": "No"
+                    }
+                ],
+                "questionsDigest": "sha256:bec00822a858a24eacbdc0c40d9ff9e3c64309e7c5a83942f1a95085ca35aa19",
+                "roundUID": "898ce86c-ee0e-434f-b7d6-823712c71bcf",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-1"
+                },
+                "submittedAt": "2026-10-07T09:07:28Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:07:48Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-1",
+                    "voter.configbutler.ai/submitter": "Meat-proxy"
+                },
+                "name": "round-1-meat-proxy",
+                "namespace": "voter",
+                "resourceVersion": "13156057",
+                "uid": "2f46f3e5-234b-4859-a00b-af51c84eca52"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "kubectl",
+                        "singleChoice": "Yes, every day"
+                    },
+                    {
+                        "questionId": "kubecon",
+                        "singleChoice": "15.000"
+                    },
+                    {
+                        "questionId": "cncf",
+                        "singleChoice": "No"
+                    }
+                ],
+                "questionsDigest": "sha256:bec00822a858a24eacbdc0c40d9ff9e3c64309e7c5a83942f1a95085ca35aa19",
+                "roundUID": "898ce86c-ee0e-434f-b7d6-823712c71bcf",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-1"
+                },
+                "submittedAt": "2026-10-07T09:07:49Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:07:32Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-1",
+                    "voter.configbutler.ai/submitter": "NullReferenceException"
+                },
+                "name": "round-1-nullreferenceexception",
+                "namespace": "voter",
+                "resourceVersion": "13155924",
+                "uid": "d5fe9d95-3060-4e0b-8f89-2190dd557f7e"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "kubectl",
+                        "singleChoice": "Once, it scared me"
+                    },
+                    {
+                        "questionId": "kubecon",
+                        "singleChoice": "What is KubeCon?"
+                    },
+                    {
+                        "questionId": "cncf",
+                        "singleChoice": "Yes, cool!"
+                    }
+                ],
+                "questionsDigest": "sha256:bec00822a858a24eacbdc0c40d9ff9e3c64309e7c5a83942f1a95085ca35aa19",
+                "roundUID": "898ce86c-ee0e-434f-b7d6-823712c71bcf",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-1"
+                },
+                "submittedAt": "2026-10-07T09:07:31Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:07:38Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-1",
+                    "voter.configbutler.ai/submitter": "OutOfScope"
+                },
+                "name": "round-1-outofscope",
+                "namespace": "voter",
+                "resourceVersion": "13155973",
+                "uid": "b4964a41-0905-4b74-95c8-87b20d54c191"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "kubectl",
+                        "singleChoice": "Once, it scared me"
+                    },
+                    {
+                        "questionId": "kubecon",
+                        "singleChoice": "10.000"
+                    },
+                    {
+                        "questionId": "cncf",
+                        "singleChoice": "Yes, cool!"
+                    }
+                ],
+                "questionsDigest": "sha256:bec00822a858a24eacbdc0c40d9ff9e3c64309e7c5a83942f1a95085ca35aa19",
+                "roundUID": "898ce86c-ee0e-434f-b7d6-823712c71bcf",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-1"
+                },
+                "submittedAt": "2026-10-07T09:07:38Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:07:46Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-1",
+                    "voter.configbutler.ai/submitter": "PersonalDetails"
+                },
+                "name": "round-1-personaldetails",
+                "namespace": "voter",
+                "resourceVersion": "13156035",
+                "uid": "729e0a4c-7324-41b3-a4e7-239d526f2835"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "kubectl",
+                        "singleChoice": "Once, it scared me"
+                    },
+                    {
+                        "questionId": "kubecon",
+                        "singleChoice": "10.000"
+                    },
+                    {
+                        "questionId": "cncf",
+                        "singleChoice": "No"
+                    }
+                ],
+                "questionsDigest": "sha256:bec00822a858a24eacbdc0c40d9ff9e3c64309e7c5a83942f1a95085ca35aa19",
+                "roundUID": "898ce86c-ee0e-434f-b7d6-823712c71bcf",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-1"
+                },
+                "submittedAt": "2026-10-07T09:07:46Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:07:38Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-1",
+                    "voter.configbutler.ai/submitter": "Richard"
+                },
+                "name": "round-1-richard",
+                "namespace": "voter",
+                "resourceVersion": "13155965",
+                "uid": "558e499b-f813-4a38-abc8-844e25d861f1"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "kubectl",
+                        "singleChoice": "What's kubectl?"
+                    },
+                    {
+                        "questionId": "kubecon",
+                        "singleChoice": "What is KubeCon?"
+                    },
+                    {
+                        "questionId": "cncf",
+                        "singleChoice": "No"
+                    }
+                ],
+                "questionsDigest": "sha256:bec00822a858a24eacbdc0c40d9ff9e3c64309e7c5a83942f1a95085ca35aa19",
+                "roundUID": "898ce86c-ee0e-434f-b7d6-823712c71bcf",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-1"
+                },
+                "submittedAt": "2026-10-07T09:07:37Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:07:28Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-1",
+                    "voter.configbutler.ai/submitter": "Spookers"
+                },
+                "name": "round-1-spookers",
+                "namespace": "voter",
+                "resourceVersion": "13155902",
+                "uid": "6c86b998-90d8-47ea-bcc5-4524186b1251"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "kubectl",
+                        "singleChoice": "What's kubectl?"
+                    },
+                    {
+                        "questionId": "kubecon",
+                        "singleChoice": "What is KubeCon?"
+                    },
+                    {
+                        "questionId": "cncf",
+                        "singleChoice": "No"
+                    }
+                ],
+                "questionsDigest": "sha256:bec00822a858a24eacbdc0c40d9ff9e3c64309e7c5a83942f1a95085ca35aa19",
+                "roundUID": "898ce86c-ee0e-434f-b7d6-823712c71bcf",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-1"
+                },
+                "submittedAt": "2026-10-07T09:07:29Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:07:46Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-1",
+                    "voter.configbutler.ai/submitter": "W2"
+                },
+                "name": "round-1-w2",
+                "namespace": "voter",
+                "resourceVersion": "13156034",
+                "uid": "b4e05a99-c2f1-4952-a43f-a3a0b07a0831"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "kubectl",
+                        "singleChoice": "Yes, every day"
+                    },
+                    {
+                        "questionId": "kubecon",
+                        "singleChoice": "15.000"
+                    },
+                    {
+                        "questionId": "cncf",
+                        "singleChoice": "Yes, cool!"
+                    }
+                ],
+                "questionsDigest": "sha256:bec00822a858a24eacbdc0c40d9ff9e3c64309e7c5a83942f1a95085ca35aa19",
+                "roundUID": "898ce86c-ee0e-434f-b7d6-823712c71bcf",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-1"
+                },
+                "submittedAt": "2026-10-07T09:07:46Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:27:11Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-2",
+                    "voter.configbutler.ai/submitter": "Azz"
+                },
+                "name": "round-2-azz",
+                "namespace": "voter",
+                "resourceVersion": "13163019",
+                "uid": "393e8580-0136-423b-bb10-7b59d5645ee4"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "framework",
+                        "singleChoice": "Whatever comes out next week"
+                    },
+                    {
+                        "questionId": "role",
+                        "singleChoice": "Frontender"
+                    },
+                    {
+                        "questionId": "diy",
+                        "singleChoice": "I've stopped counting"
+                    },
+                    {
+                        "questionId": "conflict",
+                        "singleChoice": "Panic"
+                    }
+                ],
+                "questionsDigest": "sha256:3c680edd8ec0bd11de56bb090c29281d3a3f8ea2c39b607d54bc3ac399dea628",
+                "roundUID": "e2638080-2875-4b35-af58-6c661d19b6fc",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-2"
+                },
+                "submittedAt": "2026-10-07T09:27:11Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:27:11Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-2",
+                    "voter.configbutler.ai/submitter": "Bobby-Tables"
+                },
+                "name": "round-2-bobby-tables",
+                "namespace": "voter",
+                "resourceVersion": "13163020",
+                "uid": "4c2eed38-8b8e-4f5c-aa8e-4fd817de1c28"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "framework",
+                        "singleChoice": "Whatever comes out next week"
+                    },
+                    {
+                        "questionId": "role",
+                        "singleChoice": "Full-stack"
+                    },
+                    {
+                        "questionId": "diy",
+                        "singleChoice": "1–3 times"
+                    },
+                    {
+                        "questionId": "conflict",
+                        "singleChoice": "Panic"
+                    }
+                ],
+                "questionsDigest": "sha256:3c680edd8ec0bd11de56bb090c29281d3a3f8ea2c39b607d54bc3ac399dea628",
+                "roundUID": "e2638080-2875-4b35-af58-6c661d19b6fc",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-2"
+                },
+                "submittedAt": "2026-10-07T09:27:14Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:25:32Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-2",
+                    "voter.configbutler.ai/submitter": "Display-name"
+                },
+                "name": "round-2-display-name",
+                "namespace": "voter",
+                "resourceVersion": "13162414",
+                "uid": "16158269-652b-43e3-9c82-f5fafd4b26f7"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "framework",
+                        "singleChoice": "Vue"
+                    },
+                    {
+                        "questionId": "role",
+                        "singleChoice": "Full-stack"
+                    },
+                    {
+                        "questionId": "diy",
+                        "singleChoice": "1–3 times"
+                    },
+                    {
+                        "questionId": "conflict",
+                        "singleChoice": "Last write wins"
+                    }
+                ],
+                "questionsDigest": "sha256:3c680edd8ec0bd11de56bb090c29281d3a3f8ea2c39b607d54bc3ac399dea628",
+                "roundUID": "e2638080-2875-4b35-af58-6c661d19b6fc",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-2"
+                },
+                "submittedAt": "2026-10-07T09:25:32Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:27:30Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-2",
+                    "voter.configbutler.ai/submitter": "Div"
+                },
+                "name": "round-2-div",
+                "namespace": "voter",
+                "resourceVersion": "13163165",
+                "uid": "f37815c9-d5f8-4579-b824-46f2974ac207"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "framework",
+                        "singleChoice": "Whatever comes out next week"
+                    },
+                    {
+                        "questionId": "role",
+                        "singleChoice": "Full-stack"
+                    },
+                    {
+                        "questionId": "diy",
+                        "singleChoice": "1–3 times"
+                    },
+                    {
+                        "questionId": "conflict",
+                        "singleChoice": "Last write wins"
+                    }
+                ],
+                "questionsDigest": "sha256:3c680edd8ec0bd11de56bb090c29281d3a3f8ea2c39b607d54bc3ac399dea628",
+                "roundUID": "e2638080-2875-4b35-af58-6c661d19b6fc",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-2"
+                },
+                "submittedAt": "2026-10-07T09:27:30Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:27:29Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-2",
+                    "voter.configbutler.ai/submitter": "Frenk"
+                },
+                "name": "round-2-frenk",
+                "namespace": "voter",
+                "resourceVersion": "13163161",
+                "uid": "053cb4e6-d065-4023-9d09-b464ade9253a"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "framework",
+                        "singleChoice": "Whatever comes out next week"
+                    },
+                    {
+                        "questionId": "role",
+                        "singleChoice": "Full-stack"
+                    },
+                    {
+                        "questionId": "diy",
+                        "singleChoice": "1–3 times"
+                    },
+                    {
+                        "questionId": "conflict",
+                        "singleChoice": "Panic"
+                    }
+                ],
+                "questionsDigest": "sha256:3c680edd8ec0bd11de56bb090c29281d3a3f8ea2c39b607d54bc3ac399dea628",
+                "roundUID": "e2638080-2875-4b35-af58-6c661d19b6fc",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-2"
+                },
+                "submittedAt": "2026-10-07T09:27:29Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:27:24Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-2",
+                    "voter.configbutler.ai/submitter": "Fronteer"
+                },
+                "name": "round-2-fronteer",
+                "namespace": "voter",
+                "resourceVersion": "13163123",
+                "uid": "0deb26a1-e7df-4cf6-b97c-a4fc4dddae33"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "framework",
+                        "singleChoice": "Angular"
+                    },
+                    {
+                        "questionId": "role",
+                        "singleChoice": "Frontender"
+                    },
+                    {
+                        "questionId": "diy",
+                        "singleChoice": "Never"
+                    },
+                    {
+                        "questionId": "conflict",
+                        "singleChoice": "Last write wins"
+                    }
+                ],
+                "questionsDigest": "sha256:3c680edd8ec0bd11de56bb090c29281d3a3f8ea2c39b607d54bc3ac399dea628",
+                "roundUID": "e2638080-2875-4b35-af58-6c661d19b6fc",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-2"
+                },
+                "submittedAt": "2026-10-07T09:27:24Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:27:40Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-2",
+                    "voter.configbutler.ai/submitter": "Je-weet-wel"
+                },
+                "name": "round-2-je-weet-wel",
+                "namespace": "voter",
+                "resourceVersion": "13163240",
+                "uid": "ea60ddcd-a43e-4e0a-b706-07fb293ea0a4"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "framework",
+                        "singleChoice": "React"
+                    },
+                    {
+                        "questionId": "role",
+                        "singleChoice": "Frontender"
+                    },
+                    {
+                        "questionId": "diy",
+                        "singleChoice": "1–3 times"
+                    },
+                    {
+                        "questionId": "conflict",
+                        "singleChoice": "Panic"
+                    }
+                ],
+                "questionsDigest": "sha256:3c680edd8ec0bd11de56bb090c29281d3a3f8ea2c39b607d54bc3ac399dea628",
+                "roundUID": "e2638080-2875-4b35-af58-6c661d19b6fc",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-2"
+                },
+                "submittedAt": "2026-10-07T09:27:40Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:27:28Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-2",
+                    "voter.configbutler.ai/submitter": "Justin"
+                },
+                "name": "round-2-justin",
+                "namespace": "voter",
+                "resourceVersion": "13163160",
+                "uid": "96107981-24f2-40bf-983d-20b9dd742f4f"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "framework",
+                        "singleChoice": "React"
+                    },
+                    {
+                        "questionId": "role",
+                        "singleChoice": "Full-stack"
+                    },
+                    {
+                        "questionId": "diy",
+                        "singleChoice": "1–3 times"
+                    },
+                    {
+                        "questionId": "conflict",
+                        "singleChoice": "Panic"
+                    }
+                ],
+                "questionsDigest": "sha256:3c680edd8ec0bd11de56bb090c29281d3a3f8ea2c39b607d54bc3ac399dea628",
+                "roundUID": "e2638080-2875-4b35-af58-6c661d19b6fc",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-2"
+                },
+                "submittedAt": "2026-10-07T09:27:28Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:27:39Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-2",
+                    "voter.configbutler.ai/submitter": "Kijk"
+                },
+                "name": "round-2-kijk",
+                "namespace": "voter",
+                "resourceVersion": "13163239",
+                "uid": "084b2264-61d9-4215-8e17-f97086422c0d"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "framework",
+                        "singleChoice": "React"
+                    },
+                    {
+                        "questionId": "role",
+                        "singleChoice": "Full-stack"
+                    },
+                    {
+                        "questionId": "diy",
+                        "singleChoice": "I've stopped counting"
+                    },
+                    {
+                        "questionId": "conflict",
+                        "singleChoice": "First write wins, the second one sees a conflict"
+                    }
+                ],
+                "questionsDigest": "sha256:3c680edd8ec0bd11de56bb090c29281d3a3f8ea2c39b607d54bc3ac399dea628",
+                "roundUID": "e2638080-2875-4b35-af58-6c661d19b6fc",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-2"
+                },
+                "submittedAt": "2026-10-07T09:27:39Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:27:29Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-2",
+                    "voter.configbutler.ai/submitter": "Laura"
+                },
+                "name": "round-2-laura",
+                "namespace": "voter",
+                "resourceVersion": "13163163",
+                "uid": "747cd242-2654-4cf3-b8a8-81eacf8af634"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "framework",
+                        "singleChoice": "Whatever comes out next week"
+                    },
+                    {
+                        "questionId": "role",
+                        "singleChoice": "Full-stack"
+                    },
+                    {
+                        "questionId": "diy",
+                        "singleChoice": "1–3 times"
+                    },
+                    {
+                        "questionId": "conflict",
+                        "singleChoice": "Panic"
+                    }
+                ],
+                "questionsDigest": "sha256:3c680edd8ec0bd11de56bb090c29281d3a3f8ea2c39b607d54bc3ac399dea628",
+                "roundUID": "e2638080-2875-4b35-af58-6c661d19b6fc",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-2"
+                },
+                "submittedAt": "2026-10-07T09:27:30Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:27:30Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-2",
+                    "voter.configbutler.ai/submitter": "Maartje"
+                },
+                "name": "round-2-maartje",
+                "namespace": "voter",
+                "resourceVersion": "13163180",
+                "uid": "a9519548-14fe-4723-9c05-474a060b1e2c"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "framework",
+                        "singleChoice": "Whatever comes out next week"
+                    },
+                    {
+                        "questionId": "role",
+                        "singleChoice": "Full-stack"
+                    },
+                    {
+                        "questionId": "diy",
+                        "singleChoice": "1–3 times"
+                    },
+                    {
+                        "questionId": "conflict",
+                        "singleChoice": "Merge it somehow"
+                    }
+                ],
+                "questionsDigest": "sha256:3c680edd8ec0bd11de56bb090c29281d3a3f8ea2c39b607d54bc3ac399dea628",
+                "roundUID": "e2638080-2875-4b35-af58-6c661d19b6fc",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-2"
+                },
+                "submittedAt": "2026-10-07T09:27:30Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:27:19Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-2",
+                    "voter.configbutler.ai/submitter": "Meat-proxy"
+                },
+                "name": "round-2-meat-proxy",
+                "namespace": "voter",
+                "resourceVersion": "13163087",
+                "uid": "b4f53519-1614-400b-a2f3-901180d5e17b"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "framework",
+                        "singleChoice": "Whatever comes out next week"
+                    },
+                    {
+                        "questionId": "role",
+                        "singleChoice": "Full-stack"
+                    },
+                    {
+                        "questionId": "diy",
+                        "singleChoice": "1–3 times"
+                    },
+                    {
+                        "questionId": "conflict",
+                        "singleChoice": "Last write wins"
+                    }
+                ],
+                "questionsDigest": "sha256:3c680edd8ec0bd11de56bb090c29281d3a3f8ea2c39b607d54bc3ac399dea628",
+                "roundUID": "e2638080-2875-4b35-af58-6c661d19b6fc",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-2"
+                },
+                "submittedAt": "2026-10-07T09:27:20Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:26:57Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-2",
+                    "voter.configbutler.ai/submitter": "NullReferenceException"
+                },
+                "name": "round-2-nullreferenceexception",
+                "namespace": "voter",
+                "resourceVersion": "13162908",
+                "uid": "b3594e84-d4a2-4d0c-9667-0ba68ce753bd"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "framework",
+                        "singleChoice": "Whatever comes out next week"
+                    },
+                    {
+                        "questionId": "role",
+                        "singleChoice": "Full-stack"
+                    },
+                    {
+                        "questionId": "diy",
+                        "singleChoice": "1–3 times"
+                    },
+                    {
+                        "questionId": "conflict",
+                        "singleChoice": "Panic"
+                    }
+                ],
+                "questionsDigest": "sha256:3c680edd8ec0bd11de56bb090c29281d3a3f8ea2c39b607d54bc3ac399dea628",
+                "roundUID": "e2638080-2875-4b35-af58-6c661d19b6fc",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-2"
+                },
+                "submittedAt": "2026-10-07T09:26:57Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:25:03Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-2",
+                    "voter.configbutler.ai/submitter": "OutOfScope"
+                },
+                "name": "round-2-outofscope",
+                "namespace": "voter",
+                "resourceVersion": "13162214",
+                "uid": "6b6b51a6-f21b-449b-af4e-3ded8717b828"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "framework",
+                        "singleChoice": "Vue"
+                    },
+                    {
+                        "questionId": "role",
+                        "singleChoice": "Full-stack"
+                    },
+                    {
+                        "questionId": "diy",
+                        "singleChoice": "1–3 times"
+                    },
+                    {
+                        "questionId": "conflict",
+                        "singleChoice": "First write wins, the second one sees a conflict"
+                    }
+                ],
+                "questionsDigest": "sha256:3c680edd8ec0bd11de56bb090c29281d3a3f8ea2c39b607d54bc3ac399dea628",
+                "roundUID": "e2638080-2875-4b35-af58-6c661d19b6fc",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-2"
+                },
+                "submittedAt": "2026-10-07T09:25:03Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:27:18Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-2",
+                    "voter.configbutler.ai/submitter": "PersonalDetails"
+                },
+                "name": "round-2-personaldetails",
+                "namespace": "voter",
+                "resourceVersion": "13163084",
+                "uid": "eaa193b9-118f-4f98-a9ef-da2e77c09940"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "framework",
+                        "singleChoice": "Whatever comes out next week"
+                    },
+                    {
+                        "questionId": "role",
+                        "singleChoice": "Full-stack"
+                    },
+                    {
+                        "questionId": "diy",
+                        "singleChoice": "1–3 times"
+                    },
+                    {
+                        "questionId": "conflict",
+                        "singleChoice": "Panic"
+                    }
+                ],
+                "questionsDigest": "sha256:3c680edd8ec0bd11de56bb090c29281d3a3f8ea2c39b607d54bc3ac399dea628",
+                "roundUID": "e2638080-2875-4b35-af58-6c661d19b6fc",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-2"
+                },
+                "submittedAt": "2026-10-07T09:27:18Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:27:09Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-2",
+                    "voter.configbutler.ai/submitter": "Richard"
+                },
+                "name": "round-2-richard",
+                "namespace": "voter",
+                "resourceVersion": "13162989",
+                "uid": "7aec302f-f8c0-4f53-8fd6-40196ed198d3"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "framework",
+                        "singleChoice": "Angular"
+                    },
+                    {
+                        "questionId": "role",
+                        "singleChoice": "Frontender"
+                    },
+                    {
+                        "questionId": "diy",
+                        "singleChoice": "Never"
+                    },
+                    {
+                        "questionId": "conflict",
+                        "singleChoice": "Merge it somehow"
+                    }
+                ],
+                "questionsDigest": "sha256:3c680edd8ec0bd11de56bb090c29281d3a3f8ea2c39b607d54bc3ac399dea628",
+                "roundUID": "e2638080-2875-4b35-af58-6c661d19b6fc",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-2"
+                },
+                "submittedAt": "2026-10-07T09:27:08Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:27:15Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-2",
+                    "voter.configbutler.ai/submitter": "Spookers"
+                },
+                "name": "round-2-spookers",
+                "namespace": "voter",
+                "resourceVersion": "13163047",
+                "uid": "f7c919a5-fbb4-4241-a0c2-488c5224a354"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "framework",
+                        "singleChoice": "Angular"
+                    },
+                    {
+                        "questionId": "role",
+                        "singleChoice": "Backender"
+                    },
+                    {
+                        "questionId": "diy",
+                        "singleChoice": "1–3 times"
+                    },
+                    {
+                        "questionId": "conflict",
+                        "singleChoice": "Last write wins"
+                    }
+                ],
+                "questionsDigest": "sha256:3c680edd8ec0bd11de56bb090c29281d3a3f8ea2c39b607d54bc3ac399dea628",
+                "roundUID": "e2638080-2875-4b35-af58-6c661d19b6fc",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-2"
+                },
+                "submittedAt": "2026-10-07T09:27:16Z"
+            }
+        },
+        {
+            "apiVersion": "examples.configbutler.ai/v1alpha1",
+            "kind": "QuizSubmission",
+            "metadata": {
+                "creationTimestamp": "2026-10-07T09:27:58Z",
+                "generation": 1,
+                "labels": {
+                    "voter.configbutler.ai/round": "round-2",
+                    "voter.configbutler.ai/submitter": "W2"
+                },
+                "name": "round-2-w2",
+                "namespace": "voter",
+                "resourceVersion": "13163376",
+                "uid": "84c6c558-6efc-4f20-8e55-88ae527f3e08"
+            },
+            "spec": {
+                "answers": [
+                    {
+                        "questionId": "framework",
+                        "singleChoice": "Angular"
+                    },
+                    {
+                        "questionId": "role",
+                        "singleChoice": "Full-stack"
+                    },
+                    {
+                        "questionId": "diy",
+                        "singleChoice": "I've stopped counting"
+                    },
+                    {
+                        "questionId": "conflict",
+                        "singleChoice": "Last write wins"
+                    }
+                ],
+                "questionsDigest": "sha256:3c680edd8ec0bd11de56bb090c29281d3a3f8ea2c39b607d54bc3ac399dea628",
+                "roundUID": "e2638080-2875-4b35-af58-6c661d19b6fc",
+                "sessionRef": {
+                    "group": "examples.configbutler.ai",
+                    "kind": "QuizSession",
+                    "name": "round-2"
+                },
+                "submittedAt": "2026-10-07T09:27:58Z"
+            }
+        }
+    ],
+    "kind": "List",
+    "metadata": {
+        "resourceVersion": ""
+    }
+}

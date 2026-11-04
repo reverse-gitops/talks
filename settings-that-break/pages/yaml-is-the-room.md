@@ -12,12 +12,12 @@ transition: fade
 apiVersion: room-pass.koudijs.dev/v1alpha1
 kind: Room
 metadata:
-  name: mission2
+  name: ordev-1-stamp
   namespace: voter
 spec:
   title: Room Pass
   appearance:
-    tagline: Dutch Cloud Native Day · Mission 2
+    tagline: Ordev · Stamp · Thursday 14:55
   question:
     prompt: How familiar are you with GitOps?
     answers:
@@ -28,7 +28,7 @@ spec:
   joinCode: { length: 6, rotateEvery: 30s, validFor: 120s }
   maxParticipants: 300
   enrollment: Open
-  endsAt: "2026-10-30T23:00:00Z"
+  endsAt: "2026-11-05T23:00:00Z"
 status:           # written by the controller
   conditions: [{ type: Ready, status: "True" }]
 ```
@@ -40,7 +40,7 @@ status:           # written by the controller
     <li v-click>The question you answered at the door, the join code, the 300 seats: <strong>all of it</strong></li>
     <li v-click>No database behind it. <strong>GET the object and you have the whole thing.</strong></li>
   </ul>
-  <a v-click class="live" href="https://demo.koudijs.dev/k8s/apis/room-pass.koudijs.dev/v1alpha1/namespaces/voter/rooms/mission2" target="_blank">demo.koudijs.dev/k8s/apis/room-pass.koudijs.dev/v1alpha1/namespaces/voter/rooms/mission2</a>
+  <a v-click class="live" href="https://demo.koudijs.dev/k8s/apis/room-pass.koudijs.dev/v1alpha1/namespaces/voter/rooms/ordev-1-stamp" target="_blank">demo.koudijs.dev/k8s/apis/room-pass.koudijs.dev/v1alpha1/namespaces/voter/rooms/ordev-1-stamp</a>
   <p v-click class="fine"><code>status</code>, <code>resourceVersion</code> and <code>managedFields</code> belong to the server. <code>spec</code> is the intent, and that is what goes to Git.</p>
 </div>
 </div>
