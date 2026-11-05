@@ -11,6 +11,7 @@ transition: fade
   Settings: click 4 the row appears, 5 new version, 6 to test, 7 to production.
   The second row's space is kept empty from the start, so nothing moves when it arrives.
   A version swaps when its flying pill lands: see .late.
+  The e2e chip belongs to the Test environment: it runs when a version lands there (clicks 2 and 6), on the same click.
 -->
 <div class="stage">
 
@@ -73,6 +74,12 @@ transition: fade
     </div>
   </div>
 
+  <!-- the e2e tests run against the Test environment, whichever stream just landed there -->
+  <div class="at e2e fade late" :class="{ off: $clicks < 2, run: $clicks === 2 || $clicks === 6 }">
+    <span class="busy">e2e tests running…</span>
+    <span class="pass">✓ e2e tests passed</span>
+  </div>
+
   <!-- the words that belong to one step -->
   <div class="at once fade" :class="{ off: $clicks !== 3 }">build once, move the same thing</div>
   <div class="at depends fade" :class="{ off: $clicks !== 3 }">Your ingredients will differ. It all depends.</div>
@@ -92,11 +99,11 @@ transition: fade
 
 - **the picture** Commit, build, store, roll out. Every step leaves something you can look at.
 - **new build** A new commit becomes shop:1.4 in the registry. Nothing is running it yet.
-- **to test** CD rolls shop:1.4 out to test. Production stays on shop:1.3.
+- **to test** CD rolls shop:1.4 out to test and the e2e tests run against it. Production stays on shop:1.3.
 - **to production** The very thing test has seen moves on to production. Nothing gets rebuilt.
 - **a second stream** Configuration gets its own commits, its own build, its own versions. Same registry.
 - **a change** An end user saves a setting on their screen. No Git needed: it becomes shop-settings:43.
-- **to test** Same road: test gets the new settings first. Production stays on shop-settings:42.
+- **to test** Same road: test gets the new settings first, and the same e2e tests run. Production stays on shop-settings:42.
 - **to production** No new build of the code. The pod states exactly what it runs: shop:1.4 and shop-settings:43.
 
 </Story>
@@ -106,7 +113,7 @@ transition: fade
 
 [click] New code. A commit, a build, and a new version in the registry. Nothing runs it yet.
 
-[click] It goes to test first. Production is still on the old version.
+[click] It goes to test first, and we run our e2e tests against that environment: does it work like we intended? Production is still on the old version.
 
 [click] Then production. We build once: what reaches production is the very thing test has seen. A word on ingredients: I don't know your exact system, and as a good consultant once said: it all depends.
 
@@ -114,7 +121,7 @@ transition: fade
 
 [click] Now somebody changes a setting. A new version of the settings, in the same registry.
 
-[click] To test first. Exactly the same step as the code.
+[click] To test first. Exactly the same step as the code, and the same e2e tests run again: now they check the new settings too.
 
 [click] And to production, without a new build of the code. The pod says exactly what it runs: this version of the code, and this version of the settings. Hold that thought, we'll get there. First we have to make configuration something you can put in Git.
 -->
@@ -154,6 +161,27 @@ transition: fade
 
 /* a new version shows up when its flying pill lands */
 .late.late { transition-delay: .9s; }
+
+/* The chip shows the last result until the new version lands, then runs: same timing on clicks 2 and 6. */
+.e2e { left: 1050px; top: 388px; width: 197px; height: 36px; }
+.e2e span {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; white-space: nowrap;
+  border-radius: 8px; font-family: var(--mono); font-size: 15px;
+}
+.e2e .busy { opacity: 0; color: var(--amber); background: #1F1A10; border: 1px solid var(--amber); }
+.e2e .pass { color: var(--good); background: #101C17; border: 1px solid var(--good); }
+.e2e.run .busy { animation: e2e-busy 2.8s linear both; }
+.e2e.run .pass { animation: e2e-pass 2.8s linear both; }
+@keyframes e2e-busy {
+  0%, 37% { opacity: 0; }
+  38%, 88% { opacity: 1; }
+  89%, 100% { opacity: 0; }
+}
+@keyframes e2e-pass {
+  0%, 37% { opacity: 1; }
+  38%, 88% { opacity: 0; }
+  89%, 100% { opacity: 1; }
+}
 
 .once { left: 1036px; top: 684px; width: 500px; text-align: center; font-family: var(--mono); font-size: 18px; color: var(--good); }
 .depends { left: 64px; top: 410px; width: 520px; font-family: 'Caveat', cursive; font-size: 48px; line-height: 1; font-weight: 600; color: var(--amber); transform: rotate(-1.5deg); }

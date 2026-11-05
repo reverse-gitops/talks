@@ -90,7 +90,7 @@ This is the part to spend time on.
 - The same digest moves through environments: test first, then production when someone agrees.
 - This is where "slowing down" happens, and this is where review lives.
 - Going back means pointing at the previous digest. That is the Cloudflare button from section 1.
-- **New slide:** promotion picture. It is a slide unless the second environment gets built (see "Before going on stage").
+- **Slide:** `promote`. It runs for real: Kargo promotes `test` automatically and `prod` only when a person does. `demo-production` takes the same image through a pull request that a person merges.
 
 ### 8. Secrets, one minute (32–33)
 
@@ -149,7 +149,7 @@ chair colours to appear in the image.
 | Keep watching the registry, commit the digest to the GitOps repo (`ConfigButler/k8s`), and apply it | [Flux image automation](https://fluxcd.io/flux/components/image/) | `delivery`, `coffee-image`, `promote` |
 | Mount it | A Kubernetes image volume | `delivery` |
 | Secrets | [SOPS](https://getsops.io), [age](https://age-encryption.org), [OpenBao](https://openbao.org) | `secrets` |
-| Promotion | [Kargo](https://kargo.akuity.io) is installed on the cluster but not set up, so only the notes mention it as an option | `promote` |
+| Promotion | [Kargo](https://kargo.akuity.io) moves the digest: `test` automatically, `prod` when a person promotes it | `coffee-image`, `promote` |
 
 ## Slide: Loose ends
 
@@ -187,7 +187,7 @@ Spoken only, if there is time:
 | Packaged | §6 | Live |
 | Versioned | §6 | Live: commit and digest |
 | **Signed** | §5, §6 | **Half.** The commits are signed. The image's provenance is an unsigned claim. Say so: `cosign` is the standard next step |
-| **Promoted through environments** | §7 | **Slide only today.** One consumer on the cluster |
+| Promoted through environments | §7 | Live on the cluster: Kargo `test` and `prod`, and `demo-production` by pull request. On stage it's the slide and the links, unless a live promotion gets rehearsed |
 | Where Git still fits | §2, §5 | Covered |
 | Why OCI is a useful packaging boundary | §3, §6 | Live |
 | Separating authoring from delivery | §5 | Covered |
@@ -196,8 +196,8 @@ Spoken only, if there is time:
 
 ## Before going on stage
 
-- [ ] **Decide on promotion.** Either state plainly that it's a picture, or add a second Deployment pinned to
-      an older digest and bump it by hand on stage. The second option is small and delivers the promise.
+- [ ] **Decide on promotion.** Either show the slide and the Kargo page, or promote `prod` live on stage. Only
+      do it live if it has been rehearsed.
 - [ ] **Add non-YAML files, or say it's a picture.** The real image holds only three YAML files, and the demo
       lists them right after the `package` slide shows XML, INI and JPG. `coffee/.gittargetignore` doesn't list
       `raw/` yet, and the operator refuses files it doesn't manage, so add `raw/` there before committing to

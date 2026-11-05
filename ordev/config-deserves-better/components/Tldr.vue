@@ -10,9 +10,7 @@
     </div>
     <h1>Package settings <span class="green">into an image.</span></h1>
 
-    <div class="chain">
-      <b>Settings screen</b><i>→</i><b>Files in Git</b><i>→</i><b class="hero">Image</b><i>→</i><b>Test</b><i>→</i><b>Production</b>
-    </div>
+    <TalkChain at="image" />
 
     <div class="points">
       <div><strong>Model config text-based</strong><span>Desired state, format choice is yours: YAML, XML, INI, JPG...</span></div>
@@ -39,10 +37,6 @@
 .download b { color: var(--accent); }
 .tldr h1 { font-size: 66px; margin-bottom: 44px; }
 .tldr h1 .green { color: var(--good); }
-.chain { display: flex; align-items: center; gap: 18px; font-size: 32px; }
-.chain b { flex: 1; padding: 24px 12px; text-align: center; white-space: nowrap; background: var(--panel); border: 1px solid var(--line-strong); border-radius: 12px; font-weight: 500; }
-.chain b.hero { color: var(--bg); background: var(--good); border-color: var(--good); font-weight: 700; }
-.chain i { font-style: normal; color: var(--arrow); }
 .points { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; margin-top: 44px; }
 .points div { display: flex; flex-direction: column; gap: 12px; }
 .points strong { font-size: 36px; line-height: 1.2; }

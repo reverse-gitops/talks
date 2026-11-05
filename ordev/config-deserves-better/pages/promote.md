@@ -46,11 +46,11 @@ transition: fade
 <Sources slim :items="[{ name: 'settings-image', href: 'https://github.com/ConfigButler/settings-image' }, { name: 'Flux', href: 'https://fluxcd.io/flux/components/image/' }, { name: 'Kargo', href: 'https://kargo.akuity.io' }]" />
 
 <!--
-29:00. The picture for promoting. On my cluster there's one environment today, so this part is a picture. Say that. Flux writes the digest for me today. For moving it between environments, Kargo is one tool built for that: it's installed on my cluster, but not set up yet.
+29:00. This picture runs on my cluster today, with Kargo moving the digest. The digests on the slide are examples. The Kargo page and the test and prod links are on the previous slide.
 
-Test gets every change straight away.
+Test gets every change straight away: Kargo promotes it automatically.
 
-[click] Production waits for someone to agree. Here is the "slowing down": the settings screen stays fast, the road to production gets longer. And what goes to production is exactly what test has seen.
+[click] Production waits for someone to agree: in Kargo, prod only moves when a person promotes it. Here is the "slowing down": the settings screen stays fast, the road to production gets longer. And what goes to production is exactly what test has seen. demo-production does the same with a pull request: Flux writes it, a person merges it.
 
 [click] And the road back gets shorter. Something's wrong: point at the previous digest. New pods replace the old pods, and that's the 10-minute button.
 -->

@@ -48,6 +48,10 @@ src: ./pages/problem.md
 ---
 
 ---
+src: ./pages/chain-settings.md
+---
+
+---
 src: ./pages/cloudflare-screens.md
 ---
 
@@ -65,6 +69,10 @@ src: ./pages/legacy.md
 
 ---
 src: ./pages/applies-to.md
+---
+
+---
+src: ./pages/chain-git.md
 ---
 
 ---

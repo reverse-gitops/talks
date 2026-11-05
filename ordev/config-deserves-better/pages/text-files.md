@@ -15,7 +15,7 @@ transition: fade
 
 <p v-click class="split">We split <span class="ok">edits from using.</span></p>
 
-<p class="answer"><strong>Come see that tomorrow.</strong> I do advise you to have <span class="ok">a temporary database in front of it, and a very nice API.</span></p>
+<p class="answer">I do advise you to have <span class="ok">a temporary database in front of it, and a very nice API.</span></p>
 
 <!--
 Back to text files: oh dear, what is he proposing?
@@ -28,7 +28,7 @@ And how do we let people change that?
 
 [click] We split edits from using.
 
-Come see that tomorrow. I do advise you to have a temporary database in front of it, and a very nice API.
+I do advise you to have a temporary database in front of it, and a very nice API.
 -->
 
 <style>
@@ -38,6 +38,5 @@ h1 .red { color: var(--bad); }
 .split { margin: 56px 0 0; font-size: 72px; line-height: 1.15; font-weight: 700; color: var(--text); opacity: 1; }
 .split .ok { color: var(--good); }
 .answer { margin: 48px 0 0; font-size: 38px; line-height: 1.3; color: var(--soft); opacity: 1; }
-.answer strong { color: var(--text); font-weight: 700; }
 .answer .ok { color: var(--good); }
 </style>
