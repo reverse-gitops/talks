@@ -19,7 +19,7 @@ import scriptFile from './demo-scripts/commits.yaml?url'
 
 <!--
 7:30 · Someone changes their colour live and types why.
-Keep Kubernetes out of this. Only commits and messages: the wow is that it's them. The files come later.
+Keep Kubernetes out of this. Only commits and messages: the wow is that it's them. The files come right after this.
 
 [. .] cd into the repo.
 

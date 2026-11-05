@@ -84,10 +84,6 @@ src: ./pages/commits.md
 ---
 
 ---
-src: ./pages/externalized.md
----
-
----
 src: ./pages/desired-state.md
 ---
 
@@ -97,14 +93,6 @@ src: ./pages/text-files.md
 
 ---
 src: ./pages/formats.md
----
-
----
-src: ./pages/create-artifacts.md
----
-
----
-src: ./pages/tomorrow.md
 ---
 
 ---
@@ -121,6 +109,10 @@ hide: true
 ---
 
 ---
+src: ./pages/api-and-files.md
+---
+
+---
 src: ./pages/api-to-git.md
 ---
 
@@ -129,7 +121,27 @@ src: ./pages/kubernetes-tomorrow.md
 ---
 
 ---
+src: ./pages/tomorrow.md
+---
+
+---
+src: ./pages/chain-image.md
+---
+
+---
+src: ./pages/ci-step.md
+---
+
+---
+src: ./pages/externalized.md
+---
+
+---
 src: ./pages/package.md
+---
+
+---
+src: ./pages/create-artifacts.md
 ---
 
 ---

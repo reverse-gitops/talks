@@ -38,7 +38,7 @@ transition: fade
 <Sources slim :items="[{ name: 'GitOps Reverser', href: 'https://github.com/ConfigButler/gitops-reverser' }, { name: 'Reverse GitOps', href: 'https://reversegitops.dev' }]" />
 
 <!--
-20:00. You might have felt this one coming: now that we have files, we can commit them. That is how your chairs got into Git. The API also decides who may change what, so authorization happens before anything reaches Git.
+16:00. You might have felt this one coming: now that we have files, we can commit them. That is how your chairs got into Git. The API also decides who may change what, so authorization happens before anything reaches Git.
 
 [click] Every person who makes a change ends up in Git. I built a special nerd operator for that: gitops-reverser. How it works is tomorrow's talk.
 

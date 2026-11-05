@@ -37,18 +37,7 @@ road back gets shorter.*
   beforehand. It's a good start, but it isn't delivery yet."
 - **Slides:** `seats`, `commits`.
 
-### 3. How we already do this for code (10–14)
-
-- First the picture everyone recognises: Git → CI → artifact in a registry → CD → environments.
-- A word on promoting: we build once, and we move the same thing through test and production.
-- A word on ingredients: "I don't know your system. As a good consultant once said: it all depends."
-- Then the picture with configuration externalised, sitting beside the code as its own stream.
-- The registry stores artifacts of any kind, and it is sitting right below our configuration.
-- The question for the rest of the talk: what does that take, and is it worth it?
-- First the code lane, then configuration in the same picture: new version, test, then production, twice.
-- **Slides:** `externalized`.
-
-### 4. Model it as files, then the reveal, part two (14–20)
+### 3. Model it as files, then the reveal, part two (10–16)
 
 - To reuse all of this, configuration has to become text files. "Oef, that's two steps back, isn't it?"
 - "Oh dear, what is he proposing? How do we let people change that?" We split edits from using.
@@ -59,17 +48,30 @@ road back gets shorter.*
 - The jump: for the structured ones I picked one shape, KRM. Only mention it.
 - The twist: the room's own answers to the GitOps question at the door. You already know these files.
 - "YAML is just JSON that is afraid of curly braces." The real chairs in the terminal, and throw `yq` at them.
-- **Slides:** `desired-state`, `formats`, `krm`, `gitops-people`, `chairs`.
+- **Slides:** `desired-state`, `text-files`, `formats`, `krm`, `gitops-people`, hidden `chairs`.
 
-### 5. From API to Git, and the Kubernetes disclaimer (20–21:30)
+### 4. The jump: an API and files, and tomorrow's talk (14:30–18)
 
+- Say out loud that this is a big jump: an API and files at the same time, made possible by KRM and gitops-reverser. For today it's magic, and tomorrow is where I show the trick.
 - We still want a nice settings screen, and an API that gives AI tools fast answers: validated intent.
 - gitops-reverser lets you edit a folder of files through an API. Users don't see Git, and you get the audit log.
 - This is the boundary from the abstract: **authoring** ends here and **delivery** starts.
 - There is a Kubernetes API behind this, and that magic stays for tomorrow. Two important things: don't dismiss
   this if you dislike Kubernetes, the idea stands, because you can push a representation as an artifact. And be
   explicit about the process around it.
-- **Slides:** `api-to-git`, `kubernetes-tomorrow`.
+- **Slides:** `api-and-files`, `api-to-git`, `kubernetes-tomorrow`, `tomorrow`.
+
+### 5. How we already do this for code (18–21:30)
+
+- First the picture everyone recognises: Git → CI → artifact in a registry → CD → environments.
+- A word on promoting: we build once, and we move the same thing through test and production.
+- A word on ingredients: "I don't know your system. As a good consultant once said: it all depends."
+- Then the picture with configuration externalised, sitting beside the code as its own stream.
+- The registry stores artifacts of any kind, and it is sitting right below our configuration.
+- The question for the rest of the talk: what does that take, and is it worth it?
+- First the code lane, then configuration in the same picture: new version, test, then production, twice.
+- First make the image concrete: a commit becomes an image in one CI step, using the real `coffee-settings` workflow.
+- **Slides:** `chain-image`, `ci-step`, `externalized`.
 
 ### 6. The main point: package it (21–29)
 
@@ -82,7 +84,7 @@ This is the part to spend time on.
 - Sideload it next to the app with an image volume. New settings mean new pods replacing old pods, so the
   rolling update protects you: if the new pods don't get ready, the old ones keep serving.
 - **Demo:** see below. The wait for the image is when `delivery` explains the mechanism.
-- **Slides:** `package`, `coffee`, `delivery`, `coffee-image`. `delivery` keeps Alice's fictional shop on
+- **Slides:** `package`, `create-artifacts`, `coffee`, `delivery`, `coffee-image`. `delivery` keeps Alice's fictional shop on
   purpose: it closes the opening story, and the demo right after it shows the real thing.
 
 ### 7. Promote it (29–32)

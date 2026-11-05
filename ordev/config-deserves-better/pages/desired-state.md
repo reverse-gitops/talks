@@ -3,7 +3,7 @@ layout: default
 transition: fade
 ---
 
-###### Let's apply this
+###### What is in those commits?
 
 # Back to text files. <span class="red">Oef, two steps back?</span>
 
@@ -31,7 +31,7 @@ color: "#a8e05f"
 <Sources slim :items="[{ name: 'Config Deserves Better', href: 'https://configdeservesbetter.dev' }]" />
 
 <!--
-14:00. If we want to get back to how source code works, we should model our configuration as text files, as much as possible.
+10:00. So what is in those commits? Text files. That's how we treat source code, so model configuration as text files, as much as possible.
 Oef. That's two steps back, isn't it?
 
 A description of what it should be. The desired state, a specification. You can read it, compare it, and go back to it.

@@ -34,7 +34,7 @@ spec:
 <p class="punch">The Kubernetes Resource Model: a description, in a shape many tools already read.</p>
 
 <!--
-17:00. Now I can make the jump. For the structured ones I picked one shape: KRM, the Kubernetes Resource Model.
+13:00. Now I can make the jump. For the structured ones I picked one shape: KRM, the Kubernetes Resource Model.
 
 Just mention it. No CRDs, no API server, no validation rules: that's tomorrow.
 

@@ -18,7 +18,7 @@ transition: fade
 <Sources slim :items="[{ name: 'Reverse GitOps', href: 'https://reversegitops.dev' }]" />
 
 <!--
-17:30 · The twist. Remember the question at the door? "Where is GitOps going?" These are your own answers, live. No explaining what GitOps is.
+13:30 · The twist. Remember the question at the door? "Where is GitOps going?" These are your own answers, live. No explaining what GitOps is.
 
 Now it's your chair, and your settings.
 

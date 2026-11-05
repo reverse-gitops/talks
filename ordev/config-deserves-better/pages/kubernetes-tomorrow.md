@@ -12,12 +12,10 @@ transition: fade
   <div class="card"><b>2</b><strong>Be explicit about the process around it</strong><span>Who changes it, what checks it, and how it moves to production.</span></div>
 </div>
 
-<p class="foot"><strong>The magic behind it:</strong> tomorrow, 11:15, Turing. (Ab)using the Kubernetes API as a Configuration Backend.</p>
-
 <Sources slim :items="[{ name: 'Reverse GitOps', href: 'https://reversegitops.dev' }, { name: 'Config Deserves Better', href: 'https://configdeservesbetter.dev' }]" />
 
 <!--
-21:00. Some of you will recognise this as Kubernetes. It is. There's an API behind this, and I use it for its great API and for writing back to Git. That part stays a bit of magic until tomorrow.
+17:00. Some of you will recognise this as Kubernetes. It is. There's an API behind this, and I use it for its great API and for writing back to Git. That part stays a bit of magic until tomorrow.
 
 Two important things, also if you dislike Kubernetes:
 
@@ -32,5 +30,4 @@ And be explicit about the process around it. That's what the rest of this talk i
 .card b { width: 56px; height: 56px; border-radius: 28px; display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--bg); background: var(--good); }
 .card strong { font-size: 40px; line-height: 1.15; }
 .card span { font-size: 28px; line-height: 1.3; color: var(--soft); }
-.foot { margin-top: 56px; font-size: 28px; line-height: 1.3; color: var(--soft); }
 </style>
