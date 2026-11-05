@@ -46,7 +46,7 @@ transition: fade
 <Sources slim :items="[{ name: 'settings-image', href: 'https://github.com/ConfigButler/settings-image' }, { name: 'Flux', href: 'https://fluxcd.io/flux/components/image/' }, { name: 'Kargo', href: 'https://kargo.akuity.io' }]" />
 
 <!--
-29:00. This picture runs on my cluster today, with Kargo moving the digest. The digests on the slide are examples. The Kargo page and the test and prod links are on the previous slide.
+31:00. This picture runs on my cluster today, with Kargo moving the digest. The digests on the slide are examples. The Kargo page and the test and prod links are on the coffee-image slide, a few slides back.
 
 Test gets every change straight away: Kargo promotes it automatically.
 

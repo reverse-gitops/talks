@@ -4,21 +4,28 @@ clicks: 3
 transition: fade
 ---
 
-# Any file. <span class="green">One image.</span>
+# Your files. <span class="green">One image.</span>
 
 <div class="stage">
   <div class="at files">
-    <div class="file"><i>YAML</i>settings.yaml</div>
-    <div class="file"><i>XML</i>tax-rules.xml</div>
-    <div class="file"><i>INI</i>legacy-printer.ini</div>
-    <div class="file"><i>JPG</i>avatars/simon.jpg</div>
+    <div class="file"><b>coffeeconfig.yaml</b><pre v-pre>kind: CoffeeConfig
+shopName: Coffee order system
+mail:
+  apiKeySecretRef:
+    name: coffee-mail</pre></div>
+    <div class="file secret"><b>coffee-mail.sops.yaml</b><pre v-pre>kind: Secret
+name: coffee-mail
+apiKey: ENC[AES256_GCM,data:Qdw1fCKT…</pre></div>
+    <div class="file secret"><b>coffee-payments.sops.yaml</b><pre v-pre>kind: Secret
+name: coffee-payments
+apiKey: ENC[AES256_GCM,data:m93YmS91…</pre></div>
   </div>
 
   <div class="fade" :class="{ off: $clicks < 1 }">
-    <Arrow points="470,430 568,430" color="var(--good)" />
+    <Arrow points="510,430 568,430" color="var(--good)" />
     <div class="box image">
-      <b>shop-settings</b>
-      <span class="digest">sha256:7f3a91c2…</span>
+      <b>coffee-settings</b>
+      <span class="digest">sha256:00b28189…</span>
       <span class="tag">no base image, no shell, nothing executes</span>
     </div>
   </div>
@@ -36,21 +43,21 @@ transition: fade
 
 <Story>
 
-- **any file** Your app doesn't have to change its format: YAML, XML, INI, or a JPG.
+- **your files** A real example: the coffee shop's settings, and its two secrets, encrypted.
 - **an image** It's all packaged into a plain container image, stored right next to your code. The same files always give the same digest.
 - **the model** Not a pile of changes on top of a table, but everything in one thing.
 - **point at it** One line answers what's running. It also answers what was running an hour ago.
 
 </Story>
 
-<Sources slim :items="[{ name: 'settings-image', href: 'https://github.com/ConfigButler/settings-image' }]" />
+<Sources slim :items="[{ name: 'coffee-settings', href: 'https://github.com/ConfigButler/coffee-settings' }, { name: 'settings-image', href: 'https://github.com/ConfigButler/settings-image' }]" />
 
 <!--
-21:30. This is the part to take your time on.
+19:30. This is the part to take your time on.
 
-You can package whatever your application already reads. YAML, XML, INI files, even the JPG of someone's avatar. Your app doesn't have to change.
+This is a real example: the files of the coffee shop you'll see later. One CoffeeConfig, which points at two Secrets. Those two stay encrypted. You can package whatever your application already reads, so your app doesn't have to change.
 
-[click] It all goes into a container image. No base image, no shell: just your files. The same files give the same digest, on any machine.
+[click] It all goes into a container image. No base image, no shell: just your files. The same files give the same digest, on any machine: I changed this menu and changed it back, and that image got this exact digest again.
 
 [click] And that image is the complete model of the current desired state, as an end user configured it.
 
@@ -58,13 +65,11 @@ You can package whatever your application already reads. YAML, XML, INI files, e
 -->
 
 <style>
-.files { left: 64px; top: 240px; width: 400px; display: flex; flex-direction: column; gap: 16px; }
-.file {
-  display: flex; align-items: center; gap: 14px; height: 80px; box-sizing: border-box; padding: 0 16px;
-  background: var(--panel); border: 1px solid var(--line-strong); border-radius: 12px;
-  font-family: var(--mono); font-size: 18px; color: var(--soft);
-}
-.file i { flex: none; width: 76px; font-style: normal; font-weight: 600; font-size: 20px; color: var(--accent); }
+.files { left: 64px; top: 205px; width: 440px; display: flex; flex-direction: column; gap: 14px; }
+.file { display: flex; flex-direction: column; gap: 6px; box-sizing: border-box; padding: 12px 16px; background: var(--panel); border: 1px solid var(--line-strong); border-radius: 12px; }
+.file b { font-family: var(--mono); font-size: 18px; line-height: 24px; font-weight: 600; color: var(--accent); }
+.file pre { margin: 0; font-family: var(--mono); font-size: 16px; line-height: 23px; color: var(--soft); background: none; white-space: pre; }
+.file.secret b { color: var(--amber); }
 .image { left: 570px; top: 300px; width: 400px; height: 260px; gap: 16px; border: 2px solid var(--good); }
 .image b { font-size: 32px; line-height: 38px; }
 .digest { font-family: var(--mono); font-size: 24px; color: var(--good); }

@@ -27,7 +27,7 @@ data:
 <Sources slim :items="[{ name: 'SOPS', href: 'https://getsops.io' }, { name: 'age', href: 'https://age-encryption.org' }, { name: 'OpenBao', href: 'https://openbao.org' }]" />
 
 <!--
-≈1:00, no more. You just saw it, so don't walk through it.
+27:00, ≈1:00, no more. You just saw it, so don't walk through it.
 
 Git, CI and the registry only ever see ciphertext. Very late, the pod's init container logs in to OpenBao with its own ServiceAccount token, gets the key, and opens the file into a memory-only volume.
 

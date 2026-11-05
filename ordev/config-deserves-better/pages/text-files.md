@@ -13,9 +13,11 @@ transition: fade
   <blockquote>How do we let people change that?</blockquote>
 </div>
 
-<p v-click class="split">We split <span class="ok">edits from using.</span></p>
-
-<p class="answer">I do advise you to have <span class="ok">a temporary database in front of it, and a very nice API.</span></p>
+<div v-click>
+  <p class="split">We split <span class="ok">edits from using.</span></p>
+  <p class="answer">Have <span class="ok">a very nice API for editing the files.</span></p>
+  <p class="hint">Hint: don't try to build that API directly on top of Git. I failed trying.</p>
+</div>
 
 <!--
 Back to text files: oh dear, what is he proposing?
@@ -28,7 +30,9 @@ And how do we let people change that?
 
 [click] We split edits from using.
 
-I do advise you to have a temporary database in front of it, and a very nice API.
+Have a very nice API for editing the files. That's simple enough.
+
+And a hint: don't try to build that API directly on top of Git. I failed trying.
 -->
 
 <style>
@@ -39,4 +43,5 @@ h1 .red { color: var(--bad); }
 .split .ok { color: var(--good); }
 .answer { margin: 48px 0 0; font-size: 38px; line-height: 1.3; color: var(--soft); opacity: 1; }
 .answer .ok { color: var(--good); }
+.hint { margin: 28px 0 0; font-family: 'Caveat', cursive; font-size: 50px; line-height: 1.1; font-weight: 600; color: var(--amber); opacity: 1; }
 </style>

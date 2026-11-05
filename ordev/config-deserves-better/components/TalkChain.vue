@@ -1,18 +1,20 @@
 <!--
   The order of the talk, as a chain: on the TLDR slide, and between sections to show where we are.
-  `at` picks the step that is highlighted: settings, git, image, test or production.
+  `at` picks the highlighted step, or a list of steps: settings, git, image, test or production.
 -->
 <script setup lang="ts">
-defineProps<{ at: 'settings' | 'git' | 'image' | 'test' | 'production' }>()
+type Step = 'settings' | 'git' | 'image' | 'test' | 'production'
+const props = defineProps<{ at: Step | Step[] }>()
+const lit = (step: Step) => [props.at].flat().includes(step)
 </script>
 
 <template>
   <div class="chain">
-    <b :class="{ hero: at === 'settings' }">Settings screen</b><i>→</i>
-    <b :class="{ hero: at === 'git' }">Files in Git</b><i>→</i>
-    <b :class="{ hero: at === 'image' }">Image</b><i>→</i>
-    <b :class="{ hero: at === 'test' }">Test</b><i>→</i>
-    <b :class="{ hero: at === 'production' }">Production</b>
+    <b :class="{ hero: lit('settings') }">Settings screen</b><i>→</i>
+    <b :class="{ hero: lit('git') }">Files in Git</b><i>→</i>
+    <b :class="{ hero: lit('image') }">Image</b><i>→</i>
+    <b :class="{ hero: lit('test') }">Test</b><i>→</i>
+    <b :class="{ hero: lit('production') }">Production</b>
   </div>
 </template>
 

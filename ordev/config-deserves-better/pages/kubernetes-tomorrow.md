@@ -7,27 +7,56 @@ transition: fade
 
 # Don't dismiss this <span class="green">if you dislike Kubernetes.</span>
 
-<div class="two">
-  <div class="card"><b>1</b><strong>The idea stands</strong><span>You can push a representation of your configuration as an artifact, however you produce it.</span></div>
-  <div class="card"><b>2</b><strong>Be explicit about the process around it</strong><span>Who changes it, what checks it, and how it moves to production.</span></div>
+<div class="three">
+  <div class="card"><strong>Strong modelling</strong><span>Typed objects, validation rules, and references between them.</span></div>
+  <div class="card"><strong>Authz / RBAC</strong><span>Already built in: who may change what, per kind and per namespace.</span></div>
+  <div class="card"><strong>A well-known format</strong><span>Many tools already read it, so there's a lot available to help you.</span></div>
+  <div class="card ai">
+    <strong>AI can help</strong>
+    <span>It knows this format. My skill reviews your model:</span>
+    <a href="https://github.com/ConfigButler/skills" target="_blank">github.com/ConfigButler/skills</a>
+  </div>
 </div>
 
-<Sources slim :items="[{ name: 'Reverse GitOps', href: 'https://reversegitops.dev' }, { name: 'Config Deserves Better', href: 'https://configdeservesbetter.dev' }]" />
+<p class="dream">My dream: so common that you can buy these steps as a managed service (or self-host), while your data stays in your own Git repo.</p>
+
+<div class="promo">
+  <span class="when">Tomorrow, 11:15, Turing</span>
+  <span class="what">(Ab)using the Kubernetes API as a Configuration Backend</span>
+  <span class="teaser">Teaser: <strong>bi-directional GitOps</strong></span>
+</div>
+
+<Sources slim :items="[{ name: 'ConfigButler skills', href: 'https://github.com/ConfigButler/skills' }, { name: 'Reverse GitOps', href: 'https://reversegitops.dev' }]" />
 
 <!--
-17:00. Some of you will recognise this as Kubernetes. It is. There's an API behind this, and I use it for its great API and for writing back to Git. That part stays a bit of magic until tomorrow.
+16:30. Some of you will recognise this as Kubernetes. It is, and I use it for its API and for writing back to Git. If you dislike Kubernetes, don't dismiss the idea: you can push a representation as an artifact, however you produce it.
 
-Two important things, also if you dislike Kubernetes:
+Why I picked it: the modelling features are strong. Typed objects, validation rules, references between them.
 
-The idea stands. You can push a representation as an artifact. It doesn't matter what produced it.
+RBAC and authorization are already there: who may change what, per kind and per namespace. You don't have to build that yourself.
 
-And be explicit about the process around it. That's what the rest of this talk is about.
+It's a well-known format, so there's a lot available to help you.
+
+And AI can help: it knows this format. I made a skill that reviews your model, it's in ConfigButler/skills.
+
+My dream is that this gets so common that you can also buy these steps as a managed service, or self-host them, while keeping your data in your own Git repo.
+
+Tomorrow, 11:15, Turing, and a teaser: bi-directional GitOps. Git to the API, and the API back to Git.
+
+Back to today. We have the files and the log. Now, how do we deliver them?
 -->
 
 <style>
-.two { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 44px; }
-.card { display: flex; flex-direction: column; gap: 14px; padding: 36px; background: var(--panel); border: 1px solid var(--line-strong); border-radius: 16px; }
-.card b { width: 56px; height: 56px; border-radius: 28px; display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--bg); background: var(--good); }
-.card strong { font-size: 40px; line-height: 1.15; }
-.card span { font-size: 28px; line-height: 1.3; color: var(--soft); }
+.three { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 48px; }
+.card { display: flex; flex-direction: column; gap: 14px; padding: 24px; background: var(--panel); border: 1px solid var(--line-strong); border-radius: 16px; }
+.card strong { font-size: 30px; line-height: 1.15; white-space: nowrap; }
+.card span { font-size: 24px; line-height: 1.3; color: var(--soft); }
+.card a { font-family: var(--mono); font-size: 17px; line-height: 1.3; color: var(--accent); text-decoration: none; border: none; white-space: nowrap; }
+.card.ai { border-color: var(--good); }
+.dream { margin: 32px 0 0; text-align: center; font-family: 'Caveat', cursive; font-size: 46px; line-height: 1.1; font-weight: 600; color: var(--amber); opacity: 1; }
+.promo { display: flex; flex-direction: column; gap: 6px; margin-top: 32px; padding: 26px 32px; background: var(--panel); border: 1px solid var(--accent); border-radius: 16px; }
+.promo .when { font-size: 36px; line-height: 1.2; font-weight: 700; color: var(--accent); }
+.promo .what { font-size: 28px; line-height: 1.3; color: var(--text); }
+.promo .teaser { font-size: 28px; line-height: 1.3; color: var(--soft); }
+.promo .teaser strong { font-weight: 700; color: var(--good); }
 </style>

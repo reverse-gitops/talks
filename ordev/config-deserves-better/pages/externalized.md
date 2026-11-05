@@ -109,7 +109,7 @@ transition: fade
 </Story>
 
 <!--
-19:00. We have an image, but remember the commits: an audit log, not delivery yet. So how do we deliver? The normal, regular process. Everybody here recognises this: Git, CI, an artifact in a registry, CD, your environments. The empty space is for later.
+27:00. We can point at a digest now, and one pod is running it. Remember the commits: an audit log, not delivery yet. So how do we deliver? The normal, regular process. Everybody here recognises this: Git, CI, an artifact in a registry, CD, your environments. The empty space is for later.
 
 [click] New code. A commit, a build, and a new version in the registry. Nothing runs it yet.
 
@@ -123,7 +123,7 @@ transition: fade
 
 [click] To test first. Exactly the same step as the code, and the same e2e tests run again: now they check the new settings too.
 
-[click] And to production, without a new build of the code. The pod says exactly what it runs: this version of the code, and this version of the settings. Hold that thought. Next: why that image is the main point.
+[click] And to production, without a new build of the code. The pod says exactly what it runs: this version of the code, and this version of the settings. Let's see that live.
 -->
 
 <style>

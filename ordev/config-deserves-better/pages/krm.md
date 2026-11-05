@@ -49,5 +49,5 @@ Four fields, and spec is the part we were just talking about.
 dl { margin: 0; display: flex; flex-direction: column; gap: 24px; }
 dt { font-family: var(--mono); font-size: 28px; font-weight: 600; color: var(--accent); }
 dd { margin: 0; font-size: 28px; line-height: 1.25; color: var(--soft); }
-.punch { margin-top: 44px; font-size: 32px; line-height: 1.3; color: var(--soft); }
+.punch { margin-top: 28px; font-size: 30px; line-height: 1.3; color: var(--soft); }
 </style>

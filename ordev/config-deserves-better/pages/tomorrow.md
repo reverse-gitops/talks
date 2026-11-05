@@ -19,7 +19,7 @@ transition: fade
 <p class="no-k8s"><strong>Don't want to run Kubernetes?</strong> It's useful for you too. Self-hosting is fine, but managed solutions should arise soon.</p>
 
 <!--
-17:30. Today it's magic, tomorrow I'll show you the trick: how one thing can be an API and files at the same time.
+17:00. Today it's magic, tomorrow I'll show you the trick: how one thing can be an API and files at the same time.
 
 We'll also get into more detail on GitOps, Reverse GitOps, and even bi-directional GitOps.
 

@@ -48,7 +48,7 @@ road back gets shorter.*
 - The jump: for the structured ones I picked one shape, KRM. Only mention it.
 - The twist: the room's own answers to the GitOps question at the door. You already know these files.
 - "YAML is just JSON that is afraid of curly braces." The real chairs in the terminal, and throw `yq` at them.
-- **Slides:** `desired-state`, `text-files`, `formats`, `krm`, `gitops-people`, hidden `chairs`.
+- **Slides:** `desired-state`, `formats`, `text-files`, `api-and-files` (tomorrow's TLDR, see section 4), `krm`, `gitops-people`, hidden `chairs`.
 
 ### 4. The jump: an API and files, and tomorrow's talk (14:30–18)
 
@@ -59,9 +59,31 @@ road back gets shorter.*
 - There is a Kubernetes API behind this, and that magic stays for tomorrow. Two important things: don't dismiss
   this if you dislike Kubernetes, the idea stands, because you can push a representation as an artifact. And be
   explicit about the process around it.
-- **Slides:** `api-and-files`, `api-to-git`, `kubernetes-tomorrow`, `tomorrow`.
+- **Slides:** `api-and-files` (tomorrow's TLDR: auth, public kube-apiserver, gitops-reverser, Git, and the step back; it now comes right after `text-files`), `kubernetes-tomorrow` (also the promo for tomorrow). `api-to-git` and `tomorrow` are hidden.
 
-### 5. How we already do this for code (18–21:30)
+### 5. The main point: package it (18–27)
+
+This is the part to spend time on.
+
+- First make the image concrete: a commit becomes an image in one CI step, using the real `coffee-settings` workflow.
+- A real example: `coffeeconfig.yaml` and its two encrypted Secrets, the three files in the `coffee-settings` image. Your app doesn't have to change its format.
+- The image holds **the complete model of the desired state as the end user configured it**.
+- **It gives you a clear place to point at.** "What is production running?" has a one-line answer: this digest.
+- Same files, same digest. It holds no base image or shell, and nothing in it executes.
+- Sideload it next to the app with an image volume. New settings mean new pods replacing old pods, so the
+  rolling update protects you: if the new pods don't get ready, the old ones keep serving.
+- **Demo:** see below. The wait for the image is when `delivery` explains the mechanism.
+- **Slides:** `chain-image`, `ci-step`, `create-artifacts`, `package`, `coffee`, `chain-environments`, `delivery`, `coffee-image`. `delivery` keeps Alice's fictional shop on
+  purpose: it closes the opening story, and the demo right after it shows the real thing.
+
+### 6. Secrets, short (on `sops` and `three-files`, around 13:00)
+
+- Encrypting and decrypting are separate steps: encrypted before it reaches Git, decrypted only in the pod.
+- A plain Secret, never committed, gets encrypted in place with a key. SOPS with age is one of the possible ways.
+- That gives three files to commit: the config, which refers to the Secrets by name, and the two encrypted Secrets. `package` picks up those same three files.
+- **Slides:** `sops` and `three-files`. `secrets` is hidden.
+
+### 7. How we already do this for code (27–30)
 
 - First the picture everyone recognises: Git → CI → artifact in a registry → CD → environments.
 - A word on promoting: we build once, and we move the same thing through test and production.
@@ -70,37 +92,15 @@ road back gets shorter.*
 - The registry stores artifacts of any kind, and it is sitting right below our configuration.
 - The question for the rest of the talk: what does that take, and is it worth it?
 - First the code lane, then configuration in the same picture: new version, test, then production, twice.
-- First make the image concrete: a commit becomes an image in one CI step, using the real `coffee-settings` workflow.
-- **Slides:** `chain-image`, `ci-step`, `externalized`.
+- **Slides:** `externalized`.
 
-### 6. The main point: package it (21–29)
-
-This is the part to spend time on.
-
-- Any file can go in: YAML, XML, INI, JPG. Your app doesn't have to change its format.
-- The image holds **the complete model of the desired state as the end user configured it**.
-- **It gives you a clear place to point at.** "What is production running?" has a one-line answer: this digest.
-- Same files, same digest. It holds no base image or shell, and nothing in it executes.
-- Sideload it next to the app with an image volume. New settings mean new pods replacing old pods, so the
-  rolling update protects you: if the new pods don't get ready, the old ones keep serving.
-- **Demo:** see below. The wait for the image is when `delivery` explains the mechanism.
-- **Slides:** `package`, `create-artifacts`, `coffee`, `delivery`, `coffee-image`. `delivery` keeps Alice's fictional shop on
-  purpose: it closes the opening story, and the demo right after it shows the real thing.
-
-### 7. Promote it (29–32)
+### 8. Demo time: promote it (30–33)
 
 - The same digest moves through environments: test first, then production when someone agrees.
 - This is where "slowing down" happens, and this is where review lives.
-- Going back means pointing at the previous digest. That is the Cloudflare button from section 1.
-- **Slide:** `promote`. It runs for real: Kargo promotes `test` automatically and `prod` only when a person does. `demo-production` takes the same image through a pull request that a person merges.
-
-### 8. Secrets, one minute (32–33)
-
-- A registry is not a secret store. In Git and in the image, a secret is ciphertext.
-- It is opened very late, in the pod's memory, using the workload's own identity.
-- "Git, CI and the registry only see ciphertext. The API key from the start now has a version too."
-- The secret word in the demo already showed this, so don't walk through it again. If someone wants more,
-  it's a hallway conversation. Don't claim nobody can read it: the files have two recipients, and one is yours.
+- Going back means promoting the previous Freight. That is the Cloudflare button from section 1.
+- Only the Kargo tab goes on screen. The slide lists the addresses so people can look them up.
+- **Slide:** `demo-time`. `promote` and `closing` are hidden. It runs for real: see `docs/demo-kargo.md` in `external/k8s`. Stage `test` promotes by itself (`demo-test.koudijs.dev`), and `production` waits for a person (`demo-production.koudijs.dev`).
 
 ### 9. Loose ends (33–36)
 
@@ -118,7 +118,7 @@ See the slide content below. Say this plainly: **none of these parts are easy.**
 - Pointer: this uses Kubernetes, but only for its API and for writing back to Git. Tomorrow's talk,
   *(Ab)using the Kubernetes API as a Configuration Backend*, asks if that is contrarian, and if there's a
   chance it's right. That also circles back to Wednesday's Neo4j keynote.
-- **Slides:** `closing`, maybe `pros-cons`.
+- **Slides:** `worth-it`, `tldr-end`. `closing` is hidden.
 
 ## Demo
 
@@ -200,10 +200,6 @@ Spoken only, if there is time:
 
 - [ ] **Decide on promotion.** Either show the slide and the Kargo page, or promote `prod` live on stage. Only
       do it live if it has been rehearsed.
-- [ ] **Add non-YAML files, or say it's a picture.** The real image holds only three YAML files, and the demo
-      lists them right after the `package` slide shows XML, INI and JPG. `coffee/.gittargetignore` doesn't list
-      `raw/` yet, and the operator refuses files it doesn't manage, so add `raw/` there before committing to
-      `coffee/raw/`. `public/images/coffee-raw.jpg` would be a nice one. The limit is 10 MiB.
 - [ ] **Don't use `kubectl rollout undo` as the rollback.** The Deployment is managed by Flux, so I expect the
       next reconcile to put it back. Not tested. Rehearse going back by digest or through Git.
 - [ ] **Rehearse the rollback with the API in the loop** (loose end 4), so it can't surprise you on stage.

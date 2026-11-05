@@ -31,13 +31,13 @@ COPY settings/ /</pre>
 <Sources :items="[{ name: 'settings-image', href: 'https://github.com/ConfigButler/settings-image' }, { name: 'ORAS', href: 'https://oras.land' }]" />
 
 <!--
-So how do you create these artifacts? Do you have a good option?
+19:00. That was the tool I built, but you may already have a good option to create these artifacts.
 
 A Dockerfile from scratch: you already know it.
 
 ORAS pushes plain files to any OCI registry.
 
-And settings-image, the one I built. The same files give the same digest, nothing in it executes, and a Secret must be SOPS-encrypted or the build stops. It's still v0.1.
+And settings-image, the one you just saw. The same files give the same digest, nothing in it executes, and a Secret must be SOPS-encrypted or the build stops. It's still v0.1.
 -->
 
 <style>

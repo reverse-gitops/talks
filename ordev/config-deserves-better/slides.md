@@ -88,15 +88,27 @@ src: ./pages/desired-state.md
 ---
 
 ---
-src: ./pages/text-files.md
----
-
----
 src: ./pages/formats.md
 ---
 
 ---
+src: ./pages/text-files.md
+---
+
+---
+src: ./pages/api-and-files.md
+---
+
+---
 src: ./pages/krm.md
+---
+
+---
+src: ./pages/sops.md
+---
+
+---
+src: ./pages/three-files.md
 ---
 
 ---
@@ -109,11 +121,8 @@ hide: true
 ---
 
 ---
-src: ./pages/api-and-files.md
----
-
----
 src: ./pages/api-to-git.md
+hide: true
 ---
 
 ---
@@ -122,6 +131,7 @@ src: ./pages/kubernetes-tomorrow.md
 
 ---
 src: ./pages/tomorrow.md
+hide: true
 ---
 
 ---
@@ -133,7 +143,7 @@ src: ./pages/ci-step.md
 ---
 
 ---
-src: ./pages/externalized.md
+src: ./pages/create-artifacts.md
 ---
 
 ---
@@ -141,11 +151,11 @@ src: ./pages/package.md
 ---
 
 ---
-src: ./pages/create-artifacts.md
+src: ./pages/coffee.md
 ---
 
 ---
-src: ./pages/coffee.md
+src: ./pages/chain-environments.md
 ---
 
 ---
@@ -157,15 +167,26 @@ src: ./pages/coffee-image.md
 ---
 
 ---
-src: ./pages/promote.md
+src: ./pages/secrets.md
+hide: true
 ---
 
 ---
-src: ./pages/secrets.md
+src: ./pages/externalized.md
+---
+
+---
+src: ./pages/demo-time.md
+---
+
+---
+src: ./pages/promote.md
+hide: true
 ---
 
 ---
 src: ./pages/closing.md
+hide: true
 ---
 
 ---

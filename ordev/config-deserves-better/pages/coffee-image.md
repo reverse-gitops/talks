@@ -43,7 +43,7 @@ import scriptFile from './demo-scripts/coffee-image.yaml?url'
 <Sources slim :items="[{ name: 'coffee-settings', href: 'https://github.com/ConfigButler/coffee-settings' }, { name: 'settings-image', href: 'https://github.com/ConfigButler/settings-image' }]" />
 
 <!--
-26:00. Back to the secret word.
+24:30. Back to the secret word.
 
 [. .] cd into coffee-settings.
 

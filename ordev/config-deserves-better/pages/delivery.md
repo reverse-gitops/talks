@@ -93,7 +93,7 @@ transition: fade
 <Sources slim :items="[{ name: 'settings-image', href: 'https://github.com/ConfigButler/settings-image' }, { name: 'Flux', href: 'https://fluxcd.io/flux/components/image/' }, { name: 'zot', href: 'https://zotregistry.dev' }]" />
 
 <!--
-24:00. While the word is on its way: this is what's happening to it. Back to Alice's shop. Bob's revert is just a commit in the config repo. CI publishes the repo as an image: orderer-config:43.
+22:30. While the word is on its way: this is what's happening to it. Back to Alice's shop. Bob's revert is just a commit in the config repo. CI publishes the repo as an image: orderer-config:43.
 
 [click] The registry now holds the app image and every version of its settings, side by side.
 
