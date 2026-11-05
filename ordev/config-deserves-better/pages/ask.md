@@ -7,10 +7,8 @@ transition: fade
 import { renderSVG } from 'uqr'
 
 const linkedin = 'https://www.linkedin.com/in/simonkoudijs'
-const repo = 'https://github.com/ConfigButler/gitops-reverser'
 const qrOptions = { ecc: 'M', border: 2, whiteColor: '#FFFFFF', blackColor: '#0B0F14' }
 const linkedinQr = renderSVG(linkedin, qrOptions)
-const repoQr = renderSVG(repo, qrOptions)
 </script>
 
 ###### One ask
@@ -19,43 +17,56 @@ const repoQr = renderSVG(repo, qrOptions)
 
 <div class="ask">
   <div class="main">
-    <p class="lead">Connect with me, and tell me <strong>one more ingredient</strong>. Critical questions are the most welcome.</p>
-    <p class="promise">I won't spam you. I'd just love to hear from you.</p>
+    <p class="lead">If this appeals somewhere: <span class="green">connect or let me know!</span></p>
+    <p class="detail">Tell me <strong>one more ingredient</strong>. Critical questions are the most welcome. I won't spam you. I'd just love to hear from you.</p>
+    <a class="mail" href="mailto:simon@koudijs.dev">simon@koudijs.dev</a>
     <p v-click class="close">The most valuable thing for me: <span class="green">people who give feedback.</span></p>
+    <div class="tomorrow">
+      <span class="when">Tomorrow, 11:15, Turing</span>
+      <span class="what">(Ab)using the Kubernetes API as a Configuration Backend</span>
+    </div>
   </div>
-  <a class="card" href="https://www.linkedin.com/in/simonkoudijs" target="_blank">
-    <span class="kind">connect · LinkedIn</span>
-    <div class="code big" v-html="linkedinQr" />
-    <span class="url">linkedin.com/in/simonkoudijs</span>
-  </a>
-  <a class="card small" href="https://github.com/ConfigButler/gitops-reverser" target="_blank">
-    <span class="kind">or ⭐ star it</span>
-    <div class="code" v-html="repoQr" />
-    <span class="url">gitops-reverser</span>
-  </a>
+  <div class="room">
+    <span class="kind">the room · stamp</span>
+    <SeatMap size="medium" :preview="60" />
+  </div>
+  <div class="cards">
+    <a class="card" href="https://www.linkedin.com/in/simonkoudijs" target="_blank">
+      <span class="kind">connect · LinkedIn</span>
+      <div class="code" v-html="linkedinQr" />
+      <span class="url">linkedin.com/in/simonkoudijs</span>
+    </a>
+  </div>
 </div>
 
 <!--
-≈1:00 · One ask, not a sales pitch.
+38:30, then stay on this slide for questions. One ask, not a sales pitch.
 
-Connect on LinkedIn, and tell me one more ingredient that I'm missing. I won't spam you, I just want to hear from you. Critical questions too: especially those.
+If this appeals somewhere: connect on LinkedIn or mail me, and tell me one more ingredient that I'm missing. I won't spam you, I just want to hear from you. Critical questions too: especially those.
 
-Or star GitOps Reverser on GitHub: it helps more than you think. Issues are welcome too.
+[click] The most valuable thing for me right now is people who give feedback.
 
-[click] The most valuable thing for me right now is people who give feedback. Then questions.
+The room is still live: thanks for your seats. And tomorrow, 11:15, Turing: the Kubernetes API behind all this.
+
+Then questions.
 -->
 
 <style>
-.ask { display: grid; grid-template-columns: 1fr 340px 220px; gap: 40px; align-items: end; margin-top: 16px; }
-.main { align-self: center; }
-.lead { font-size: 34px; line-height: 1.35; margin: 0 0 24px; }
-.promise { font-size: 24px; color: var(--soft); margin: 0 0 40px; }
-.close { font-size: 28px; margin: 0; }
-.card { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 22px; background: var(--panel); border: 1px solid var(--good); border-radius: 16px; text-decoration: none; color: inherit; }
-.card.small { border-color: var(--line-strong); }
-.card .kind { font-family: var(--mono); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-.code { width: 170px; height: 170px; border-radius: 10px; overflow: hidden; background: #fff; }
-.code.big { width: 290px; height: 290px; }
+.slidev-layout h1 { font-size: 56px; margin-bottom: 20px; }
+.ask { display: grid; grid-template-columns: 1fr auto 340px; gap: 36px; align-items: stretch; }
+.main { display: flex; flex-direction: column; gap: 22px; }
+.lead { font-size: 36px; line-height: 1.2; font-weight: 700; margin: 0; }
+.detail { font-size: 26px; line-height: 1.35; color: var(--soft); margin: 0; }
+.mail { align-self: flex-start; font-family: var(--mono); font-size: 38px; font-weight: 600; color: var(--good); text-decoration: none; }
+.close { font-size: 26px; line-height: 1.3; margin: 0; }
+.tomorrow { margin-top: auto; display: flex; flex-direction: column; gap: 6px; padding: 18px 22px; background: var(--panel); border: 1px solid var(--accent); border-radius: 14px; }
+.tomorrow .when { font-size: 34px; font-weight: 700; color: var(--accent); }
+.tomorrow .what { font-size: 21px; line-height: 1.3; color: var(--soft); }
+.room { display: flex; flex-direction: column; gap: 12px; }
+.kind { font-family: var(--mono); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.cards { display: flex; flex-direction: column; gap: 16px; }
+.card { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 18px; background: var(--panel); border: 1px solid var(--good); border-radius: 16px; text-decoration: none; color: inherit; }
+.code { width: 290px; height: 290px; flex: none; border-radius: 10px; overflow: hidden; background: #fff; }
 .code :deep(svg) { display: block; width: 100%; height: 100%; }
 .card .url { font-family: var(--mono); font-size: 14px; color: var(--soft); white-space: nowrap; }
 </style>

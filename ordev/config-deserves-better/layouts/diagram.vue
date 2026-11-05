@@ -34,9 +34,4 @@
   position: absolute; left: 64px; top: 146px; width: 1100px; margin: 0;
   font-size: 19px; line-height: 28px; color: var(--soft); opacity: 1;
 }
-.slidev-layout .red { color: var(--bad); }
-.slidev-layout .green { color: var(--good); }
-.slidev-layout .blue { color: var(--accent); }
-.slidev-layout .amber { color: var(--amber); }
-.slidev-layout .violet { color: var(--violet); }
 </style>

@@ -16,12 +16,12 @@ npm run export    # PDF, one page per click
 
 The order is the list of `src:` blocks in [slides.md](slides.md), and follows
 [talk-outline.md](talk-outline.md). The talk starts and ends with the TLDR
-([Tldr.vue](components/Tldr.vue)). The slides after `tldr-end` come from the old deck and carry
-`hide: true`: remove that line, and move the block, to bring one into the talk.
+([Tldr.vue](components/Tldr.vue)), followed by the closing `ask`. The slides after `ask` come from
+the old deck and carry `hide: true`: remove that line, and move the block, to bring one into the talk.
 
 ## The big equation
 
-[components/ProductionEquation.vue](components/ProductionEquation.vue) is the code + config + infra
+[components/ProductionEquation.vue](components/ProductionEquation.vue) is the infra + config + code
 equation. It is one still slide in [equation.md](pages/equation.md) (the intro). To bring it back later in the
 talk, add a page that drives it from `$clicks`. Two pages that are no longer in the deck show how:
 [equation-tools.md](pages/equation-tools.md) (what each part gets, in its `#code`, `#config` and `#infra` slots)

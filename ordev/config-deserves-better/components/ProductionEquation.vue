@@ -1,5 +1,5 @@
 <!--
-  The big equation: code + config + infra, the thread that keeps coming back in this talk.
+  The big equation: infra + config + code, the thread that keeps coming back in this talk.
     <ProductionEquation />                                                  the words only
     <ProductionEquation compact><template #code>…</template></ProductionEquation>   smaller, with room below
   The slots #code, #config and #infra sit below their part, in the same columns.
@@ -10,7 +10,7 @@ defineProps({
   compact: Boolean, // smaller, to leave room for the slots
 })
 
-const parts = ['code', 'config', 'infra']
+const parts = ['infra', 'config', 'code']
 </script>
 
 <template>

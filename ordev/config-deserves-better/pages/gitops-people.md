@@ -13,7 +13,7 @@ transition: fade
   <PollResult :preview="60" :question="false" />
 </div>
 
-<blockquote v-click class="quote">End users don't need to be in Git.<br><span class="green">But their actions should be.</span></blockquote>
+<blockquote v-click class="quote">End users don't need to be in Git.<br><span class="green">But their breaking actions should be.</span></blockquote>
 
 <Sources slim :items="[{ name: 'Reverse GitOps', href: 'https://reversegitops.dev' }]" />
 

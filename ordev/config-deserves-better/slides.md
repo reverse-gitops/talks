@@ -40,6 +40,10 @@ src: ./pages/equation.md
 ---
 
 ---
+src: ./pages/which-config.md
+---
+
+---
 src: ./pages/problem.md
 ---
 
@@ -69,10 +73,6 @@ src: ./pages/seats.md
 
 ---
 src: ./pages/commits.md
----
-
----
-src: ./pages/normal-delivery.md
 ---
 
 ---
@@ -161,6 +161,10 @@ src: ./pages/tldr-end.md
 ---
 
 ---
+src: ./pages/ask.md
+---
+
+---
 src: ./pages/code-vs-settings.md
 hide: true
 ---
@@ -227,11 +231,6 @@ hide: true
 
 ---
 src: ./pages/pros-cons.md
-hide: true
----
-
----
-src: ./pages/ask.md
 hide: true
 ---
 

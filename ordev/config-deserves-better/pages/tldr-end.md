@@ -15,5 +15,5 @@ Three things to take home:
 
 This used Kubernetes, but only for its API and for writing back to Git. Tomorrow's talk goes into that, and circles back to Wednesday's Neo4j keynote.
 
-Stay on this slide for questions.
+Next: the one ask, which stays up for questions.
 -->

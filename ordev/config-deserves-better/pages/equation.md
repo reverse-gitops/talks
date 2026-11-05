@@ -8,14 +8,14 @@ transition: fade
 </div>
 
 <!--
-Everything your system does in production comes from three things: code, config and infra. It has to add up.
+Everything your system does in production comes from three things: infra, config and code. It has to add up.
 
 This is the place for my personal frustration. Tell it the way it happened:
 - Who did it?
 - How do I roll it back?
 - Why did they change it?
 
-Into the example: let me show you how fast that goes.
+Next: which of that configuration I mean.
 -->
 
 <style>

@@ -6,7 +6,7 @@
 **The one sentence:** package what the user configured into an image, so the desired state is one
 complete, versioned thing you can point at, and promote it the way you promote code.
 
-**The deck:** [slides.md](slides.md) follows this order, and opens and closes with the TLDR slide.
+**The deck:** [slides.md](slides.md) follows this order, opens and closes with the TLDR slide, and ends on the closing ask.
 
 **On "slowing down":** the goal in structure.md is to slow down configuration changes. Nobody in the
 room wants slower changes, and the Cloudflare story wants a faster way back. Suggested wording:
@@ -18,13 +18,15 @@ road back gets shorter.*
 ### 1. You just changed a setting (0–7)
 
 - Title slide with the chairs. "You've all just changed a setting. Remember that."
-- `code + config + infra = production`, one still slide. This is the place for my personal frustration: who did
+- `infra + config + code = production`, one still slide. This is the place for my personal frustration: who did
   it? How do I roll it back? Why?
 - The failing API key: nothing crashes and every email bounces. Who did it? Can we go back?
 - Christine Pinto's talk yesterday: "we don't need to test that". Configuration is where we say that most.
 - My own Cloudflare DNS change. Yes, a better runbook would have helped. But why is there no button
   to revert the last 10 minutes when I'm panicking?
-- **Slides:** `title`, `about`, `equation`, `problem`. **New:** Cloudflare, with the Pinto reference.
+- Which configuration: infra, environment-specific values and connection strings stay as you are used to. This talk
+  is end-user self-service. Transaction data: let's agree not to talk about that today.
+- **Slides:** `title`, `about`, `equation`, `which-config`, `problem`. **New:** Cloudflare, with the Pinto reference.
 
 ### 2. The reveal, part one: your commits (7–10)
 
@@ -43,11 +45,13 @@ road back gets shorter.*
 - Then the picture with configuration externalised, sitting beside the code as its own stream.
 - The registry stores artifacts of any kind, and it is sitting right below our configuration.
 - The question for the rest of the talk: what does that take, and is it worth it?
-- **New:** the normal process, then the externalised picture.
+- First the code lane, then configuration in the same picture: new version, test, then production, twice.
+- **Slides:** `externalized`.
 
 ### 4. Model it as files, then the reveal, part two (14–20)
 
 - To reuse all of this, configuration has to become text files. "Oef, that's two steps back, isn't it?"
+- "Oh dear, what is he proposing? How do we let people change that?" We split edits from using.
 - Not a script: a description of what it should be. The desired state, a specification.
 - Store only the desired state, in several files that reference each other. Secret values get a special place.
 - We have plenty of good formats: INI, XML, JSON, YAML, and also the pictures people upload as an avatar.
@@ -141,7 +145,7 @@ chair colours to appear in the image.
 |---|---|---|
 | Change through the API, commit in Git | [GitOps Reverser](https://github.com/ConfigButler/gitops-reverser) | `commits`, `chairs`, `api-to-git` |
 | Build and push the image from CI | GitHub Actions with [settings-image](https://github.com/ConfigButler/settings-image), logging in with the run's OIDC token | `package`, `delivery`, `coffee-image` |
-| Registry | [zot](https://zotregistry.dev), which tells Flux about each push | `normal-delivery`, `delivery` |
+| Registry | [zot](https://zotregistry.dev), which tells Flux about each push | `externalized`, `delivery` |
 | Keep watching the registry, commit the digest to the GitOps repo (`ConfigButler/k8s`), and apply it | [Flux image automation](https://fluxcd.io/flux/components/image/) | `delivery`, `coffee-image`, `promote` |
 | Mount it | A Kubernetes image volume | `delivery` |
 | Secrets | [SOPS](https://getsops.io), [age](https://age-encryption.org), [OpenBao](https://openbao.org) | `secrets` |
