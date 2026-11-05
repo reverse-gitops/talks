@@ -20,9 +20,9 @@ We did infra as code. Let's go for infra as data.
 -->
 
 <style>
-.what-if { margin-top: 48px; }
+.what-if { margin-top: 48px; text-align: center; }
 .what-if p { margin: 0 0 28px; font-size: 48px; line-height: 1.25; color: var(--soft); opacity: 1; }
 .what-if strong { color: var(--text); font-weight: 700; }
-.slidev-layout h1.as-data { margin: 88px 0 0; font-size: 64px; }
+.slidev-layout h1.as-data { margin: 88px 0 0; font-size: 64px; text-align: center; }
 .as-data .green { color: var(--good); }
 </style>

@@ -1,0 +1,18 @@
+# demo-kargo/app/app.yaml
+containers:
+  - name: voter
+    volumeMounts:
+      - name: settings
+        mountPath: /settings
+
+# demo-kargo/test/settings.yaml: Kargo writes this, by itself
+volumes:
+  - name: settings
+    image:
+      reference: cr.k8s.koudijs.dev/configbutler/coffee-settings:main-1793873184-7a53b5b@sha256:00b28189…
+
+# demo-kargo/production/settings.yaml: only moves when you click Promote
+volumes:
+  - name: settings
+    image:
+      reference: cr.k8s.koudijs.dev/configbutler/coffee-settings:main-1793872606-1eed2d5@sha256:fc3e12dc…

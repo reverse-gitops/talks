@@ -1,7 +1,8 @@
-/etc/orderer/config/
-├── emailsettings/order-confirmations.yaml
-├── apikey/sendgrid.yaml                        # spec only, no status
-└── secret/sendgrid-api-key.sops.yaml           # still SOPS-encrypted
+/settings/
+└── resources/
+    ├── coffeeconfig.yaml
+    ├── coffee-mail.sops.yaml               # still SOPS-encrypted
+    └── coffee-payments.sops.yaml           # still SOPS-encrypted
 
-# emailsettings/order-confirmations.yaml
-spec: { sender: orders@stroopwafel.nl, templateId: order-confirmed, apiKeyRef: sendgrid }
+# resources/coffeeconfig.yaml
+spec: { shopName: Coffee order system, mail: { apiKeySecretRef: { name: coffee-mail } } }

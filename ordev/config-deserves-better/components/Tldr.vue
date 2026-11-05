@@ -13,7 +13,7 @@
     <TalkChain at="image" />
 
     <div class="points">
-      <div><strong>Model config text-based</strong><span>Desired state, format choice is yours: YAML, XML, INI, JPG...</span></div>
+      <div><strong>Model config text-based</strong><span>Desired state, format choice is yours: <b>YAML</b>, XML, INI</span></div>
       <div><strong>A clear place to point at</strong><span>What is production running? This digest.</span></div>
       <div><strong>Promoted like code</strong><span>Workloads now get 2:<br> executable image <br>config image</span></div>
     </div>
@@ -41,5 +41,6 @@
 .points div { display: flex; flex-direction: column; gap: 12px; }
 .points strong { font-size: 36px; line-height: 1.2; }
 .points span { font-size: 27px; line-height: 1.35; color: var(--soft); }
+.points b { font-weight: 700; color: var(--text); }
 .foot { margin: auto 0 0; font-size: 26px; line-height: 1.35; color: var(--soft); }
 </style>

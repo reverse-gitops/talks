@@ -22,9 +22,9 @@ color: "#a8e05f"
 </div>
 
 <ul class="rules">
-  <li v-click><strong>Only the desired state.</strong> Nothing that happened at runtime</li>
-  <li v-click><strong>Several small files that reference each other,</strong> for what's complex</li>
-  <li v-click><strong>A special place for secret values.</strong> We don't want them in sight</li>
+  <li><strong>Only the desired state.</strong> Nothing that happened at runtime</li>
+  <li><strong>Several small files that reference each other,</strong> for what's complex</li>
+  <li><strong>A special place for secret values.</strong> We don't want them in sight</li>
 </ul>
 </div>
 
@@ -36,11 +36,11 @@ Oef. That's two steps back, isn't it?
 
 A description of what it should be. The desired state, a specification. You can read it, compare it, and go back to it.
 
-[click] Only store the desired state.
+Only store the desired state.
 
-[click] Model complex configuration in several files that reference each other.
+Model complex configuration in several files that reference each other.
 
-[click] And keep a special place for secret values.
+And keep a special place for secret values.
 -->
 
 <style>

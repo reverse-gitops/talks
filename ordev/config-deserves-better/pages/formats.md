@@ -26,14 +26,14 @@ color: "#a8e05f"</pre></div>
   <div v-click class="tile avatar"><b>simon.jpg</b><img src="/images/simon-portret.jpg" alt="An uploaded avatar" /><span class="even">even this</span></div>
 </div>
 
-<p v-click class="how">My suggestion: <span class="green">use YAML (KRM).</span></p>
+<p v-click class="how">My suggestion: <span class="green">use YAML.</span></p>
 
 <!--
 11:30. INI, XML, JSON, YAML. It's all text-based files. We have a lot of valuable formats, and your application already reads one of them. It doesn't have to change.
 
 [click] And think wider than text: the pictures people upload as an avatar. Those are also something a user configured.
 
-[click] You don't need or want all of them. My suggestion: use YAML, in the KRM shape. More on that in a moment.
+[click] You don't need or want all of them. My suggestion: use YAML.
 -->
 
 <style>

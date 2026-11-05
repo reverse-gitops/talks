@@ -6,7 +6,7 @@ transition: fade
 
 # Ship settings <span class="green">like images</span>.
 
-<p class="lead fade" :class="{ off: $clicks === 3 }">Settings ship as an image. Flux picks up new versions, and the Deployment mounts them as a read-only image volume.</p>
+<p class="lead fade" :class="{ off: $clicks === 3 }">Settings ship as an image. Kargo moves it one stage at a time, and the Deployment mounts it as a read-only image volume.</p>
 
 <div class="stage">
 
@@ -23,16 +23,16 @@ transition: fade
 <div class="at tag" style="left: 462px; top: 610px; color: var(--muted)">keeps watching</div>
 <div class="at tag" style="left: 604px; top: 610px; color: var(--muted)">commits the digest</div>
 
-<div class="box card" style="left: 64px; top: 300px; height: 190px"><div><b>Config repo</b> <small>· what people changed</small></div></div>
-<div class="commit" style="top: 356px"><span style="color: var(--soft)">alice@stroopwafel.nl</span><br><span style="color: var(--dim)">update sendgrid.apiKey</span></div>
-<div class="commit ok" style="top: 412px"><span class="amber">bob@stroopwafel.nl</span><br><span class="green">revert: sendgrid.apiKey</span></div>
+<div class="box card" style="left: 64px; top: 300px; height: 190px"><div><b>coffee-settings</b> <small>· config repo</small></div></div>
+<div class="commit" style="top: 356px"><span style="color: var(--soft)">1eed2d5 Simon Koudijs</span><br><span style="color: var(--dim)">Let's do a little title change</span></div>
+<div class="commit ok" style="top: 412px"><span class="amber">7a53b5b Simon Koudijs</span><br><span class="green">Let's go back to the same image</span></div>
 
 <div class="box card" style="left: 440px; top: 300px"><div><b>Registry</b> <small>· code and config</small></div></div>
-<div class="ref blue" style="top: 356px; border-color: #2D5D85">orderer:1.4 <span>· image</span></div>
-<div class="ref" style="top: 408px; color: var(--muted)">orderer-config:42 <span>· image</span></div>
-<div class="ref ok green pop" :class="{ off: $clicks < 1, late: $clicks === 1 }" style="top: 460px">orderer-config:43 <span>· image</span></div>
+<div class="ref blue" style="top: 356px; border-color: #2D5D85">voter:2.12.0 <span>· image</span></div>
+<div class="ref" style="top: 408px; color: var(--muted)"><div>coffee-settings<br>main-1793872606-1eed2d5</div></div>
+<div class="ref ok green pop" :class="{ off: $clicks < 1, late: $clicks === 1 }" style="top: 460px"><div>coffee-settings<br>main-1793873184-7a53b5b</div></div>
 
-<div class="box flux" :class="{ glow: $clicks === 2 }"><div><b>Flux</b> <small>· image automation</small><br><span class="tag">always on · highest tag wins</span></div></div>
+<div class="box kargo" :class="{ glow: $clicks === 2 }"><img class="kargo-logo" src="/images/logos/kargo.png" alt=""><div><b>Kargo</b> <small>· Warehouse</small><br><span class="tag">test by itself · production on a click</span></div></div>
 
 <i class="dot watch loop" />
 
@@ -40,22 +40,22 @@ transition: fade
 
 <!-- the Deployment, as YAML, in its own repo -->
 <div class="panel deploy" :class="{ glow: $clicks === 2 }">
-<div class="head"><b>GitOps repo</b> <small>· the real truth · orderer's Deployment</small></div>
-<div class="fluxcommit pop" :class="{ off: $clicks < 2, late: $clicks === 2 }"><b>flux</b> orderer-config 42 → 43</div>
+<div class="head"><b>ConfigButler/k8s</b> <small>· the real truth</small></div>
+<div class="kargocommit pop" :class="{ off: $clicks < 2, late: $clicks === 2 }"><b>kargo</b> test mounts main-1793873184-7a53b5b</div>
 <div class="vol fade" :class="{ off: $clicks < 3 }" />
 <div class="bar ref-line" :class="{ flash: $clicks === 2, off: $clicks < 2 }" />
 
 ````md magic-move {at:2}
-<<< @/snippets/delivery/deployment-42.yaml
-<<< @/snippets/delivery/deployment-43.yaml
+<<< @/snippets/delivery/settings-before.yaml
+<<< @/snippets/delivery/settings-after.yaml
 ````
 
 </div>
 <Arrow points="1168,632 1168,650" color="var(--dim)" dash="2 6" />
-<div class="box cluster"><b>Cluster</b> <small>follows the GitOps repo</small><span class="mono green fade roll" :class="{ off: $clicks < 2, late: $clicks === 2 }">new pod mounts orderer-config:43</span></div>
+<div class="box cluster"><b>Cluster</b> <small>Flux follows that repo</small><span class="mono green fade roll" :class="{ off: $clicks < 2, late: $clicks === 2 }">new test pod mounts main-1793873184-7a53b5b</span></div>
 
 <!-- one-shot motions -->
-<div v-if="$clicks === 1" class="art">orderer-config:43</div>
+<div v-if="$clicks === 1" class="art">main-1793873184-7a53b5b</div>
 <template v-if="$clicks === 2">
   <i class="dot apply" />
   <i class="dot sync" />
@@ -63,18 +63,18 @@ transition: fade
 
 </div>
 
-<!-- what's inside orderer-config:43, and the app reading it -->
+<!-- what's inside the image, and the app reading it -->
 <div class="panel files pop" :class="{ off: $clicks < 4 }">
-<div class="head"><b>Inside orderer-config:43</b> <small>· mounted at /etc/orderer/config</small></div>
+<div class="head"><b>Inside main-1793873184-7a53b5b</b> <small>· mounted at /settings</small></div>
 
 <<< @/snippets/delivery/config-volume.sh
 
 </div>
 <div class="panel code pop" :class="{ off: $clicks < 4 }">
-<div class="head"><b>The app</b> <small>· just reads YAML, through a typed lib generated from the CRDs</small></div>
+<div class="head"><b>The app: Voter</b> <small>· just reads the files in that folder</small></div>
 <div class="bar decrypt" :class="{ flash: $clicks === 4 }" />
 
-<<< @/snippets/delivery/app.go
+<<< @/snippets/delivery/voter-env.yaml
 
 </div>
 
@@ -82,26 +82,26 @@ transition: fade
 
 <Story>
 
-- **publish** Bob’s revert lands in the config repo and is published as a new image: <span class="green">orderer-config:43</span>.
+- **publish** My last commit lands in coffee-settings and is published as a new image: <span class="green">main-1793873184-7a53b5b</span>.
 - **registry** The registry holds the app image and every version of its settings, side by side.
-- **Flux bumps** Flux keeps watching the registry and commits the new digest to the GitOps repo. The cluster follows that repo.
-- **mounted** Settings arrive as a read-only <span class="green">image volume</span>. No settings resources live in the infra cluster.
-- **the app reads it** And the app just reads YAML files. A typed library, generated from the CRDs, makes that a few lines of code.
+- **Kargo writes** Kargo sees the new image and commits it to test's <span class="green">settings.yaml</span>. Production's file doesn't move until someone clicks.
+- **mounted** The settings arrive as a read-only <span class="green">image volume</span> at /settings. The same three files.
+- **the app reads it** And Voter just reads those files, and opens the two secrets in memory.
 
 </Story>
 
-<Sources slim :items="[{ name: 'settings-image', href: 'https://github.com/ConfigButler/settings-image' }, { name: 'Flux', href: 'https://fluxcd.io/flux/components/image/' }, { name: 'zot', href: 'https://zotregistry.dev' }]" />
+<Sources slim :items="[{ name: 'settings-image', href: 'https://github.com/ConfigButler/settings-image' }, { name: 'Kargo', href: 'https://kargo.io' }, { name: 'zot', href: 'https://zotregistry.dev' }]" />
 
 <!--
-22:30. While the word is on its way: this is what's happening to it. Back to Alice's shop. Bob's revert is just a commit in the config repo. CI publishes the repo as an image: orderer-config:43.
+22:30. While the word is on its way: this is what's happening to it, and these are the real names. My last commit in coffee-settings. CI publishes the repo as an image, with the time and the commit in the tag.
 
-[click] The registry now holds the app image and every version of its settings, side by side.
+[click] The registry now holds the app image and every version of its settings, side by side. zot tells Kargo about a push straight away.
 
-[click] The Deployment lives in its own repo: the GitOps repo. Flux image automation is always watching the registry. It sees the new tag and commits the new digest to that repo, so that repo is the real truth of what runs. The cluster follows it. No pipeline to babysit. That's how my demo works too: coffee-settings is the config repo, ConfigButler/k8s is the GitOps repo, and the registry is zot, which tells Flux about a push straight away.
+[click] The Deployment lives in its own repo, ConfigButler/k8s, and that repo is the real truth of what runs. Kargo commits the new image to test's settings.yaml, by itself. Look at production's settings.yaml: it hasn't moved, and it won't until someone clicks Promote. Flux makes the cluster follow that repo.
 
-[click] The settings arrive as a read-only image volume. Nothing settings-related lives in the infra cluster.
+[click] The settings arrive as a read-only image volume at /settings. Same reference, in the pod spec, by digest.
 
-[click] And the app just reads YAML files, through a typed library generated from the CRDs. A few lines of code.
+[click] Look inside: coffeeconfig.yaml, coffee-mail.sops.yaml and coffee-payments.sops.yaml. The same three files we started with, still encrypted. Voter reads that folder, gets an age key from OpenBao, and opens the two secrets in memory. It has no Kubernetes API access at all.
 -->
 
 <style>
@@ -116,8 +116,9 @@ small { font-size: 13px; font-weight: 400; color: var(--soft); }
 
 /* git and registry cards */
 .card { width: 300px; height: 300px; padding: 16px; justify-content: flex-start; align-items: flex-start; font-size: 20px; line-height: 26px; }
-.flux { left: 440px; top: 640px; width: 300px; height: 92px; padding: 12px 16px; align-items: flex-start; text-align: left; line-height: 22px; border-color: var(--line-strong); }
-.flux .tag { font-size: 11px; }
+.kargo { left: 440px; top: 640px; width: 300px; height: 92px; padding: 12px 16px; align-items: flex-start; text-align: left; line-height: 22px; border-color: var(--line-strong); }
+.kargo .tag { font-size: 11px; }
+.kargo-logo { position: absolute; right: 14px; top: 8px; height: 40px; width: auto; }
 .commit, .ref {
   position: absolute; width: 268px; box-sizing: border-box; padding: 5px 12px;
   background: #0F1A26; border: 1px solid var(--line); border-radius: 8px;
@@ -126,7 +127,7 @@ small { font-size: 13px; font-weight: 400; color: var(--soft); }
 .commit { left: 80px; height: 48px; }
 .commit b { font-weight: 600; }
 .commit .amber { font-weight: 600; }
-.ref { left: 456px; height: 44px; display: flex; align-items: center; gap: .6em; }
+.ref { left: 456px; height: 46px; display: flex; align-items: center; gap: .6em; }
 .ref span { color: var(--dim); }
 .ok { background: #101C17; border-color: #2E6B4E; }
 .pop { transition: opacity .4s, transform .4s; }
@@ -153,35 +154,35 @@ small { font-size: 13px; font-weight: 400; color: var(--soft); }
 .files.pop.off, .code.pop.off { transform: scale(.97); }
 .files:not(.off) { transition-delay: .4s; }
 .code:not(.off) { transition-delay: 1s; }
-.vol { position: absolute; left: 12px; top: 302px; width: 712px; height: 104px; border-radius: 6px; background: rgba(126, 224, 161, .07); border: 1px dashed #2E6B4E; }
+.vol { position: absolute; left: 12px; top: 202px; width: 712px; height: 84px; border-radius: 6px; background: rgba(126, 224, 161, .07); border: 1px dashed #2E6B4E; }
 .vol:not(.off) { transition-delay: .2s; }
 .bar { position: absolute; left: 20px; height: 20px; border-radius: 4px; }
-.ref-line { top: 362px; width: 696px; background: rgba(126, 224, 161, .08); transition: opacity .3s; }
+.ref-line { top: 262px; width: 696px; background: rgba(126, 224, 161, .08); transition: opacity .3s; }
 .ref-line.flash { animation: flash-green 1.2s 1.2s both; }
 @keyframes flash-green { 0% { background: rgba(126, 224, 161, 0) } 15% { background: rgba(126, 224, 161, .22) } 100% { background: rgba(126, 224, 161, .08) } }
 .decrypt { top: 78px; width: 656px; background: rgba(242, 169, 59, .08); }
 .decrypt.flash { animation: flash-amber 1.4s 1.6s both; }
 @keyframes flash-amber { 0% { background: rgba(242, 169, 59, 0) } 25% { background: rgba(242, 169, 59, .25) } 100% { background: rgba(242, 169, 59, .08) } }
 
-/* glows: Flux when it spots the tag, the Deployment when it is applied */
-.flux.glow { animation: glow-green 1s .35s both; }
+/* glows: Kargo when it spots the tag, the Deployment when it is applied */
+.kargo.glow { animation: glow-green 1s .35s both; }
 @keyframes glow-green { 0% { box-shadow: 0 0 0 0 rgba(126, 224, 161, 0) } 30% { box-shadow: 0 0 0 6px rgba(126, 224, 161, .3) } 100% { box-shadow: 0 0 0 0 rgba(126, 224, 161, 0) } }
 .deploy.glow { animation: glow-blue 1s 1.05s both; }
 @keyframes glow-blue { 0% { box-shadow: 0 0 0 0 rgba(90, 184, 255, 0) } 30% { box-shadow: 0 0 0 6px rgba(90, 184, 255, .25) } 100% { box-shadow: 0 0 0 0 rgba(90, 184, 255, 0) } }
 
 /* the GitOps repo's newest commit, and the cluster that follows it */
-.fluxcommit {
+.kargocommit {
   position: absolute; right: 16px; top: 10px; height: 26px; box-sizing: border-box; padding: 0 10px;
   display: flex; align-items: center; gap: .6em; background: #0F1A26; border: 1px solid var(--line-strong); border-radius: 7px;
   font-size: 12px; line-height: 18px; color: var(--soft);
 }
-.fluxcommit b { font-weight: 600; color: var(--text); }
+.kargocommit b { font-weight: 600; color: var(--text); }
 .cluster { left: 800px; top: 652px; width: 736px; height: 60px; padding: 0 20px; flex-direction: row; justify-content: flex-start; gap: 12px; font-size: 20px; line-height: 26px; }
 .cluster .roll { margin-left: auto; font-size: 14px; line-height: 20px; }
 
 /* one-shot motions */
 .art {
-  position: absolute; left: 0; top: 0; width: 140px; height: 28px; box-sizing: border-box; padding: 0 10px;
+  position: absolute; left: 0; top: 0; width: 190px; height: 28px; box-sizing: border-box; padding: 0 10px;
   display: flex; align-items: center; white-space: nowrap; background: #101C17; border: 1px solid var(--good); border-radius: 8px;
   font-family: var(--mono); font-size: 11px; color: var(--good);
   animation: art 1.7s ease-in-out both;
@@ -193,7 +194,7 @@ small { font-size: 13px; font-weight: 400; color: var(--soft); }
   100% { opacity: 0; transform: translate(476px, 467px); }
 }
 .dot { position: absolute; left: 0; top: 0; width: 10px; height: 10px; border-radius: 5px; opacity: 0; }
-/* Flux never stops looking at the registry. */
+/* Kargo never stops looking at the registry. */
 .watch { background: var(--text); box-shadow: 0 0 10px rgba(231, 236, 242, .8); animation: watch 1.8s ease-in-out infinite; }
 @keyframes watch {
   0%, 15% { opacity: 0; transform: translate(585px, 632px); }

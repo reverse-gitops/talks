@@ -73,8 +73,8 @@ This is the part to spend time on.
 - Sideload it next to the app with an image volume. New settings mean new pods replacing old pods, so the
   rolling update protects you: if the new pods don't get ready, the old ones keep serving.
 - **Demo:** see below. The wait for the image is when `delivery` explains the mechanism.
-- **Slides:** `chain-image`, `ci-step`, `create-artifacts`, `package`, `coffee`, `chain-environments`, `delivery`, `coffee-image`. `delivery` keeps Alice's fictional shop on
-  purpose: it closes the opening story, and the demo right after it shows the real thing.
+- **Slides:** `chain-image`, `ci-step`, `create-artifacts`, `package`, `coffee`, `chain-environments`, `delivery`. `coffee-image` is hidden. `delivery` shows the real thing, as it runs
+  in the cluster: coffee-settings, Kargo, each stage's `settings.yaml`, and the same three files inside the image at `/settings/resources`.
 
 ### 6. Secrets, short (on `sops` and `three-files`, around 13:00)
 
@@ -111,6 +111,7 @@ See the slide content below. Say this plainly: **none of these parts are easy.**
 - Honest answer: not for everything. Orders stay in the database. Settings that change every minute or per
   tenant probably don't belong here either.
 - Worth it when a bad change can take production down, and you can't answer who, what, when and how to go back.
+- Coming up: the EU Cyber Resilience Act (Regulation 2024/2847), main duties from 11 Dec 2027. Each security update stays available for at least 10 years (Art. 13(9)). It doesn't mention registries, and pure SaaS mostly falls under NIS2.
 - Take-aways:
   1. Treat configuration as a delivery problem, not only a storage problem.
   2. Separate authoring from delivery. Direct mutation of what's deployed is the wrong default.

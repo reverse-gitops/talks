@@ -164,6 +164,7 @@ src: ./pages/delivery.md
 
 ---
 src: ./pages/coffee-image.md
+hide: true
 ---
 
 ---

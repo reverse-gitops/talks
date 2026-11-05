@@ -1,0 +1,6 @@
+# demo-kargo/app/app.yaml: how Voter reads it
+SETTINGS_DIR: /settings/resources       # reads coffeeconfig.yaml
+SETTINGS_KEYS: openbao-age              # age key from OpenBao opens both in memory
+automountServiceAccountToken: false     # no Kubernetes API at all
+
+# no API calls for settings: just files
