@@ -13,7 +13,7 @@ npm run export    # PDF, one page per click
 ```
 
 The PDF linked from the [main README](../README.md) is `task export-reverser-pdf` from the repo root:
-one page per slide, in `dist/settings-that-break-production.pdf`. In that export the demo
+one page per slide, in `dist/20261030-settings-that-break-production.pdf`. In that export the demo
 terminals show their commands instead of a live shell, and the title slide leaves out the
 rotating join code.
 

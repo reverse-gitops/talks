@@ -30,7 +30,7 @@ live slides are untouched.
 | `pages/1-vote-frozen.md` | PDF-safe version of the voting demo that shows intent as plain editable objects in a Git folder |
 | `pages/3-3-gitops-frozen.md` | Copy of `3-3-gitops.md` with `DemoTerminal` components replaced by static terminal blocks |
 | `slides-pdf.md` | Mirror of `slides.md`, using the frozen voting and GitOps pages instead of the live demo pages |
-| `../dist/the-gitops-paradox.pdf` | The generated PDF (29 pages) |
+| `../dist/20260323-the-gitops-paradox.pdf` | The generated PDF (29 pages) |
 
 ### Modified files
 
@@ -115,7 +115,7 @@ podinfos-intent   paal       True   36s
 ```makefile
 task run          # live demo — existing target, unchanged
 task run-frozen   # start dev server with slides-pdf.md (no btwebterminal needed)
-task export-pdf   # export to dist/the-gitops-paradox.pdf
+task export-pdf   # export to dist/20260323-the-gitops-paradox.pdf
 ```
 
 ### The HMR overlay problem
@@ -289,7 +289,7 @@ export-pdf: install-node-deps
     cd the-gitops-paradox && npx slidev export slides-pdf.md --format png \
         --output /tmp/slidev-export-png --scale 2 --timeout 60000
     ls -v /tmp/slidev-export-png/*.png | xargs /home/node/.local/bin/img2pdf \
-        -o dist/the-gitops-paradox.pdf
+        -o dist/20260323-the-gitops-paradox.pdf
 ```
 
 `img2pdf` embeds the PNGs losslessly without re-encoding, so colors are exactly as

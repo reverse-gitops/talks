@@ -201,12 +201,12 @@ tasks:
       - npx slidev --entry slides-pdf.md --remote --no-open
 
   export-pdf:
-    desc: Export the-gitops-paradox to dist/the-gitops-paradox.pdf
+    desc: Export the-gitops-paradox to dist/20260323-the-gitops-paradox.pdf
     deps: [install-node-deps]
     cmds:
       - rm -rf /tmp/slidev-export-png && mkdir -p /tmp/slidev-export-png
       - cd the-gitops-paradox && npx slidev export slides-pdf.md --format png --output /tmp/slidev-export-png --scale 2 --timeout 60000
-      - ls -v /tmp/slidev-export-png/*.png | xargs /home/node/.local/bin/img2pdf -o dist/the-gitops-paradox.pdf
+      - ls -v /tmp/slidev-export-png/*.png | xargs /home/node/.local/bin/img2pdf -o dist/20260323-the-gitops-paradox.pdf
 
   export-krm-bff-pdf:
     desc: Export krm-bff (Frontmania) to dist/be-bffs-with-the-kubernetes-api.pdf
@@ -218,28 +218,28 @@ tasks:
       - ls -v /tmp/marp-export-krm-bff/page-*.jpg | xargs /home/node/.local/bin/img2pdf -o dist/be-bffs-with-the-kubernetes-api.pdf
 
   export-reverser-pdf:
-    desc: Export settings-that-break to dist/settings-that-break-production.pdf
+    desc: Export settings-that-break to dist/20261030-settings-that-break-production.pdf
     deps: [install-node-deps]
     cmds:
       - rm -rf /tmp/slidev-export-reverser && mkdir -p /tmp/slidev-export-reverser
       - cd settings-that-break && npx slidev export --format png --output /tmp/slidev-export-reverser --scale 2 --timeout 60000
-      - ls -v /tmp/slidev-export-reverser/*.png | xargs /home/node/.local/bin/img2pdf -o dist/settings-that-break-production.pdf
+      - ls -v /tmp/slidev-export-reverser/*.png | xargs /home/node/.local/bin/img2pdf -o dist/20261030-settings-that-break-production.pdf
 
   export-config-deserves-better-pdf:
-    desc: Export ordev/config-deserves-better to dist/config-deserves-better.pdf
+    desc: Export ordev/config-deserves-better to dist/20261105-config-deserves-better.pdf
     deps: [install-node-deps]
     cmds:
       - rm -rf /tmp/slidev-export-config-deserves-better && mkdir -p /tmp/slidev-export-config-deserves-better
       - cd ordev/config-deserves-better && npx slidev export --format png --output /tmp/slidev-export-config-deserves-better --scale 2 --timeout 60000
-      - ls -v /tmp/slidev-export-config-deserves-better/*.png | xargs /home/node/.local/bin/img2pdf -o dist/config-deserves-better.pdf
+      - ls -v /tmp/slidev-export-config-deserves-better/*.png | xargs /home/node/.local/bin/img2pdf -o dist/20261105-config-deserves-better.pdf
 
   export-abusing-kubernetes-api-pdf:
-    desc: Export ordev/abusing-kubernetes-api to dist/abusing-kubernetes-api.pdf
+    desc: Export ordev/abusing-kubernetes-api to dist/20261106-abusing-kubernetes-api.pdf
     deps: [install-node-deps]
     cmds:
       - rm -rf /tmp/slidev-export-abusing-kubernetes-api && mkdir -p /tmp/slidev-export-abusing-kubernetes-api
       - cd ordev/abusing-kubernetes-api && npx slidev export --format png --output /tmp/slidev-export-abusing-kubernetes-api --scale 2 --timeout 60000
-      - ls -v /tmp/slidev-export-abusing-kubernetes-api/*.png | xargs /home/node/.local/bin/img2pdf -o dist/abusing-kubernetes-api.pdf
+      - ls -v /tmp/slidev-export-abusing-kubernetes-api/*.png | xargs /home/node/.local/bin/img2pdf -o dist/20261106-abusing-kubernetes-api.pdf
 
   run-reverser:
     desc: Live settings-that-break deck (start run-terminal-bridge for its terminals)

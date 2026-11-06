@@ -9,11 +9,12 @@
   demo.koudijs.dev, the kubectl proxy forwarder locally), so a resized room redraws by itself.
   The newest change pulses once, so a colour changed live is easy to point at.
   Hover a seat for its last why; click it for that commit in the trail repo.
-  On a failed read the last good map stays up.
+  On a failed read the last good map stays up. With no seats to draw, a message says why: the
+  technical reason is its tooltip. A PDF never shows invented seats.
 -->
 <script setup>
 import { computed, onUnmounted, ref, watchEffect } from 'vue'
-import { useSlideContext } from '@slidev/client'
+import { useNav, useSlideContext } from '@slidev/client'
 
 
 const props = defineProps({
@@ -26,9 +27,11 @@ const props = defineProps({
 })
 
 const { $renderContext } = useSlideContext()
+const { isPrintMode } = useNav()
 const seats = ref([])
 const problem = ref('')
 const previewing = ref(false)
+const settled = ref(false) // a read has finished: only now may "nobody yet" be said
 // Stamp as it really is: what the overview and the PDF draw, and the first frame before the read.
 const plan = ref({ rows: 16, columns: 15, aisles: [8] }) // a walkway after these columns; seats keep counting across it
 const planProblem = ref('')
@@ -57,7 +60,7 @@ function toSeat(item) {
 async function read() {
   try {
     const res = await fetch(seatsUrl.value, { headers: { accept: 'application/json' }, credentials: 'same-origin' })
-    if (res.status === 404 && props.preview) {
+    if (res.status === 404 && props.preview && !isPrintMode.value) {
       seats.value = invented(props.preview)
       previewing.value = true
       problem.value = ''
@@ -73,6 +76,8 @@ async function read() {
     problem.value = ''
   } catch {
     problem.value = 'cluster not reachable'
+  } finally {
+    settled.value = true
   }
 }
 
@@ -122,7 +127,8 @@ watchEffect(() => {
   timer = null
   if ($renderContext.value !== 'slide' && $renderContext.value !== 'presenter') {
     // Overview, export: a still picture, never a request per thumbnail.
-    if (props.preview) seats.value = invented(props.preview)
+    if (isPrintMode.value) settled.value = true
+    else if (props.preview) seats.value = invented(props.preview)
     return
   }
   const poll = () => { read(); readPlan() }
@@ -164,6 +170,13 @@ function hover(c) {
 }
 
 const seatCount = computed(() => plan.value.rows * plan.value.columns)
+// What to say instead of an empty map. A PDF reader can't do anything about it, so no error there.
+const message = computed(() => {
+  if (!settled.value || seats.value.length) return ''
+  if (isPrintMode.value) return 'The room filled this in live during the talk'
+  return problem.value ? 'Can’t reach the seats right now' : 'Nobody has taken a seat yet'
+})
+const hideCount = computed(() => !!message.value && (isPrintMode.value || !!problem.value))
 // Seats outside the drawn room (a smaller room than the CRD allows) are counted, not lost.
 const outside = computed(() => seats.value.filter((s) => s.row > plan.value.rows || s.column > plan.value.columns).length)
 </script>
@@ -172,6 +185,7 @@ const outside = computed(() => seats.value.filter((s) => s.row > plan.value.rows
   <div class="seat-map" :class="size" :style="geometry">
     <div class="stage">stage</div>
     <div class="grid">
+      <div v-if="message" class="message" :title="problem"><span>{{ message }}</span></div>
       <div v-for="a in aisleTracks" :key="`aisle-${a}`" class="aisle" :style="{ gridColumn: a }" />
       <component
         :is="c.seat?.commit ? 'a' : 'div'" v-for="c in cells" :key="c.id"
@@ -188,9 +202,9 @@ const outside = computed(() => seats.value.filter((s) => s.row > plan.value.rows
       </component>
     </div>
     <div class="foot">
-      <span>{{ seats.length - outside }} / {{ seatCount }} seats claimed<template v-if="outside"> · {{ outside }} outside the map</template></span>
+      <span v-if="!hideCount">{{ seats.length - outside }} / {{ seatCount }} seats claimed<template v-if="outside"> · {{ outside }} outside the map</template></span>
       <span v-if="previewing" class="note">preview data · no Seat CRD yet</span>
-      <span v-else-if="problem || planProblem" class="note">{{ problem || planProblem }}</span>
+      <span v-else-if="(problem || planProblem) && !message" class="note" :title="problem || planProblem">live view paused</span>
     </div>
   </div>
 </template>
@@ -204,8 +218,14 @@ const outside = computed(() => seats.value.filter((s) => s.row > plan.value.rows
 }
 .large .stage { height: 22px; font-size: 11px; line-height: 22px; text-align: center; font-family: var(--mono); letter-spacing: .3em; text-transform: uppercase; color: var(--muted); background: var(--panel); border: 1px solid var(--line); }
 
-.grid { display: grid; grid-template-columns: repeat(var(--columns), var(--cell)); grid-template-rows: repeat(var(--rows), var(--cell)); gap: var(--gap); }
+.grid { position: relative; display: grid; grid-template-columns: repeat(var(--columns), var(--cell)); grid-template-rows: repeat(var(--rows), var(--cell)); gap: var(--gap); }
 .aisle { grid-row: 1 / -1; border-radius: 4px; background: var(--line); opacity: .5; }
+
+.message { position: absolute; inset: 0; z-index: 2; display: flex; align-items: center; justify-content: center; text-align: center; }
+/* A fixed colour: the title slide turns --soft dark for its sky, but this pill stays dark. */
+.message span { padding: .6em 1.1em; border-radius: 10px; background: var(--panel); border: 1px solid var(--line-strong); color: #A3AEBE; font-size: 14px; }
+.medium .message span { font-size: 18px; }
+.large .message span { font-size: 30px; }
 
 .cell {
   border-radius: 4px; border: 1px solid var(--line);
