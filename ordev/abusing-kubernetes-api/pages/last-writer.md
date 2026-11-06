@@ -36,20 +36,6 @@ transition: fade
 
 <p v-click class="punch">My advice: <span class="green">make your edits through the API.</span></p>
 
-<!--
-What happens when two people edit at the same time? People expect locks, or something clever. I just do last writer wins, per field.
-
-Alice changes the colour, Bob the emoji, at the same moment. Both are small merge patches, so both survive.
-
-[click] Only the same field can collide, and then the last one wins. For editing settings, that's enough.
-
-[click] And that's because of watches. Everyone's screen is live, so you see the other edit straight away. You're rarely working on old data.
-
-[click] And if you want it stricter, it's already there. That's how the coffee editor works: every save carries the resourceVersion. Different fields: it re-reads and saves again. The same price: it stops and shows the conflict. That's optimistic concurrency, for free.
-
-[click] This only works in one place. So: edits go through the API. Not in Git. Git doesn't know about fields, it knows about lines and merge conflicts.
--->
-
 <style>
 .slidev-layout h1 { margin-bottom: 28px; }
 .edits { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center; gap: 24px; }
@@ -62,3 +48,19 @@ Alice changes the colour, Bob the emoji, at the same moment. Both are small merg
 .slidev-layout .points li { margin: 0 0 18px; padding: 0; font-size: 30px; line-height: 1.25; }
 .punch { position: absolute; left: 64px; right: 64px; bottom: 56px; margin: 0; text-align: center; font-size: 46px; line-height: 1.2; font-weight: 700; opacity: 1; }
 </style>
+
+<!--
+**9:00 · 1:00**
+
+Asked yesterday: how can several people change one screen without hurting each other? Last writer wins, per field.
+
+Alice colour, Bob emoji: small merge patches, both survive.
+
+[click] Only the same field collides. For settings, that's enough.
+
+[click] Watches: everyone's screen is live, so you rarely work on old data.
+
+[click] Stricter? resourceVersion, 409, my coffee editor. Optimistic concurrency, for free.
+
+[click] Edits through the API. Git knows lines and merge conflicts, not fields.
+-->

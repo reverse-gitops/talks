@@ -30,12 +30,6 @@ const { isPrintMode } = useNav()
   </div>
 </div>
 
-<!--
-≈0:45, hard stop. Nobody is here for the bio.
-
-The QR is the same one as on the title slide, for everyone who just walked in. Leave it up for a moment.
--->
-
 <style>
 .about { display: grid; grid-template-columns: 430px 1fr 320px; gap: 44px; align-items: center; margin-top: 8px; }
 .portrait { width: 430px; height: 620px; object-fit: cover; object-position: 50% 20%; border-radius: 16px; border: 1px solid var(--line-strong); }
@@ -48,3 +42,9 @@ The QR is the same one as on the title slide, for everyone who just walked in. L
 .join { display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
 .join p { margin: 0; font-size: 24px; line-height: 1.3; color: var(--soft); opacity: 1; }
 </style>
+
+<!--
+**1:25 · 0:20**
+
+Hard stop. Nobody is here for the bio. Leave the QR up a moment.
+-->

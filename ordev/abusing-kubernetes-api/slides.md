@@ -9,6 +9,8 @@ colorSchema: dark
 canvasWidth: 1600
 aspectRatio: 16/9
 codeCopy: false
+duration: 36min
+timer: stopwatch
 fonts:
   provider: none
 addons:
@@ -17,6 +19,22 @@ defaults:
   layout: diagram
   transition: fade
 src: ./pages/title.md
+---
+
+---
+src: ./pages/belief.md
+---
+
+---
+src: ./pages/tldr.md
+---
+
+---
+src: ./pages/breath-not-infra.md
+---
+
+---
+src: ./pages/tldr-contents.md
 ---
 
 ---
@@ -32,27 +50,11 @@ src: ./pages/yesterday.md
 ---
 
 ---
-src: ./pages/consumers.md
----
-
----
-src: ./pages/expectations.md
----
-
----
 src: ./pages/provider-expectations.md
 ---
 
 ---
-src: ./pages/tldr.md
----
-
----
-src: ./pages/breath-database.md
----
-
----
-src: ./pages/screen.md
+src: ./pages/part-api.md
 ---
 
 ---
@@ -60,11 +62,11 @@ src: ./pages/breath-chair.md
 ---
 
 ---
-src: ./pages/auth.md
+src: ./pages/curl.md
 ---
 
 ---
-src: ./pages/api.md
+src: ./pages/breath-database.md
 ---
 
 ---
@@ -76,31 +78,15 @@ src: ./pages/crd.md
 ---
 
 ---
+src: ./pages/crd-seat.md
+---
+
+---
 src: ./pages/modelling-crds.md
 ---
 
 ---
-src: ./pages/price-policy.md
----
-
----
 src: ./pages/last-writer.md
----
-
----
-src: ./pages/curl.md
----
-
----
-src: ./pages/api-key.md
----
-
----
-src: ./pages/foyer.md
----
-
----
-src: ./pages/seats-list.md
 ---
 
 ---
@@ -112,7 +98,35 @@ src: ./pages/control-loop.md
 ---
 
 ---
-src: ./pages/breath-who.md
+src: ./pages/solid.md
+---
+
+---
+src: ./pages/self-host.md
+---
+
+---
+src: ./pages/part-identity.md
+---
+
+---
+src: ./pages/api-key.md
+---
+
+---
+src: ./pages/foyer.md
+---
+
+---
+src: ./pages/pipeline.md
+---
+
+---
+src: ./pages/price-policy.md
+---
+
+---
+src: ./pages/part-history.md
 ---
 
 ---
@@ -120,7 +134,15 @@ src: ./pages/reverser.md
 ---
 
 ---
-src: ./pages/inside-apiserver.md
+src: ./pages/both-ways.md
+---
+
+---
+src: ./pages/breath-remembers.md
+---
+
+---
+src: ./pages/breath-who.md
 ---
 
 ---
@@ -132,27 +154,23 @@ src: ./pages/commit-request.md
 ---
 
 ---
-src: ./pages/reverser-model.md
----
-
----
 src: ./pages/reverser-committer.md
 ---
 
 ---
-src: ./pages/git.md
+src: ./pages/breath-story.md
 ---
 
 ---
-src: ./pages/breath-remembers.md
+src: ./pages/part-limits.md
 ---
 
 ---
-src: ./pages/back.md
+src: ./pages/webshop.md
 ---
 
 ---
-src: ./pages/krm.md
+src: ./pages/criteria.md
 ---
 
 ---
@@ -160,7 +178,7 @@ src: ./pages/pros-cons.md
 ---
 
 ---
-src: ./pages/criteria.md
+src: ./pages/adult.md
 ---
 
 ---
@@ -180,13 +198,29 @@ src: ./pages/ask.md
 ---
 
 ---
-src: ./pages/both-ways.md
----
-
----
 src: ./pages/one-writer.md
 ---
 
 ---
 src: ./pages/tldr-workload.md
+---
+
+---
+src: ./pages/reverser-model.md
+---
+
+---
+src: ./pages/inside-apiserver.md
+---
+
+---
+src: ./pages/seats-list.md
+---
+
+---
+src: ./pages/consumers.md
+---
+
+---
+src: ./pages/expectations.md
 ---

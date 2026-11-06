@@ -120,28 +120,6 @@ The watch stream says what changed; the audit webhook says who. Each change wait
 
 </Story>
 
-<!--
-Two streams: the watch stream tells Reverser what changed, the audit webhook tells it who.
-
-[click] Alice scales deploy/web. The watch event is instant, but anonymous. It waits in the join phase.
-
-[click] The audit webhook batches every second. That batch brings the who: alice. Identity attached, straight into a 10-second window.
-
-[click] Window closes: one change, one commit, authored by alice.
-
-[click] Now Bob. He updates a Service. Same thing: instant, but waiting for who.
-
-[click] The batch names bob; his change opens a new window.
-
-[click] He creates a ConfigMap...
-
-[click] ...which joins the same window. And he deletes a Job.
-
-[click] All three are in Bob's open window.
-
-[click] Window closes: one commit by bob with an update, a create and a delete.
--->
-
 <style>
 .slidev-layout h1 { width: 1320px; }
 .small { font-size: 12px; line-height: 18px; font-weight: 400; color: var(--soft); }
@@ -269,3 +247,29 @@ Two streams: the watch stream tells Reverser what changed, the audit webhook tel
   30% { box-shadow: 0 0 0 6px var(--c); }
 }
 </style>
+
+<!--
+**23:45 · 2:00**
+
+Watch: what. Audit webhook: who.
+
+[click] Alice scales. Instant, but anonymous. Waits in join.
+
+[click] The 1s batch brings who. On into a 10s window.
+
+[click] Window closes: one commit, by alice.
+
+[click] Bob: a Service. Waiting for who.
+
+[click] Batch names bob. New window.
+
+[click] A ConfigMap...
+
+[click] ...joins the window. And deletes a Job.
+
+[click] All three in Bob's window.
+
+[click] One commit by bob: update, create, delete.
+
+The timers run for real. Don't rush, explain during the wait.
+-->

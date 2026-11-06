@@ -37,20 +37,6 @@ spec:
 </dl>
 </div>
 
-<!--
-And here's one of those objects: a GitProvider, the real one from my cluster, shortened. You configure the committer, and the signing, as plain YAML.
-
-Git already has two names on every commit, and that's perfect for this.
-
-[click] The author: whoever changed it in the API. That's what the two streams are for.
-
-[click] The committer: my bot, the one with access to the repo.
-
-[click] And the commit is signed. Be precise here, especially if there's a lawyer in the room: the signature proves the bot wrote the commit. That the author is really Alice comes from her token and the audit log. So you trust that chain.
-
-Nice detail: the operator publishes the public key in status. Add it to your Git host, and you get the verified badge.
--->
-
 <style>
 .slidev-layout h1 { margin-bottom: 20px; }
 .commit { display: grid; grid-template-columns: 860px 1fr; gap: 44px; }
@@ -61,3 +47,19 @@ Nice detail: the operator publishes the public key in status. Add it to your Git
 .commit dt { font-size: 38px; line-height: 1.2; font-weight: 700; color: var(--good); }
 .commit dd { margin: 4px 0 0; font-size: 26px; line-height: 1.3; color: var(--soft); }
 </style>
+
+<!--
+**27:15 · 1:00**
+
+The real GitProvider, shortened. Two names on every commit.
+
+[click] Author: whoever changed it in the API.
+
+[click] Committer: my bot.
+
+[click] Signed. Be precise: it proves the bot wrote it. That it was Alice comes from her token and the audit log. You trust that chain.
+
+Public key in status: verified badge.
+
+Behind? Skip this slide, say "the commits are signed".
+-->

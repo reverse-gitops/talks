@@ -5,7 +5,11 @@ layout: breath
 The API comes first.<br>Git remembers.
 
 <!--
-Say it, then stop talking. Five seconds.
+**23:00 · 0:30**
 
-This is the answer to "isn't this the end of GitOps?" Next: how the files get back.
+Say it. Stop. Five seconds.
+
+Say it before they do: Git is no longer the front door. For seconds the API is ahead. Same resource: the API wins.
+
+Single source of truth? GitOps keeps its job: record, restore, promote. "It loses its front door."
 -->

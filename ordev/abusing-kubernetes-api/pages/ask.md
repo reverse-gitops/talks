@@ -44,20 +44,6 @@ const linkedinQr = renderSVG(linkedin, qrOptions)
   </div>
 </div>
 
-<!--
-38:30, then stay on this slide for questions. One ask, not a sales pitch.
-
-If this appeals somewhere: connect on LinkedIn or mail me, and tell me one more ingredient that I'm missing. I won't spam you, I just want to hear from you. Critical questions too: especially those.
-
-[click] The most valuable thing for me right now is people who give feedback.
-
-And the second QR: please leave feedback on Sessionize. It takes a minute, and it helps me and the conference.
-
-The room is still live: thanks for your seats. The slides of both talks are at koudijs.dev/speaking.
-
-Then questions.
--->
-
 <style>
 .slidev-layout h1 { font-size: 56px; margin-bottom: 20px; }
 .ask { display: grid; grid-template-columns: 1fr auto 340px; gap: 36px; align-items: stretch; }
@@ -78,3 +64,15 @@ Then questions.
 .card.feedback { border-color: var(--amber); }
 .card .url { font-family: var(--mono); font-size: 14px; color: var(--soft); white-space: nowrap; }
 </style>
+
+<!--
+**35:30 · stays up**
+
+One ask, not a pitch. Connect or mail. One more ingredient I'm missing. Critical questions especially.
+
+[click] Most valuable right now: people who give feedback.
+
+Second QR: Sessionize, one minute. Slides at koudijs.dev/speaking. The room is still live.
+
+Then questions.
+-->

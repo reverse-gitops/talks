@@ -26,20 +26,6 @@ transition: fade
 
 <Sources label="read it" :items="[{ name: 'The Kubernetes Resource Model, Brian Grant, 2018', href: 'https://github.com/kubernetes/design-proposals-archive/blob/main/architecture/resource-management.md' }]" />
 
-<!--
-This wasn't an accident. There's a design document from 2018 by Brian Grant, one of the people behind this API, called The Kubernetes Resource Model. Everything here is a literal quote.
-
-One: declarative comes first. It isn't layered on top.
-
-[click] Two: no hidden APIs. The document also says that clients and controllers "interact with the same APIs". So there's no special door for Kubernetes itself. That's why your workload can use it too.
-
-[click] Three: written for humans to author and read. The API object is the configuration format.
-
-[click] And this one is my favourite. They say it themselves: version control isn't the job of the API, it's the job of something like Git. So putting Git next to this API isn't abuse. It's in the design document.
-
-Honest note, also in that document: no "atomic transactions across multiple resources", and no referential integrity. We'll come back to that when we talk about where this breaks.
--->
-
 <style>
 .slidev-layout h1 { margin-bottom: 20px; }
 .quotes { display: flex; flex-direction: column; gap: 20px; }
@@ -48,3 +34,21 @@ Honest note, also in that document: no "atomic transactions across multiple reso
 .quote span { display: block; margin-top: 6px; font-size: 26px; line-height: 1.3; color: var(--soft); }
 .punch { margin: 26px 0 0; text-align: center; font-size: 34px; line-height: 1.2; font-weight: 700; opacity: 1; }
 </style>
+
+<!--
+**10:00 · 0:45**
+
+Brian Grant, 2018. All literal quotes. Not an accident.
+
+Declarative comes first.
+
+[click] No hidden APIs, no special door. So your workload can use it too.
+
+[click] Written for humans. The API object is the configuration format.
+
+[click] My favourite. Git next to this API isn't abuse: it's in the design document.
+
+Also in there: no transactions across resources. Comes back in part 4.
+
+Behind? Skip this slide, say the Git quote out loud.
+-->

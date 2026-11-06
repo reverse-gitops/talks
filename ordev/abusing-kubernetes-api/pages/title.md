@@ -34,13 +34,6 @@ const { isPrintMode } = useNav()
   <p class="by"><strong>Simon Koudijs</strong><span class="company">ConfigButler</span></p>
 </div>
 
-<!--
-Up while the room fills: doors open → scan, log in, claim a seat.
-The QR follows the ordev-2-turing Room's rotating join code; the squares fill in as people claim their seat.
-
-0:00 · "You've all just changed a setting. Remember that." Then: who am I, quickly.
--->
-
 <style>
 .title-bg {
   position: absolute; inset: 0; z-index: 0; pointer-events: none;
@@ -70,3 +63,11 @@ The QR follows the ordev-2-turing Room's rotating join code; the squares fill in
 .title .by { font-size: 26px; color: var(--text); margin: 0; }
 .title .company { margin-left: .7em; }
 </style>
+
+<!--
+**before the start**
+
+Up while the room fills: scan, log in, claim a seat.
+
+Doors close: "You've all just changed a setting. Remember that."
+-->

@@ -5,7 +5,7 @@ layout: breath
 Is this contrarian?<br>And is there a chance it's right?
 
 <!--
-Say it, then stop talking. This one can take a bit longer.
+**34:30 · 0:30**
 
-Next: the same picture as at the start.
+Say it. Stop. This one can take longer.
 -->

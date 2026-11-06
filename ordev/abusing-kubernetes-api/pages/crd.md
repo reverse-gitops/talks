@@ -20,30 +20,18 @@ clicks: 3
       <b>Custom Resource</b>
       <em>an instance</em>
       <span>One chair: <code>ordev-2-turing-7-1</code></span>
+      <div class="owner"><strong>Consumer</strong> fills it in, using the app</div>
     </div>
     <div class="def crd-def" :class="{ on: $clicks >= 2 }">
       <b>Custom Resource Definition</b>
       <em>the interface, the schema</em>
       <span>What every <code>Seat</code> must look like: a row, a colour, an emoji</span>
+      <div class="owner"><strong>Provider</strong> defines it, during application development</div>
     </div>
   </div>
 </div>
 
 <p class="punch" :class="{ on: $clicks >= 3 }">Freelens knows nothing about chairs. <span class="green">It reads the CRD.</span></p>
-
-<!--
-For those who answered "no idea" or "heard of it": this is the whole idea. This is Freelens, an ordinary Kubernetes GUI that I didn't write.
-
-Look at the left: Coffee Config, Quiz Session, Room, Seat. Those are mine, listed right next to what Kubernetes ships.
-
-[click] Each row is a Custom Resource: an instance. One chair. It's the object we just looked at.
-
-[click] And this is the Custom Resource Definition: the interface, the schema. It says what any Seat must look like, and it's what added "Seat" to this sidebar and these columns to this table. Row, Column, Emoji, Color. In code terms: the definition is the class or interface, and the resource is the instance.
-
-And a CRD is itself just an object: you apply it, and the API server immediately speaks your new type.
-
-[click] So Freelens knows nothing about chairs. Validation, kubectl and this whole screen come from that one schema. Closed for modification, open for extension.
--->
 
 <style>
 .slidev-layout h1 { margin-bottom: 24px; }
@@ -65,6 +53,19 @@ And a CRD is itself just an object: you apply it, and the API server immediately
 .def.cr em { color: var(--good); }
 .def.crd-def em { color: var(--accent); }
 .def span { font-size: 24px; line-height: 1.3; color: var(--soft); }
+.owner { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); font-size: 24px; line-height: 1.3; color: var(--text); }
 .punch { position: absolute; left: 64px; right: 64px; bottom: 56px; margin: 0; text-align: center; font-size: 44px; line-height: 1.2; font-weight: 700; opacity: 0; transition: opacity .3s; }
 .punch.on { opacity: 1; }
 </style>
+
+<!--
+**6:30 · 1:00**
+
+Freelens: an ordinary GUI I didn't write. My types next to what Kubernetes ships.
+
+[click] A row is a Custom Resource: one chair. Consumer fills it in: you, on your phone.
+
+[click] Custom Resource Definition: interface, schema. Class and instance. Provider defines it, during application development: me.
+
+[click] Freelens knows nothing about chairs. Closed for modification, open for extension.
+-->

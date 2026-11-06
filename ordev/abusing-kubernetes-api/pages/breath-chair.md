@@ -5,7 +5,7 @@ layout: breath
 That chair you just coloured<br>is a Kubernetes object.
 
 <!--
-Say it, then stop talking. Let it land.
+**3:40 · 0:10**
 
-You never saw Kubernetes. You saw a nice screen.
+Say it. Let it land. You never saw Kubernetes, you saw a nice screen.
 -->

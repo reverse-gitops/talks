@@ -11,18 +11,6 @@ transition: fade
   <PollResult :preview="60" :question="false" />
 </div>
 
-<!--
-Live: these are your answers from when you logged in. Read them out, and adjust to the room.
-
-Lots of people who write them? "Then correct me during the talk, please."
-
-Lots of "no idea"? "Good, you're who this is for. You don't need to know, and in about ten minutes you will."
-
-The bars are themselves read from the Kubernetes API, and each answer is a group on your login. Don't explain that yet.
-
-If the footer says "preview data", nobody has joined: skip this slide.
--->
-
 <style>
 .slidev-layout h1 { margin-bottom: 44px; }
 .answers :deep(.poll) { gap: 28px; }
@@ -30,3 +18,14 @@ If the footer says "preview data", nobody has joined: skip this slide.
 .answers :deep(.track) { height: 64px; }
 .answers :deep(.foot) { margin-top: 12px; font-size: 18px; }
 </style>
+
+<!--
+**1:45 · 0:30**
+
+Your answers from the door. Read them out.
+
+Many who write them: "Correct me during the talk, please."
+Many "no idea": "You're who this is for. In ten minutes you'll know."
+
+Footer says "preview data"? Skip this slide.
+-->
