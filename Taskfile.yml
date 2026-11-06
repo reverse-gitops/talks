@@ -209,13 +209,13 @@ tasks:
       - ls -v /tmp/slidev-export-png/*.png | xargs /home/node/.local/bin/img2pdf -o dist/20260323-the-gitops-paradox.pdf
 
   export-krm-bff-pdf:
-    desc: Export krm-bff (Frontmania) to dist/be-bffs-with-the-kubernetes-api.pdf
+    desc: Export krm-bff (Frontmania) to dist/20261007-be-bffs-with-the-kubernetes-api.pdf
     cmds:
       - rm -rf /tmp/marp-export-krm-bff && mkdir -p /tmp/marp-export-krm-bff
       - cd krm-bff && marp slides.md --pdf --allow-local-files --html -o /tmp/marp-export-krm-bff/full.pdf
       # Marp embeds the 3 MB background again on every page (60 MB): flatten to one JPEG per page
       - pdftoppm -jpeg -jpegopt quality=85 -r 144 /tmp/marp-export-krm-bff/full.pdf /tmp/marp-export-krm-bff/page
-      - ls -v /tmp/marp-export-krm-bff/page-*.jpg | xargs /home/node/.local/bin/img2pdf -o dist/be-bffs-with-the-kubernetes-api.pdf
+      - ls -v /tmp/marp-export-krm-bff/page-*.jpg | xargs /home/node/.local/bin/img2pdf -o dist/20261007-be-bffs-with-the-kubernetes-api.pdf
 
   export-reverser-pdf:
     desc: Export settings-that-break to dist/20261030-settings-that-break-production.pdf
