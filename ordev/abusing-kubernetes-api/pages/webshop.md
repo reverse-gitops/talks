@@ -46,7 +46,7 @@ transition: fade
 </style>
 
 <!--
-**28:45 · 2:00**
+**29:30 · 2:00**
 
 Discussion yesterday: a whole catalogue in KRM? I think you could. Static stuff away from PHP and MySQL.
 

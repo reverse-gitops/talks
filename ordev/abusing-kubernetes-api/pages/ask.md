@@ -66,7 +66,7 @@ const linkedinQr = renderSVG(linkedin, qrOptions)
 </style>
 
 <!--
-**35:30 · stays up**
+**36:15 · stays up**
 
 One ask, not a pitch. Connect or mail. One more ingredient I'm missing. Critical questions especially.
 

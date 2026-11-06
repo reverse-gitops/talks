@@ -11,13 +11,13 @@ clicks: 5
 <div class="krm">
   <div class="object">
     <div class="group" :class="{ lit: $clicks === 1 }">
-      <div class="l">apiVersion: examples.configbutler.ai/v1alpha1</div>
-      <div class="l">kind: Seat</div>
+      <div class="l">apiVersion: <span class="map type" :class="{ on: $clicks >= 5 }">examples.configbutler.ai/v1alpha1</span></div>
+      <div class="l">kind: <span class="map type dashed" :class="{ on: $clicks >= 5 }">Seat</span></div>
     </div>
     <div class="group" :class="{ lit: $clicks === 2 }">
       <div class="l">metadata:</div>
-      <div class="l in">namespace: voter</div>
-      <div class="l in">name: ordev-2-turing-7-1</div>
+      <div class="l in">namespace: <span class="map id" :class="{ on: $clicks >= 5 }">voter</span></div>
+      <div class="l in">name: <span class="map id" :class="{ on: $clicks >= 5 }">ordev-2-turing-7-1</span></div>
     </div>
     <div class="group spec" :class="{ lit: $clicks === 3 }">
       <div class="l">spec:</div>
@@ -38,7 +38,9 @@ clicks: 5
   </div>
 </div>
 
-<p class="punch" :class="{ on: $clicks >= 5 }">The object doesn't need a URL. <span class="green">So a file works just as well.</span></p>
+<div class="address" :class="{ on: $clicks >= 5 }">
+  <div class="url">.../apis/<span class="map type on">examples.configbutler.ai/v1alpha1</span>/namespaces/<span class="map id on">voter</span>/<span class="map type dashed on">seats</span>/<span class="map id on">ordev-2-turing-7-1</span></div>
+</div>
 
 <style>
 .krm { display: grid; grid-template-columns: 780px 1fr; gap: 48px; margin-top: 28px; align-items: stretch; }
@@ -59,8 +61,14 @@ clicks: 5
 .off-until strong.green { color: var(--good); }
 .off-until b.amber, .off-until strong.amber { color: var(--amber); }
 .off-until span { font-size: 25px; line-height: 1.25; color: var(--soft); }
-.punch { position: absolute; left: 64px; right: 64px; bottom: 64px; margin: 0; text-align: center; font-size: 44px; line-height: 1.2; font-weight: 700; opacity: 0; transition: opacity .4s; }
-.punch.on { opacity: 1; }
+.map { transition: color .3s; }
+.map.on { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 7px; }
+.map.type.on { text-decoration-color: var(--accent); }
+.map.dashed.on { text-decoration-style: dashed; }
+.map.id.on { text-decoration-color: var(--good); }
+.address { position: absolute; left: 64px; right: 64px; bottom: 72px; text-align: center; opacity: 0; transition: opacity .4s; }
+.address.on { opacity: 1; }
+.url { padding: 12px 8px; white-space: nowrap; font-family: var(--mono); font-size: 28px; line-height: 1.3; color: var(--soft); background: var(--panel); border: 1px solid var(--line-strong); border-radius: 12px; }
 </style>
 
 <!--
@@ -76,5 +84,5 @@ KRM. Four things. Your chair, shortened.
 
 [click] Status: the system answers, not you. Not checked into Git, only desired state. Back to it soon.
 
-[click] The whole trick: request or file, same thing, nothing translates.
+[click] The URL from a moment ago. Group and version, namespace, seats, name: it's all in the object. So it's an API resource and a YAML manifest at the same time. The whole trick: nothing translates. Except the dashed one: Seat and seats. Hold that thought.
 -->

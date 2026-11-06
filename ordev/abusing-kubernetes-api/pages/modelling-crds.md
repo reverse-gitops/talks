@@ -28,7 +28,7 @@ spec:
 
 </div>
 <ul>
-  <li v-click><strong>The seat is in the name.</strong> Two phones claim one seat: the second gets <code>409 AlreadyExists</code>. That is the whole locking story</li>
+  <li v-click><strong>The seat is in the name.</strong> Two phones claim one seat: the second gets <code>409 AlreadyExists</code>. Names are unique, so the first claim wins</li>
   <li v-click><strong>Spec is the intent.</strong> That is what goes to Git; secrets go in their own Secret</li>
 </ul>
 </div>

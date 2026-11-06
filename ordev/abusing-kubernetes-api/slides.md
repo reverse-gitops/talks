@@ -9,7 +9,7 @@ colorSchema: dark
 canvasWidth: 1600
 aspectRatio: 16/9
 codeCopy: false
-duration: 36min
+duration: 37min
 timer: stopwatch
 fonts:
   provider: none
@@ -139,6 +139,10 @@ src: ./pages/both-ways.md
 
 ---
 src: ./pages/breath-remembers.md
+---
+
+---
+src: ./pages/seats.md
 ---
 
 ---

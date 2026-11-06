@@ -39,7 +39,7 @@ transition: fade
 </style>
 
 <!--
-**31:45 · 1:00**
+**32:30 · 1:00**
 
 Don't read them all. Pick two pros.
 

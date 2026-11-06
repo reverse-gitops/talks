@@ -40,7 +40,7 @@ transition: fade
 </style>
 
 <!--
-**33:30 · 1:00**
+**34:15 · 1:00**
 
 Honest: it works, it isn't easy. Cluster, TLS, login, audit flags. Too much just to find out if you like it.
 

@@ -8,7 +8,7 @@ transition: fade
 # The definition of your chair: <span class="green">also just YAML.</span>
 
 <div class="def">
-<div class="yaml">
+<div class="yaml" :class="{ plural: $clicks === 1 }">
 
 ```yaml {1-3,5|7|11-14,16,20,21|15,17-19|all}
 apiVersion: apiextensions.k8s.io/v1
@@ -49,6 +49,8 @@ spec:
 .def { display: grid; grid-template-columns: 860px 1fr; gap: 48px; align-items: start; margin-top: 8px; }
 .def .yaml :deep(pre) { font-size: 19px !important; line-height: 1.35 !important; padding: 20px 24px !important; border-radius: 12px; }
 .def .yaml :deep(pre code) { background: none; padding: 0; }
+.def .yaml.plural :deep(.line:nth-child(7) span:nth-child(6)), .def .yaml.plural :deep(.line:nth-child(7) span:nth-child(10)) { padding-bottom: 5px; background-image: repeating-linear-gradient(to right, var(--accent) 0 9px, transparent 9px 15px); background-size: calc(100% - 1ch) 3px; background-position: right bottom; background-repeat: no-repeat; }
+.def .yaml :deep(.line.slidev-code-dishonored) { opacity: .55; }
 .def ul { margin: 0; padding-left: 1.1em; }
 .slidev-layout .def li { margin: 0 0 22px; font-size: 27px; line-height: 1.3; color: var(--text); }
 .punch { position: absolute; left: 64px; right: 64px; bottom: 28px; margin: 0; text-align: center; font-size: 46px; line-height: 1.2; font-weight: 700; opacity: 1; }
@@ -61,7 +63,7 @@ Don't read the YAML. The real one, about 230 lines with its comments.
 
 Same shape as your chair. Apply it, and the API speaks Seat.
 
-[click] Seat, plural seats: the URL you just saw.
+[click] Seat, plural seats: the dashed one from the URL. This line is the translation.
 
 [click] What's valid: colour pattern, 24 emoji. Checked before storing. I didn't write that.
 

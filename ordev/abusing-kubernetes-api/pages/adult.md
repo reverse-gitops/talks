@@ -29,7 +29,7 @@ transition: fade
 </style>
 
 <!--
-**32:45 · 0:45**
+**33:30 · 0:45**
 
 You could call it legacy. I call it legendary. Kubernetes 2.0 talk for ages. Conservative, large ecosystem.
 

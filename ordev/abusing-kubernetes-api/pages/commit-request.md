@@ -306,7 +306,7 @@ A CommitRequest is a custom resource the user applies with kubectl. Reverser use
 </style>
 
 <!--
-**25:45 · 1:30**
+**26:30 · 1:30**
 
 Two phases: join, then window.
 

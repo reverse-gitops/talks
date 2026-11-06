@@ -16,10 +16,10 @@
 | 0 | Opening | `title`, `belief`, `tldr` (the big red cross), `breath-not-infra`, `tldr-contents`, `about`, `poll-crd`, `yesterday`, `provider-expectations` |
 | 3:30 | 1. It's just an API | `part-api`, `breath-chair`, `curl`, `breath-database`, `krm-shape`, `crd`, `crd-seat`, `modelling-crds`, `last-writer`, `krm-philosophy`, `control-loop`, `solid`, `self-host` |
 | 13:30 | 2. Identity is kept | `part-identity`, `api-key` (live), `foyer`, `pipeline`, `price-policy` (live) |
-| 20:30 | 3. The API forgets, Git remembers | `part-history`, `reverser`, `both-ways`, `breath-remembers`, `breath-who`, `two-streams`, `commit-request`, `reverser-committer`, `breath-story` |
-| 28:30 | 4. It doesn't always fit | `part-limits`, `webshop`, `criteria`, `pros-cons`, `adult` |
-| 33:30 | What I don't know yet | `managed`, `breath-contrarian`, `tldr-end` |
-| 35:30 | Questions | `ask` |
+| 20:30 | 3. The API forgets, Git remembers | `part-history`, `reverser`, `both-ways`, `breath-remembers`, `seats`, `breath-who`, `two-streams`, `commit-request`, `reverser-committer`, `breath-story` |
+| 29:15 | 4. It doesn't always fit | `part-limits`, `webshop`, `criteria`, `pros-cons`, `adult` |
+| 34:15 | What I don't know yet | `managed`, `breath-contrarian`, `tldr-end` |
+| 36:15 | Questions | `ask` |
 | | *Backup* | `one-writer`, `tldr-workload`, `reverser-model`, `inside-apiserver`, `seats-list`, `consumers`, `expectations` |
 
 Not in the deck anymore: `screen`, `auth`, `api`, `git`, `back`, `krm`. They walked through the crossed-out picture.
