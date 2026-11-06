@@ -1,0 +1,31 @@
+# The identity behind the live API demo (pages/api-key.md): it may read Seats in voter, and nothing else.
+# Apply once before the talk: kubectl apply -f pages/demo-scripts/seat-reader.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: seat-reader
+  namespace: voter
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: seat-reader
+  namespace: voter
+rules:
+  - apiGroups: [examples.configbutler.ai]
+    resources: [seats]
+    verbs: [get, list, watch]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: seat-reader
+  namespace: voter
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: seat-reader
+subjects:
+  - kind: ServiceAccount
+    name: seat-reader
+    namespace: voter

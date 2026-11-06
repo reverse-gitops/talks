@@ -1,0 +1,19 @@
+steps:
+  - run: export CURL_CA_BUNDLE=~/.kube/koudijs-ca.crt
+  - run: |
+      BASE=https://api.k8s.koudijs.dev:6443
+      G=examples.configbutler.ai
+      V=v1alpha1
+      R=seats
+  - run: SEAT=$BASE/apis/$G/$V/namespaces/voter/$R/ordev-2-turing-7-1
+  - run: kubectl describe role seat-reader -n voter
+  - run: TOKEN=$(kubectl create token seat-reader -n voter --duration=1h)
+  - run: |
+      echo $TOKEN | jq -R 'split(".")[1] | @base64d | fromjson' \
+        | jq '{who: .sub, expires: (.exp | todate)}'
+  - run: |
+      curl -s -H "Authorization: Bearer $TOKEN" $SEAT \
+        | jq '{kind, spec}'
+  - run: |
+      curl -s -X DELETE -H "Authorization: Bearer $TOKEN" $SEAT \
+        | jq .message

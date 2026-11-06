@@ -15,3 +15,6 @@ krm-bff/*.html
 # Task (taskfile.dev) run state
 .task/
 ordev/prep/*
+
+# Reset backups hold attendee names, and this repo is public
+settings-that-break/reset-backups/

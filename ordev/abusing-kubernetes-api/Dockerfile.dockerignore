@@ -1,0 +1,9 @@
+# Used by BuildKit for ordev/abusing-kubernetes-api/Dockerfile only (the build context is the repository root).
+**
+!ordev/abusing-kubernetes-api/
+!tools/slidev-addon-web-terminal/
+**/node_modules
+**/dist
+**/.slidev
+ordev/abusing-kubernetes-api/shots
+tools/slidev-addon-web-terminal/example

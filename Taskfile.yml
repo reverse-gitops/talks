@@ -233,6 +233,14 @@ tasks:
       - cd ordev/config-deserves-better && npx slidev export --format png --output /tmp/slidev-export-config-deserves-better --scale 2 --timeout 60000
       - ls -v /tmp/slidev-export-config-deserves-better/*.png | xargs /home/node/.local/bin/img2pdf -o dist/config-deserves-better.pdf
 
+  export-abusing-kubernetes-api-pdf:
+    desc: Export ordev/abusing-kubernetes-api to dist/abusing-kubernetes-api.pdf
+    deps: [install-node-deps]
+    cmds:
+      - rm -rf /tmp/slidev-export-abusing-kubernetes-api && mkdir -p /tmp/slidev-export-abusing-kubernetes-api
+      - cd ordev/abusing-kubernetes-api && npx slidev export --format png --output /tmp/slidev-export-abusing-kubernetes-api --scale 2 --timeout 60000
+      - ls -v /tmp/slidev-export-abusing-kubernetes-api/*.png | xargs /home/node/.local/bin/img2pdf -o dist/abusing-kubernetes-api.pdf
+
   run-reverser:
     desc: Live settings-that-break deck (start run-terminal-bridge for its terminals)
     deps: [install-node-deps]
@@ -244,6 +252,13 @@ tasks:
     desc: Live Oredev talk 1 deck (start run-terminal-bridge for its terminals)
     deps: [install-node-deps]
     dir: ordev/config-deserves-better
+    cmds:
+      - npm run dev
+
+  run-abusing-kubernetes-api:
+    desc: Live Oredev talk 2 deck (start run-terminal-bridge for its terminals)
+    deps: [install-node-deps]
+    dir: ordev/abusing-kubernetes-api
     cmds:
       - npm run dev
 
