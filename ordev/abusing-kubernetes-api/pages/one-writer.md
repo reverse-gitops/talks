@@ -26,6 +26,19 @@ transition: fade
 
 <Sources slim label="read more" :items="[{ name: 'Bi-directional GitOps', href: 'https://github.com/ConfigButler/gitops-reverser/blob/main/docs/bi-directional.md' }]" />
 
+<style>
+.slidev-layout h1 { margin-bottom: 24px; }
+.row { margin-bottom: 26px; }
+.label { margin-bottom: 10px; font-size: 28px; line-height: 1.2; font-weight: 700; }
+.steps { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; align-items: stretch; gap: 12px; }
+.steps b { display: flex; align-items: center; justify-content: center; min-height: 104px; padding: 10px 16px; box-sizing: border-box; text-align: center; font-size: 26px; line-height: 1.2; font-weight: 500; background: var(--panel); border: 1px solid var(--line-strong); border-radius: 12px; }
+.steps b.bad { border-color: var(--bad); color: var(--bad); }
+.steps b.good { border-color: var(--good); color: var(--good); }
+.steps i { align-self: center; font-style: normal; font-size: 26px; color: var(--arrow); }
+.how { margin: 14px 0 0; font-size: 26px; line-height: 1.3; color: var(--soft); opacity: 1; }
+.honest { position: absolute; left: 64px; right: 64px; bottom: 40px; margin: 0; text-align: center; font-family: 'Caveat', cursive; font-size: 52px; line-height: 1.1; font-weight: 600; color: var(--amber); opacity: 1; }
+</style>
+
 <!--
 So both directions work. But here's the catch, and I got this wrong a few times.
 
@@ -39,16 +52,3 @@ Edits get published first, and then Flux is asked to apply, once. A push to Git 
 
 Be honest if asked: the claims are off by default. My demo cluster doesn't run a claim right now.
 -->
-
-<style>
-.slidev-layout h1 { margin-bottom: 24px; }
-.row { margin-bottom: 26px; }
-.label { margin-bottom: 10px; font-size: 28px; line-height: 1.2; font-weight: 700; }
-.steps { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; align-items: stretch; gap: 12px; }
-.steps b { display: flex; align-items: center; justify-content: center; min-height: 104px; padding: 10px 16px; box-sizing: border-box; text-align: center; font-size: 26px; line-height: 1.2; font-weight: 500; background: var(--panel); border: 1px solid var(--line-strong); border-radius: 12px; }
-.steps b.bad { border-color: var(--bad); color: var(--bad); }
-.steps b.good { border-color: var(--good); color: var(--good); }
-.steps i { align-self: center; font-style: normal; font-size: 26px; color: var(--arrow); }
-.how { margin: 14px 0 0; font-size: 26px; line-height: 1.3; color: var(--soft); opacity: 1; }
-.honest { position: absolute; left: 64px; right: 64px; bottom: 40px; margin: 0; text-align: center; font-family: 'Caveat', cursive; font-size: 52px; line-height: 1.1; font-weight: 600; color: var(--amber); opacity: 1; }
-</style>

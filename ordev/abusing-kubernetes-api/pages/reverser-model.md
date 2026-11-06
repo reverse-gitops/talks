@@ -24,6 +24,15 @@ clicks: 1
   <p class="at punch fade" :class="{ off: $clicks < 1 }">Small objects that point at each other. <span class="green">Each one a kubectl get away.</span></p>
 </div>
 
+<style>
+.diagram .kind { width: 300px; height: 130px; gap: 8px; }
+.diagram .kind b { font-size: 26px; line-height: 32px; font-family: var(--mono); font-weight: 600; }
+.diagram .kind span { font-size: 19px; line-height: 25px; color: var(--soft); }
+.diagram .kind b.pair { font-size: 19px; }
+.diagram .kind.hub { border-color: var(--good); }
+.slidev-layout .punch { left: 64px; top: 750px; width: 1472px; margin: 0; text-align: center; font-size: 42px; line-height: 1.2; font-weight: 700; color: var(--text); }
+</style>
+
 <!--
 What does modelling look like when it's more than a chair? gitops-reverser is itself a configuration product. So I eat my own cooking: this is its model, and most of these objects are running on my cluster right now. The Flux and Argo CD claims are the exception: they're opt-in. If you want to know about them, ask me afterwards.
 
@@ -33,12 +42,3 @@ Different people can own different boxes. A platform team owns the GitProvider a
 
 [click] And I got all of it for free: validation, RBAC, status, watches, kubectl. I never built a settings screen for my own settings product.
 -->
-
-<style>
-.diagram .kind { width: 300px; height: 130px; gap: 8px; }
-.diagram .kind b { font-size: 26px; line-height: 32px; font-family: var(--mono); font-weight: 600; }
-.diagram .kind span { font-size: 19px; line-height: 25px; color: var(--soft); }
-.diagram .kind b.pair { font-size: 19px; }
-.diagram .kind.hub { border-color: var(--good); }
-.slidev-layout .punch { left: 64px; top: 750px; width: 1472px; margin: 0; text-align: center; font-size: 42px; line-height: 1.2; font-weight: 700; color: var(--text); }
-</style>

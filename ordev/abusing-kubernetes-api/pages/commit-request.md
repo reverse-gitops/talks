@@ -154,22 +154,6 @@ A CommitRequest is a custom resource the user applies with kubectl. Reverser use
 
 </Story>
 
-<!--
-Reverser handles every change in two phases: join (wait for the audit event that says who) and the window (collect changes until a timeout).
-
-[click] Alice scales the web Deployment. The watch sees what changed, the audit batch says it was Alice. A window opens.
-
-[click] She also bumps the autoscaler. Again: Reverser waits for the audit event before it knows who.
-
-[click] Now she applies a CommitRequest with a message: "Prep for launch traffic". It is just another object in the cluster.
-
-[click] Like any change, the CommitRequest is joined with its identity: Alice.
-
-[click] But it does not land in the window, it closes it, right now. Reverser writes status Processing back on the object.
-
-[click] One commit, authored by Alice, with her reason as the message. The status points to commit a3f9c1. Real Git history, and she never touched Git.
--->
-
 <style>
 .diagram > h1 + p { left: 600px; top: 160px; width: 900px; }
 .label { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; }
@@ -320,3 +304,21 @@ Reverser handles every change in two phases: join (wait for the audit event that
 .r-pop { left: 224px; top: 184px; width: 320px; height: 186px; }
 .r-win { left: 1016px; top: 536px; width: 232px; height: 160px; border-radius: 10px; }
 </style>
+
+<!--
+**25:45 · 1:30**
+
+Two phases: join, then window.
+
+[click] Alice scales. A window opens.
+
+[click] She bumps the autoscaler.
+
+[click] She applies a CommitRequest: "Prep for launch traffic". Just another object.
+
+[click] Joined with identity: Alice.
+
+[click] It closes the window. Reverser writes status back: there's status again.
+
+[click] One commit, her name, her reason. "She never touched Git."
+-->

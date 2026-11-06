@@ -20,26 +20,8 @@ clicks: 4
 
   <div class="at again fade" :class="{ off: $clicks < 4 }">and again,<br>and again</div>
 
-  <p v-if="$clicks >= 4" class="at punch">You say what you want. <span class="green">The loop keeps making it true.</span></p>
+  <p v-if="$clicks >= 4" class="at punch">The provider is the loop. <span class="green">The consumer can read it.</span></p>
 </div>
-
-<!--
-If you remember one concept from Kubernetes, make it this one. And you already own one: a thermostat.
-
-You set what you want: 21 degrees. That's the spec. You don't say "heat for ten minutes".
-
-[click] It measures what's really there: 18 degrees.
-
-[click] It closes the gap: the heating goes on.
-
-[click] And it reports back: it's 19 now, and I'm heating. That's the status. Spec is written by you, status by the loop.
-
-[click] And then it does it again. Forever. Open a window, and it just sees a bigger gap.
-
-The document calls this level-based. It doesn't react to a list of events that it might miss: it looks at the difference between desired and observed. Missed an update? Doesn't matter, the next round sees the gap.
-
-Now the link with today: your workload can be this loop. It reads its spec from the API, does its work, and writes what happened to status. That's the giving back. The chair's status holds the commit and its why, and our coffee settings report whether each key has a value.
--->
 
 <style>
 .dot { left: 0; top: 0; z-index: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--amber); offset-path: path('M 410 290 L 1190 290 L 1190 560 L 410 560 Z'); offset-rotate: 0deg; animation: go-round 6s linear infinite; }
@@ -54,3 +36,21 @@ Now the link with today: your workload can be this loop. It reads its spec from 
 .again { left: 640px; top: 372px; width: 320px; text-align: center; font-family: 'Caveat', cursive; font-size: 54px; line-height: 1.05; font-weight: 600; color: var(--amber); }
 .slidev-layout .punch { left: 64px; top: 700px; width: 1472px; margin: 0; text-align: center; font-size: 46px; line-height: 1.2; font-weight: 700; color: var(--text); opacity: 1; }
 </style>
+
+<!--
+**10:45 · 1:15**
+
+One concept to remember. You own one: a thermostat. Set 21°: spec.
+
+[click] Measures 18°.
+
+[click] Heating on.
+
+[click] "19 and heating": status. Spec by you, status by the loop.
+
+[click] Again, forever. Open a window: a bigger gap.
+
+The provider IS the loop. The consumer can read it.
+
+A program running this loop is an operator. You can build your own, your workload can be one. That's the giving back.
+-->

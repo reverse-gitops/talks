@@ -5,7 +5,7 @@ layout: breath
 Is this a database,<br>or a folder of files?
 
 <!--
-Say it, then stop talking. Five seconds. Take a sip of water.
+**5:05 · 0:10**
 
-Normally it's one or the other. The rest of this talk is how it can be both.
+Say it. Stop talking. Normally one or the other. How can it be both?
 -->

@@ -42,20 +42,6 @@
   <div class="at magic">It goes both ways, so Git can promote.</div>
 </div>
 
-<!--
-BACKUP, after the ask: for when someone asks how promotion or slowing down works.
-
-One settings screen. And then a block, and that block you can simply copy: a kube-apiserver, with a workload connected to it. The workload reads its spec and reports back in status.
-
-Each block is connected to Git in two directions. A change in the API becomes a commit, and a commit gets applied to the API.
-
-[pause] And because it goes both ways, promotion is just Git. Test has its own branch, production is main. Merge test into main, and production's API gets the change. Want to slow down? Don't merge yet.
-
-And something changed directly in production? That becomes a commit on main as well, so it's not lost.
-
-Be honest: this is a sketch. My demo doesn't run it like this.
--->
-
 <style>
 .tldr-label { left: 64px; top: 26px; font-family: var(--mono); font-size: 34px; font-weight: 600; line-height: 1.5; color: var(--accent); }
 .diagram .screen { left: 64px; top: 385px; width: 240px; height: 140px; gap: 8px; }
@@ -76,3 +62,17 @@ Be honest: this is a sketch. My demo doesn't run it like this.
 .promote { left: 1416px; top: 424px; font-family: var(--mono); font-size: 20px; line-height: 26px; color: var(--amber); }
 .magic { left: 64px; top: 748px; width: 1472px; text-align: center; font-family: 'Caveat', cursive; font-size: 62px; line-height: 1.1; font-weight: 600; color: var(--amber); }
 </style>
+
+<!--
+BACKUP, after the ask: for when someone asks how promotion or slowing down works.
+
+One settings screen. And then a block, and that block you can simply copy: a kube-apiserver, with a workload connected to it. The workload reads its spec and reports back in status.
+
+Each block is connected to Git in two directions. A change in the API becomes a commit, and a commit gets applied to the API.
+
+[pause] And because it goes both ways, promotion is just Git. Test has its own branch, production is main. Merge test into main, and production's API gets the change. Want to slow down? Don't merge yet.
+
+And something changed directly in production? That becomes a commit on main as well, so it's not lost.
+
+Be honest: this is a sketch. My demo doesn't run it like this.
+-->

@@ -80,16 +80,6 @@ Settings are Kubernetes objects. Every change goes through an apiserver that kno
 
 </Story>
 
-<!--
-Zoom in on the data-only cluster: it's just a kube-apiserver. Alice's settings page sends a PATCH through the same Ingress, with her own OIDC token.
-
-[click] Reverser sits next to it and turns every settings change into a Git commit.
-
-[click] For a good commit it needs two answers: what changed, and who changed it.
-
-[click] The apiserver already offers both, as two separate streams: watch and audit. Let's look inside.
--->
-
 <style>
 .stage { --green-line: #2E6B4E; }
 .alice { display: inline-block; width: 18px; height: 18px; border-radius: 9px; background: #DDD6C6; vertical-align: -3px; }
@@ -181,3 +171,13 @@ Zoom in on the data-only cluster: it's just a kube-apiserver. Alice's settings p
   100% { opacity: 0; transform: translate(1033px, 485px); }
 }
 </style>
+
+<!--
+Zoom in on the data-only cluster: it's just a kube-apiserver. Alice's settings page sends a PATCH through the same Ingress, with her own OIDC token.
+
+[click] Reverser sits next to it and turns every settings change into a Git commit.
+
+[click] For a good commit it needs two answers: what changed, and who changed it.
+
+[click] The apiserver already offers both, as two separate streams: watch and audit. Let's look inside.
+-->

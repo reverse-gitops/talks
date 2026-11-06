@@ -25,18 +25,6 @@ transition: fade
 
 <Sources label="yesterday" :items="[{ name: 'The slides of both talks', href: 'https://koudijs.dev/speaking' }]" />
 
-<!--
-Who was here yesterday? Here's that talk in one slide. A settings screen, the kube-apiserver behind it, gitops-reverser turning changes into files in Git, an image, and your workload reads that image. Read-only, and promoted together with the workload.
-
-Reflect: I kept my distance from the Kubernetes control plane, as if it were a bad thing. You really avoid needing Kubernetes. Is that right? I'm not sure anymore. I've built so many pieces of this by now that I'm starting to feel how complex it is.
-
-[click] So today, the other way. It's simple: a consumer, a provider, and an API between them. Your workload talks to that API directly. That means it can also give something back: did it work?
-
-Neither is wrong. The image gives you a pinned version and no dependency at runtime. Direct access gives you live changes and a way to report back, but your workload now depends on the API.
-
-You don't need yesterday's talk to follow this one.
--->
-
 <style>
 .slidev-layout h1 { font-size: 56px; margin-bottom: 36px; }
 .row { margin-bottom: 36px; }
@@ -52,3 +40,15 @@ You don't need yesterday's talk to follow this one.
 .chain i.both { font-size: 48px; line-height: 1; color: var(--good); }
 .row p { margin: 14px 0 0; font-size: 28px; line-height: 1.3; color: var(--soft); opacity: 1; }
 </style>
+
+<!--
+**2:15 · 0:30**
+
+Who was here? Yesterday: workload only reads an image, promoted together.
+
+I kept my distance from the control plane. Is that right? Not sure anymore.
+
+[click] Today: the workload talks to the API, and gives back.
+
+Neither is wrong. Pinned and no runtime dependency, or live with a way back. You don't need yesterday's talk.
+-->

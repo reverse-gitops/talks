@@ -7,15 +7,15 @@ transition: fade
 
 # It's <span class="green">just an API.</span>
 
-<div class="panel">
-  <div class="l">curl -H "Authorization: Bearer <span class="key">$TOKEN</span>" \</div>
-  <div class="l">  https://api.k8s.koudijs.dev:6443/apis/<span class="type">examples.configbutler.ai/v1alpha1</span>\</div>
-  <div class="l">/namespaces/<span class="id">voter</span>/<span class="type">seats</span>/<span class="id">ordev-2-turing-7-1</span></div>
-</div>
+<a class="panel" href="https://demo.koudijs.dev/k8s/apis/examples.configbutler.ai/v1alpha1/namespaces/voter/seats/ordev-2-turing-7-1" target="_blank">
+  <div class="l">GET https://demo.koudijs.dev/<span class="key">k8s</span>/apis/<span class="type">examples.configbutler.ai/v1alpha1</span></div>
+  <div class="l">    /namespaces/<span class="id">voter</span>/<span class="type">seats</span>/<span class="id">ordev-2-turing-7-1</span></div>
+  <span class="naming"><span class="key">k8s</span>? That should be settings or config.</span>
+</a>
 
 <div class="where">
   <div v-click class="small">
-    <div class="name">A small, data-only cluster</div>
+    <div class="name">A single cluster, just for this</div>
     <div class="parts">
       <div class="part api"><b>kube-apiserver</b><span>the API</span></div>
       <i>⇄</i>
@@ -29,31 +29,16 @@ transition: fade
   </div>
   <div v-click class="infra">
     <div class="name">Your infra clusters</div>
-    <p>Your pods and nodes. <strong>This doesn't go here.</strong></p>
+    <p>Your pods and nodes. <strong>No end users in here.</strong></p>
   </div>
 </div>
 
-<p v-click class="punch">Nothing to do with infra. <span class="green">So don't run it there.</span></p>
-
-<!--
-A plain HTTPS call. No SDK, no kubectl. Your API key is a bearer token. So what's actually behind that URL?
-
-[click] Two things. The kube-apiserver, which is the API. And etcd next to it, which is where the objects are stored. They run together, and that's the whole thing. No nodes, no pods, no scheduler needed for this.
-
-So I propose something small and data-only. There are projects that make that easy to run, like kcp and Kamaji.
-
-[click] I'm not proposing that you run this inside your infra clusters. Keep strangers and your settings away from those.
-
-[click] A kube-apiserver has nothing to do with infra by itself. We just happen to know it from there.
-
-Be honest: my demo runs in namespaces on my own cluster. The small data-only cluster is where this is going.
-
-Next: let's actually do that call, with a real token.
--->
+<p v-click class="punch">A single cluster for this. <span class="green">Don't let end users poke in your infra.</span></p>
 
 <style>
 .slidev-layout h1 { margin-bottom: 14px; }
-.panel { padding: 12px 24px; font-family: var(--mono); font-size: 25px; line-height: 1.4; color: var(--soft); background: var(--panel); border: 1px solid var(--line); border-radius: 14px; }
+.slidev-layout a.panel { position: relative; display: block; padding: 12px 24px; font-family: var(--mono); font-size: 25px; line-height: 1.4; color: var(--soft); background: var(--panel); border: 1px solid var(--line); border-radius: 14px; text-decoration: none; }
+.naming { position: absolute; right: 24px; bottom: 10px; font-family: 'Caveat', cursive; font-size: 36px; line-height: 1; font-weight: 600; color: var(--amber); }
 .l { white-space: pre; }
 .type { color: var(--accent); }
 .id { color: var(--text); }
@@ -75,3 +60,19 @@ Next: let's actually do that call, with a real token.
 .infra p { margin: 0; font-size: 28px; line-height: 1.35; color: var(--soft); opacity: 1; }
 .punch { position: absolute; left: 64px; right: 64px; bottom: 34px; margin: 0; text-align: center; font-size: 44px; line-height: 1.2; font-weight: 700; opacity: 1; }
 </style>
+
+<!--
+**3:50 · 1:15**
+
+Plain HTTPS. No SDK, no kubectl. Your chair: open it yourself.
+
+"k8s" in that URL should be settings or config. Your users don't need to know.
+
+[click] kube-apiserver and etcd. That's the whole thing. No nodes, no pods, no scheduler. kcp, Kamaji.
+
+[click] Not in your infra clusters. Don't let end users poke around there.
+
+[click] Nothing to do with infra, we just know it from there.
+
+Honest: my demo runs in namespaces on my own cluster. Live call with a real token comes in part 2.
+-->

@@ -27,20 +27,6 @@ transition: fade
   { name: 'Reverse GitOps', href: 'https://reversegitops.dev', note: 'change through the API, a controller writes it to Git' },
 ]" />
 
-<!--
-So now we've seen both directions, so let's name it: bi-directional GitOps. Your seat again.
-
-[click] The way we just saw: a change in the API becomes a commit. Reverse GitOps.
-
-[click] And the normal way: a commit gets applied to the API. GitOps. You can make changes on both sides, so each side keeps its own job.
-
-[click] That only works because of KRM. It's the same document on both sides.
-
-[click] Technically you can edit either side. My advice: edit through the API. It validates, it knows who you are, and it merges per field.
-
-[click] And Git does what Git is good at: moving a change on to the next stage, and going back.
--->
-
 <style>
 .ways { display: grid; grid-template-columns: 440px 1fr 440px; align-items: center; gap: 28px; margin: 36px 0 36px; }
 .ways .node { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 40px 0; font-size: 38px; font-weight: 700; background: var(--panel); border: 1px solid var(--accent); border-radius: 14px; }
@@ -56,3 +42,19 @@ So now we've seen both directions, so let's name it: bi-directional GitOps. Your
 .slidev-layout ul.points { list-style: none; margin: 0; padding: 0; }
 .slidev-layout .points li { margin: 0 0 16px; padding: 0; font-size: 29px; line-height: 1.25; }
 </style>
+
+<!--
+**22:00 · 1:00**
+
+The opposite of Argo CD and Flux, for plain KRM and simple Kustomize. Bi-directional GitOps.
+
+[click] API change becomes a commit. Reverse GitOps.
+
+[click] Commit applied to the API: what our GitOps friends already do.
+
+[click] Only works because of KRM: same document.
+
+[click] Edit through the API: validates, knows you, merges per field.
+
+[click] Git: promote and go back.
+-->

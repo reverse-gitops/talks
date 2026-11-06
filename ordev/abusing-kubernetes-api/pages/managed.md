@@ -27,18 +27,6 @@ transition: fade
 
 <p v-click class="punch">Would you try that? <span class="green">Come and tell me.</span></p>
 
-<!--
-Let's be honest about what you've just seen. It works, and it isn't easy. You need a cluster, TLS, a login, audit flags, and a good understanding of how they fit together. That's too much just to find out whether you like the idea.
-
-So here's my plan, and it's a plan: I'm not there yet.
-
-You give access to a Git repo, and you create your CRDs. Your data stays in your own repo.
-
-[click] And I do the Kubernetes stuff.
-
-[click] Would you use that? Or would you rather run it yourself? That's exactly the feedback I'm looking for. Not a sales pitch: I want to hear where I'm wrong.
--->
-
 <style>
 .slidev-layout h1 { font-size: 56px; margin-bottom: 40px; }
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
@@ -50,3 +38,15 @@ You give access to a Git repo, and you create your CRDs. Your data stays in your
 .slidev-layout .side li { margin: 16px 0; font-size: 34px; line-height: 1.25; color: var(--text); }
 .punch { position: absolute; left: 64px; right: 64px; bottom: 64px; margin: 0; text-align: center; font-size: 48px; line-height: 1.2; font-weight: 700; opacity: 1; }
 </style>
+
+<!--
+**33:30 · 1:00**
+
+Honest: it works, it isn't easy. Cluster, TLS, login, audit flags. Too much just to find out if you like it.
+
+A plan, not there yet. You: a Git repo and your CRDs. Your data stays yours.
+
+[click] I do the Kubernetes stuff.
+
+[click] Would you use that, or run it yourself? Not a pitch: I want to hear where I'm wrong.
+-->

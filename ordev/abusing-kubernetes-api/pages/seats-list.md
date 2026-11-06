@@ -16,6 +16,14 @@ transition: fade
   </ul>
 </div>
 
+<style>
+.slidev-layout h1 { margin-bottom: 24px; }
+.list { display: grid; grid-template-columns: 800px 1fr; gap: 44px; align-items: start; }
+.shot { display: block; width: 800px; height: auto; border: 1px solid var(--line-strong); border-radius: 12px; }
+.list ul { margin: 0; padding-left: 1em; }
+.slidev-layout .list li { margin: 0 0 30px; font-size: 30px; line-height: 1.3; }
+</style>
+
 <!--
 Remove the seat's name from the URL, and you get all the seats. A SeatList. That's the arrow in the screenshot.
 
@@ -25,11 +33,3 @@ Remove the seat's name from the URL, and you get all the seats. A SeatList. That
 
 These are the reserved seats, from when I took the screenshot. Yours are in there now. Open the URL if you want to see them.
 -->
-
-<style>
-.slidev-layout h1 { margin-bottom: 24px; }
-.list { display: grid; grid-template-columns: 800px 1fr; gap: 44px; align-items: start; }
-.shot { display: block; width: 800px; height: auto; border: 1px solid var(--line-strong); border-radius: 12px; }
-.list ul { margin: 0; padding-left: 1em; }
-.slidev-layout .list li { margin: 0 0 30px; font-size: 30px; line-height: 1.3; }
-</style>
